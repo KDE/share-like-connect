@@ -21,6 +21,7 @@
 
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
+#include <QWeakPointer>
 
 #include <KWindowSystem>
 
@@ -46,10 +47,10 @@ public:
     ActiveContent content;
     bool active;
 
-    static ActiveContentDBusInterface *interface;
+    static QWeakPointer<ActiveContentDBusInterface> interface;
 };
 
-ActiveContentDBusInterface *ActiveContentService::Private::interface = 0;
+QWeakPointer<ActiveContentDBusInterface> ActiveContentService::Private::interface;
 
 ActiveContentService::ActiveContentService(const ActiveContent &content, QObject *parent)
     : QObject(parent),
@@ -70,7 +71,7 @@ ActiveContentService::~ActiveContentService()
 
 void ActiveContentService::setActive(bool active)
 {
-    const bool isActive = d->interface && d->interface->current() == this;
+    const bool isActive = d->interface && d->interface.data()->current() == this;
     if (isActive == active) {
         return;
     }
@@ -80,14 +81,14 @@ void ActiveContentService::setActive(bool active)
             d->interface = new ActiveContentDBusInterface;
         }
 
-        d->interface->setCurrent(this);
+        d->interface.data()->setCurrent(this);
         QDBusConnection::sessionBus().interface()->registerService(SERVICE_NAME,
                                                                    QDBusConnectionInterface::ReplaceExistingService,
                                                                    QDBusConnectionInterface::AllowReplacement);
     } else if (isActive) {
         QDBusConnection::sessionBus().interface()->unregisterService(SERVICE_NAME);
         if (d->interface) {
-            d->interface->setCurrent(0);
+            d->interface.data()->setCurrent(0);
         }
     }
 }
