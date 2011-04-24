@@ -87,6 +87,7 @@ void ActiveContentWatcher::Private::serviceOwnerChanged(const QString &serviceNa
 
     if (!newOwner.isEmpty()) {
         iface = new QDBusInterface("org.kde.ActiveContent", "/ActiveContent");
+        //emit q->activeContentChanged(..); //FIXME: do we need to emit something here?
     }
 }
 
