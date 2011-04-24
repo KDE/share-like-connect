@@ -50,15 +50,15 @@ ActiveContent ActiveContentDBusInterface::activeContent() const
 void ActiveContentDBusInterface::setCurrent(ActiveContentService *service)
 {
     if (!service) {
-        currentGone(m_current);
+        currentDestroyed(m_current);
     } else {
-        connect(service, SIGNAL(destroyed(QObject*)), this, SLOT(currentGone(QObject*)), Qt::UniqueConnection);
+        connect(service, SIGNAL(destroyed(QObject*)), this, SLOT(currentDestroyed(QObject*)), Qt::UniqueConnection);
     }
 
     m_current = service;
 }
 
-void ActiveContentDBusInterface::currentGone(QObject *object)
+void ActiveContentDBusInterface::currentDestroyed(QObject *object)
 {
     if (object != m_current) {
         return;
