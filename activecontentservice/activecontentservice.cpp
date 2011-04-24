@@ -19,7 +19,12 @@
 
 #include "activecontentservice.h"
 
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
+
 #include <KWindowSystem>
+
+static const QString SERVICE_NAME("org.kde.activeServiceContent");
 
 class ActiveContentService::Private
 {
@@ -61,6 +66,11 @@ void ActiveContentService::setActive(bool active)
     }
 
     d->active = active;
+    if (d->active) {
+        QDBusConnection::sessionBus().interface()->registerService(SERVICE_NAME,
+                                                                   QDBusConnectionInterface::ReplaceExistingService,
+                                                                   QDBusConnectionInterface::AllowReplacement);
+    }
 }
 
 bool ActiveContentService::isActive() const
