@@ -41,6 +41,8 @@ public:
                   const QString &serviceIdentifier = QString(),
                   WId windowId = 0);
     ActiveContent(const ActiveContent &other);
+    ~ActiveContent();
+
     const ActiveContent &operator=(const ActiveContent &rhs);
 
     KUrl url() const;

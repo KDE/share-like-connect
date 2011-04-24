@@ -59,6 +59,11 @@ ActiveContent::ActiveContent(const ActiveContent &other)
 {
 }
 
+ActiveContent::~ActiveContent()
+{
+    delete d;
+}
+
 const ActiveContent &ActiveContent::operator=(const ActiveContent &rhs)
 {
     if (this != &rhs) {
