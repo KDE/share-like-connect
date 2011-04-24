@@ -26,11 +26,11 @@
 namespace ActiveContent
 {
 
-ActiveContentDBusInterface::ActiveContentDbusInterface(QObject *parent)
+ActiveContentDBusInterface::ActiveContentDBusInterface(QObject *parent)
     : QObject(parent),
       m_current(0)
 {
-    QDBusConnection::sessionBus()->registerObject("/ActiveContent", this);
+    QDBusConnection::sessionBus().registerObject("/ActiveContent", this);
 }
 
 ActiveContentService *ActiveContentDBusInterface::current() const
@@ -38,7 +38,7 @@ ActiveContentService *ActiveContentDBusInterface::current() const
     return m_current;
 }
 
-ActiveContent activeContent() const
+ActiveContent ActiveContentDBusInterface::activeContent() const
 {
     if (m_current) {
         return m_current->activeContent();
@@ -49,12 +49,13 @@ ActiveContent activeContent() const
 
 void ActiveContentDBusInterface::setCurrent(ActiveContentService *service)
 {
-    m_current = service;
-    if (!m_current) {
-        currentGone();
+    if (!service) {
+        currentGone(m_current);
     } else {
         connect(service, SIGNAL(destroyed(QObject*)), this, SLOT(currentGone(QObject*)), Qt::UniqueConnection);
     }
+
+    m_current = service;
 }
 
 void ActiveContentDBusInterface::currentGone(QObject *object)

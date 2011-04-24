@@ -22,6 +22,7 @@
 
 #include <QObject>
 
+#include "activecontent.h"
 #include "activecontentservice_export.h"
 
 namespace ActiveContent
