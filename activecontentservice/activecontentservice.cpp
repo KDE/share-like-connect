@@ -19,28 +19,34 @@
 
 #include "activecontentservice.h"
 
+#include <KWindowSystem>
+
 class ActiveContentService::Private
 {
 public:
-    Private()
-        : isActive(false)
+    Private(ActiveContentService *obj)
+        : q(obj),
+          active(false)
     {
     }
 
+    void activeWindowChanged(WId wid);
+
+    ActiveContentService *q;
     ActiveContent content;
-    bool isActive;
+    bool active;
 };
 
 ActiveContentService::ActiveContentService(const ActiveContent &content, QObject *parent)
     : QObject(parent),
-      d(new Private)
+      d(new Private(this))
 {
-    d->content = content;
+    setActiveContent(content);
 }
 
 ActiveContentService::ActiveContentService(QObject *parent)
     : QObject(parent),
-      d(new Private)
+      d(new Private(this))
 {
 }
 
@@ -48,28 +54,43 @@ ActiveContentService::~ActiveContentService()
 {
 }
 
-void ActiveContentService::activate(bool isActive)
+void ActiveContentService::setActive(bool active)
 {
-    if (d->isActive == isActive) {
+    if (d->active == active) {
         return;
     }
 
-    d->isActive = isActive;
+    d->active = active;
 }
 
 bool ActiveContentService::isActive() const
 {
-    return d->isActive;
+    return d->active;
 }
 
 void ActiveContentService::setActiveContent(const ActiveContent &content)
 {
+    const bool hadWindow = d->content.windowId();
     d->content = content;
+    if (d->content.windowId()) {
+        connect(KWindowSystem::self(), SIGNAL(activeWindowChanged(WId)),
+                this, SLOT(activeWindowChanged(WId)), Qt::UniqueConnection);
+        d->activeWindowChanged(KWindowSystem::activeWindow());
+    } else if (hadWindow) {
+        disconnect(KWindowSystem::self(), SIGNAL(activeWindowChanged(WId)),
+                   this, SLOT(activeWindowChanged(WId)));
+        setActive(false);
+    }
 }
 
 ActiveContent ActiveContentService::activeContent() const
 {
     return d->content;
+}
+
+void ActiveContentService::Private::activeWindowChanged(WId wid)
+{
+    q->setActive(content.windowId() == wid);
 }
 
 #include "activecontentservice.moc"

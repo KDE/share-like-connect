@@ -35,16 +35,19 @@ public:
     ActiveContentService(QObject *parent = 0);
     ~ActiveContentService();
 
-    bool isActive() const;
     void setActiveContent(const ActiveContent &content);
     ActiveContent activeContent() const;
 
+    bool isActive() const;
+
 public Q_SLOTS:
-    void activate(bool isActive);
+    void setActive(bool active);
 
 private:
     class Private;
     Private * const d;
+
+    Q_PRIVATE_SLOT(d, void activeWindowChanged(WId wid))
 };
 
 #endif
