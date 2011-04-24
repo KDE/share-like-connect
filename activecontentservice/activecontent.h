@@ -20,6 +20,7 @@
 #ifndef ACTIVECONTENT_H
 #define ACTIVECONTENT_H
 
+#include <QDBusArgument>
 #include <QString>
 #include <qwindowdefs.h>
 
@@ -63,4 +64,9 @@ private:
 };
 
 } // namespace ActiveContent
+
+// DBus marshalling helpers
+QDBusArgument &operator<<(QDBusArgument &argument, const ActiveContent::ActiveContent &mystruct);
+const QDBusArgument &operator>>(const QDBusArgument &argument, ActiveContent::ActiveContent &mystruct);
+
 #endif

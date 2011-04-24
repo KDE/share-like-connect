@@ -117,3 +117,35 @@ void ActiveContent::setWindowId(const WId &windowId)
 
 } // namespace ActiveContent
 
+QDBusArgument &operator<<(QDBusArgument &argument, const ActiveContent::ActiveContent &content)
+{
+    argument.beginStructure();
+    argument << content.url().url()
+             << content.title()
+             << content.mimetype()
+             << content.serviceIdentifier()
+             << (int)content.windowId(); //FIXME: non-portable, relies on X11's definition of WId!
+    argument.endStructure();
+    return argument;
+}
+
+const QDBusArgument &operator>>(const QDBusArgument &argument, ActiveContent::ActiveContent &content)
+{
+    argument.beginStructure();
+    QString string;
+    argument >> string;
+    content.setUrl(string);
+    argument >> string;
+    content.setTitle(string);
+    argument >> string;
+    content.setMimeType(string);
+    argument >> string;
+    content.setServiceIdentifier(string);
+    int winId; //FIXME: non-portable, relies on X11's definition of WId!
+    argument >> winId;
+    content.setWindowId(winId);
+    argument.endStructure();
+    return argument;
+}
+
+
