@@ -26,6 +26,9 @@
 
 #include "activecontentservice_export.h"
 
+namespace ActiveContent
+{
+
 class ACTIVECONTENTSERVICE_EXPORT ActiveContentService : public QObject
 {
     Q_OBJECT
@@ -52,4 +55,5 @@ private:
     Q_PRIVATE_SLOT(d, void activeWindowChanged(WId wid))
 };
 
+} // namespace ActiveContent
 #endif

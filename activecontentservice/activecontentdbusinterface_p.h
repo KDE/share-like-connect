@@ -24,6 +24,9 @@
 
 #include "activecontentservice_export.h"
 
+namespace ActiveContent
+{
+
 class ActiveContentService;
 
 class ActiveContentDBusInterface : QObject
@@ -47,4 +50,5 @@ private:
     ActiveContentService *m_current;
 };
 
+} // namespace ActiveContent
 #endif

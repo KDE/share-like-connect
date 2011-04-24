@@ -19,6 +19,9 @@
 
 #include "activecontent.h"
 
+namespace ActiveContent
+{
+
 class ActiveContent::Private
 {
 public:
@@ -111,4 +114,6 @@ void ActiveContent::setWindowId(const WId &windowId)
 {
     d->windowId = windowId;
 }
+
+} // namespace ActiveContent
 

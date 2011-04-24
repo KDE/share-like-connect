@@ -23,6 +23,9 @@
 
 #include "activecontentservice.h"
 
+namespace ActiveContent
+{
+
 ActiveContentDBusInterface::ActiveContentDbusInterface(QObject *parent)
     : QObject(parent),
       m_current(0)
@@ -63,6 +66,8 @@ void ActiveContentDBusInterface::currentGone(QObject *object)
     m_current = 0;
     deleteLater();
 }
+
+} // namespace ActiveContent
 
 #include "activecontentdbusinterface_p.moc"
 

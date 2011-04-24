@@ -26,6 +26,9 @@
 
 #include "activecontentdbusinterface_p.h"
 
+namespace ActiveContent
+{
+
 static const QString SERVICE_NAME("org.kde.activeServiceContent");
 
 class ActiveContentService::Private
@@ -121,6 +124,8 @@ void ActiveContentService::Private::activeWindowChanged(WId wid)
 {
     q->setActive(content.windowId() == wid);
 }
+
+} // namespace ActiveContent
 
 #include "activecontentservice.moc"
 

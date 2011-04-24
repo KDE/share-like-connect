@@ -27,6 +27,9 @@
 
 #include "activecontentservice_export.h"
 
+namespace ActiveContent
+{
+
 class ACTIVECONTENTSERVICE_EXPORT ActiveContent
 {
 public:
@@ -59,4 +62,5 @@ private:
     Private * const d;
 };
 
+} // namespace ActiveContent
 #endif
