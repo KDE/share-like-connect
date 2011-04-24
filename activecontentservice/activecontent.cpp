@@ -62,6 +62,15 @@ const ActiveContent &ActiveContent::operator=(const ActiveContent &rhs)
     return *this;
 }
 
+KUrl ActiveContent::url() const
+{
+    return d->url;
+}
+
+void ActiveContent::setUrl(const KUrl &url)
+{
+    d->url = url;
+}
 
 QString ActiveContent::title() const
 {

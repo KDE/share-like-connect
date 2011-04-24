@@ -39,6 +39,9 @@ public:
     ActiveContent(const ActiveContent &other);
     const ActiveContent &operator=(const ActiveContent &rhs);
 
+    KUrl url() const;
+    void setUrl(const KUrl &url);
+
     QString title() const;
     void setTitle(const QString &title);
 
