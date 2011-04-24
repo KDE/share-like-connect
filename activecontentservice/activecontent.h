@@ -66,6 +66,7 @@ private:
 } // namespace ActiveContent
 
 // DBus marshalling helpers
+Q_DECLARE_METATYPE(ActiveContent::ActiveContent);
 QDBusArgument &operator<<(QDBusArgument &argument, const ActiveContent::ActiveContent &mystruct);
 const QDBusArgument &operator>>(const QDBusArgument &argument, ActiveContent::ActiveContent &mystruct);
 

@@ -19,6 +19,8 @@
 
 #include "activecontent.h"
 
+#include <QDBusMetaType>
+
 namespace ActiveContent
 {
 
@@ -35,6 +37,7 @@ public:
 ActiveContent::ActiveContent()
     : d(new Private)
 {
+    qDBusRegisterMetaType<ActiveContent>();
 }
 
 ActiveContent::ActiveContent(KUrl &url,
@@ -147,5 +150,4 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, ActiveContent::Ac
     argument.endStructure();
     return argument;
 }
-
 
