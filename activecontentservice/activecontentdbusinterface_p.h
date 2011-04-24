@@ -29,7 +29,7 @@ namespace ActiveContent
 
 class ActiveContentService;
 
-class ActiveContentDBusInterface : QObject
+class ActiveContentDBusInterface : public QObject
 {
     Q_OBJECT
 
