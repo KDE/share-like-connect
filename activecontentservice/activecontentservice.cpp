@@ -24,6 +24,8 @@
 
 #include <KWindowSystem>
 
+#include "activecontentdbusinterface_p.h"
+
 static const QString SERVICE_NAME("org.kde.activeServiceContent");
 
 class ActiveContentService::Private
@@ -40,7 +42,11 @@ public:
     ActiveContentService *q;
     ActiveContent content;
     bool active;
+
+    static ActiveContentDBusInterface *interface;
 };
+
+ActiveContentDBusInterface *ActiveContentService::Private::interface = 0;
 
 ActiveContentService::ActiveContentService(const ActiveContent &content, QObject *parent)
     : QObject(parent),
@@ -61,15 +67,25 @@ ActiveContentService::~ActiveContentService()
 
 void ActiveContentService::setActive(bool active)
 {
-    if (d->active == active) {
+    const bool isActive = d->interface && d->interface->current() == this;
+    if (isActive == active) {
         return;
     }
 
-    d->active = active;
-    if (d->active) {
+    if (active) {
+        if (!d->interface) {
+            d->interface = new ActiveContentDBusInterface;
+        }
+
+        d->interface->setCurrent(this);
         QDBusConnection::sessionBus().interface()->registerService(SERVICE_NAME,
                                                                    QDBusConnectionInterface::ReplaceExistingService,
                                                                    QDBusConnectionInterface::AllowReplacement);
+    } else if (isActive) {
+        QDBusConnection::sessionBus().interface()->unregisterService(SERVICE_NAME);
+        if (d->interface) {
+            d->interface->setCurrent(0);
+        }
     }
 }
 

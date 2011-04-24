@@ -43,8 +43,10 @@ public:
 public Q_SLOTS:
     void setActive(bool active);
 
-private:
+public:
     class Private;
+
+private:
     Private * const d;
 
     Q_PRIVATE_SLOT(d, void activeWindowChanged(WId wid))
