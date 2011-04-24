@@ -1,6 +1,8 @@
 set(activecontetnservice_SRCS
    activecontent.cpp
+   activecontentdbusinterface_p.cpp
    activecontentservice.cpp
+   activecontentwatcher.cpp
 )
 
 set(activecontentservice_HEADERS
