@@ -30,7 +30,7 @@ ActiveContentDBusInterface::ActiveContentDbusInterface(QObject *parent)
     : QObject(parent),
       m_current(0)
 {
-    QDBusConnection::sessionBus()->registerObject("ActiveContent/", this);
+    QDBusConnection::sessionBus()->registerObject("/ActiveContent", this);
 }
 
 ActiveContentService *ActiveContentDBusInterface::current() const
