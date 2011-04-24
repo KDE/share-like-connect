@@ -80,6 +80,9 @@ void ActiveContentService::setActiveContent(const ActiveContent &content)
         disconnect(KWindowSystem::self(), SIGNAL(activeWindowChanged(WId)),
                    this, SLOT(activeWindowChanged(WId)));
         setActive(false);
+    } else {
+        // base it on the URL having something useful in it
+        setActive(d->content.url().isValid());
     }
 }
 
