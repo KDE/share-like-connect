@@ -67,6 +67,7 @@ ActiveContentService::ActiveContentService(QObject *parent)
 
 ActiveContentService::~ActiveContentService()
 {
+    delete d;
 }
 
 void ActiveContentService::setActive(bool active)
