@@ -31,6 +31,8 @@ class ActiveContentService;
 
 class ActiveContentDBusInterface : QObject
 {
+    Q_OBJECT
+
 public:
     ActiveContentDBusInterface(QObject *parent = 0);
 
