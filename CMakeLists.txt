@@ -10,4 +10,5 @@ add_definitions(${KDE4_DEFINITIONS})
 include_directories(${KDE4_INCLUDES})
 
 add_subdirectory(activecontentservice)
+add_subdirectory(dataengine)
 
