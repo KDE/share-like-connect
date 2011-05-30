@@ -32,6 +32,8 @@ class ShareLikeConnectEngine : public Plasma::DataEngine
 public:
     ShareLikeConnectEngine(QObject *parent, const QVariantList &args);
 
+    Plasma::Service *serviceForSource(const QString &source);
+
 protected:
     bool sourceRequestEvent(const QString &source);
 

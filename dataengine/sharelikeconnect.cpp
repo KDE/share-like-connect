@@ -21,7 +21,7 @@
 #include "sharelikeconnect.h"
 
 #include "sharecontainer.h"
-
+#include "shareservice/shareservice.h"
 
 ShareLikeConnectEngine::ShareLikeConnectEngine(QObject *parent, const QVariantList &args)
     : Plasma::DataEngine(parent, args)
@@ -36,6 +36,17 @@ bool ShareLikeConnectEngine::sourceRequestEvent(const QString &source)
     return (source == "Share" || source == "Like" || source == "Connect");
 }
 
+Plasma::Service *ShareLikeConnectEngine::serviceForSource(const QString &source)
+{
+    if (source == "Share") { 
+        ShareService *service = new ShareService(this);
+        return service;
+    
+    //TODO: Like and Connect
+    } else {
+        return 0;
+    }
+}
 
 // export the plugin; use the plugin name and the class name
 K_EXPORT_PLASMA_DATAENGINE(org.kde.sharelikeconnect, ShareLikeConnectEngine)

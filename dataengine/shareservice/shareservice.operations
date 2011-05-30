@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE kcfg SYSTEM
+    "http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+<kcfg>
+    <group name="executeAction">
+        <entry name="ActionName" type="String">
+            <label>The name of the action to perform.</label>
+        </entry>
+        <entry name="Description" type="String">
+            <label>A description text for the sharing</label>
+        </entry>
+    </group>
+</kcfg>
