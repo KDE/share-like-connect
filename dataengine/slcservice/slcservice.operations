@@ -6,5 +6,14 @@
         <entry name="ActionName" type="String">
             <label>The name of the action to perform.</label>
         </entry>
+        <entry name="Url" type="String">
+            <label>Url of the resource we want to perform the action upon.</label>
+        </entry>
+        <entry name="Target" type="String">
+            <label>Extra text.</label>
+        </entry>
+        <entry name="Comment" type="String">
+            <label>Extra text.</label>
+        </entry>
     </group>
 </kcfg>

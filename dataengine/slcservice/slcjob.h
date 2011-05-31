@@ -37,6 +37,9 @@ public:
 
 protected:
     void start();
+
+private:
+    QWeakPointer<Provider> m_provider;
 };
 
 }

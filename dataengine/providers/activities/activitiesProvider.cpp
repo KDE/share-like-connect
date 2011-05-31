@@ -19,6 +19,12 @@
 
 #include "activitiesProvider.h"
 
+#include <Nepomuk/Query/Query>
+#include <Nepomuk/Resource>
+#include <Nepomuk/Variant>
+
+#include <soprano/vocabulary.h>
+
 ActivitiesProvider::ActivitiesProvider(QObject *parent, const QVariantList &args)
     : SLC::Provider(parent, args)
 {
@@ -40,6 +46,19 @@ bool ActivitiesProvider::executeAction(SLC::Provider::Action action, const QVari
     }
 
     kDebug() << content << parameters;
+    
+    const QString resourceUrl = parameters["Url"].toString();
+    QString activityId = parameters["Target"].toString();
+    if (activityId.isEmpty()) {
+        //TODO: first step
+        return true;
+    }
+
+    Nepomuk::Resource fileRes(resourceUrl);
+    Nepomuk::Resource acRes("activities://" + activityId);
+
+    acRes.addProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
+
     return true;
 }
 

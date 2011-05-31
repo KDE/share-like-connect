@@ -33,8 +33,10 @@ SlcService::SlcService(ShareLikeConnectEngine *parent, const QVariantList &args)
 Plasma::ServiceJob *SlcService::createJob(const QString &operation,
                                           QMap<QString, QVariant> &parameters)
 {
-    const QString action = parameters.value("Action").toString();
+    const QString action = parameters.value("ActionName").toString();
+
     Provider *provider = m_slcEngine.data()->providers().value(action);
+
     return new SlcJob(provider, operation, parameters, this);
 }
 

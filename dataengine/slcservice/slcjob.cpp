@@ -24,7 +24,8 @@
 namespace SLC {
 
 SlcJob::SlcJob(Provider *provider, const QString &operation, QMap<QString, QVariant> &parameters, QObject *parent)
-    : ServiceJob(parent->objectName(), operation, parameters, parent)
+    : ServiceJob(parent->objectName(), operation, parameters, parent),
+      m_provider(provider)
 {
 }
 
@@ -34,14 +35,23 @@ SlcJob::~SlcJob()
 
 void SlcJob::start()
 {
+    if (!m_provider) {
+        setResult(false);
+        return;
+    }
+
     const QString operation = operationName();
 
     kDebug() << "starting operation" << operation;
 
     if (operation == "executeAction") {
-        kDebug() << parameters()["ActionName"].toString()
-                 << parameters()["Description"].toString();
-        setResult(true);
+        kDebug() << parameters()["ActionName"].toString();
+        QVariantHash providerParameters;
+        providerParameters["Url"] = parameters()["Url"];
+        providerParameters["Comment"] = parameters()["Comment"];
+        providerParameters["Target"] = parameters()["Target"];
+        bool success = m_provider.data()->executeAction(SLC::Provider::Connect, QVariantHash(), providerParameters);
+        setResult(success);
         return;
     }
     setResult(false);
