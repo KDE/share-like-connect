@@ -1,4 +1,5 @@
 set(sharelikeconnect_SRCS
+    currentcontenttracker.cpp
     sharelikeconnect.cpp
     sharecontainer.cpp
     shareservice/shareservice.cpp

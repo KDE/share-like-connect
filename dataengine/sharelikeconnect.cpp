@@ -20,6 +20,7 @@
 
 #include "sharelikeconnect.h"
 
+#include "currentcontenttracker.h"
 #include "sharecontainer.h"
 #include "shareservice/shareservice.h"
 
