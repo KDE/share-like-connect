@@ -34,9 +34,6 @@ public:
 
     Plasma::Service *serviceForSource(const QString &source);
 
-protected:
-    bool sourceRequestEvent(const QString &source);
-
 private:
     ShareContainer *m_shareContainer;
 };

@@ -33,11 +33,6 @@ ShareLikeConnectEngine::ShareLikeConnectEngine(QObject *parent, const QVariantLi
     addSource(m_shareContainer);
 }
 
-bool ShareLikeConnectEngine::sourceRequestEvent(const QString &source)
-{
-    return (source == "Share" || source == "Like" || source == "Connect");
-}
-
 Plasma::Service *ShareLikeConnectEngine::serviceForSource(const QString &source)
 {
     Plasma::Service *service = 0;
