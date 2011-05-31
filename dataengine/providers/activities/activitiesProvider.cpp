@@ -46,18 +46,20 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
     }
 
     kDebug() << content << parameters;
-    
+
     const QString resourceUrl = parameters["Url"].toString();
-    QString activityId = parameters["Target"].toString();
-    if (activityId.isEmpty()) {
+    QStringList activityIds = parameters["Target"].toStringList();
+    if (activityIds.isEmpty()) {
         //TODO: first step
         return true;
     }
 
     Nepomuk::Resource fileRes(resourceUrl);
-    Nepomuk::Resource acRes("activities://" + activityId);
 
-    acRes.addProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
+    foreach (const QString &activityId, activityIds) {
+        Nepomuk::Resource acRes("activities://" + activityId);
+        acRes.addProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
+    }
 
     return true;
 }
