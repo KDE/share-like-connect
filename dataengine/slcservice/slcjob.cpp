@@ -21,7 +21,9 @@
 
 #include <kdebug.h>
 
-SlcJob::SlcJob(const QString &operation, QMap<QString, QVariant> &parameters, QObject *parent)
+namespace SLC {
+
+SlcJob::SlcJob(Provider *provider, const QString &operation, QMap<QString, QVariant> &parameters, QObject *parent)
     : ServiceJob(parent->objectName(), operation, parameters, parent)
 {
 }
@@ -43,6 +45,8 @@ void SlcJob::start()
         return;
     }
     setResult(false);
+}
+
 }
 
 #include "slcjob.moc"

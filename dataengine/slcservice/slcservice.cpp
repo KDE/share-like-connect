@@ -19,18 +19,25 @@
 
 #include "slcservice.h"
 #include "slcjob.h"
+#include "provider.h"
 
+namespace SLC {
 
-SlcService::SlcService(QObject *parent, const QVariantList &args)
-    : Plasma::Service(parent, args)
+SlcService::SlcService(ShareLikeConnectEngine *parent, const QVariantList &args)
+    : Plasma::Service(parent, args),
+      m_slcEngine(parent)
 {
     setName("slcservice");
 }
 
-ServiceJob *SlcService::createJob(const QString &operation,
+Plasma::ServiceJob *SlcService::createJob(const QString &operation,
                                           QMap<QString, QVariant> &parameters)
 {
-    return new SlcJob(operation, parameters, this);
+    const QString action = parameters.value("Action").toString();
+    Provider *provider = m_slcEngine.data()->providers().value(action);
+    return new SlcJob(provider, operation, parameters, this);
+}
+
 }
 
 #include "slcservice.moc"

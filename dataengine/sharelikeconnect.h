@@ -37,6 +37,7 @@ public:
     ~ShareLikeConnectEngine();
 
     Plasma::Service *serviceForSource(const QString &source);
+    QHash<QString, SLC::Provider *> providers() const;
 
 private Q_SLOTS:
     void contentChanged();

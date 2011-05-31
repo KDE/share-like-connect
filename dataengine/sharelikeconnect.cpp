@@ -70,7 +70,7 @@ Plasma::Service *ShareLikeConnectEngine::serviceForSource(const QString &source)
 {
     Plasma::Service *service = 0;
     if (source == "Share" || source == "Like" || source == "Connect") {
-        return new SlcService(this);
+        return new SLC::SlcService(this);
     } else {
         return 0;
     }
@@ -106,6 +106,11 @@ void ShareLikeConnectEngine::contentChanged()
             setData("Connect", it.key(), provider->name());
         }
     }
+}
+
+QHash<QString, SLC::Provider *> ShareLikeConnectEngine::providers() const
+{
+    return m_providers;
 }
 
 // export the plugin; use the plugin name and the class name
