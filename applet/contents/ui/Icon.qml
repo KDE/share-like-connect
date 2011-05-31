@@ -17,49 +17,31 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import Qt 4.7
+import QtQuick 1.0
 import org.kde.qtextracomponents 0.1
-import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
 
-Row {
-    width: 48
-    height: 16
-    spacing: 5
-    Icon {
-      icon: QIcon("system-users")
-    }
-    Icon {
-      icon: QIcon("emblem-favorite")
-    }
-    Icon {
-      icon: QIcon("network-connect")
-    }
-    
-    PlasmaCore.DataSource {
-        id: slcSource
-        engine: "org.kde.sharelikeconnect"
-        connectedSources: ["Current Content", "Share"]
+
+QIconItem {
+    id: iconItem
+    signal menuTriggered
+    width: height
+    anchors {
+        top: parent.top
+        bottom: parent.bottom
     }
 
-    PlasmaCore.Dialog {
-        id: dialog
-        mainItem: Column {
-            id: menuColumn
-            spacing: 5
-
-            Repeater {
-                model: 5
-
-                Text {
-                    text: "Example menu item"
-                }
-                /*MobileComponents.MenuItem {
-                    id: menuItem
-                    resourceUrl: contextMenu.resourceUrl
-                }*/
+    MouseArea {
+        anchors.fill: parent
+        onPressed: {
+            if (dialog.visible) {
+                dialog.visible = false
+            } else {
+                var pos = dialog.popupPosition(iconItem)
+                dialog.x = pos.x
+                dialog.y = pos.y
+                dialog.visible = true
             }
         }
     }
 }
-
