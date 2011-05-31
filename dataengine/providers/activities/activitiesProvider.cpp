@@ -39,7 +39,7 @@ SLC::Provider::Actions ActivitiesProvider::actionsFor(const QVariantHash &conten
     return NoAction;
 }
 
-bool ActivitiesProvider::executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters)
+QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters)
 {
     if (action != Connect) {
         return false;

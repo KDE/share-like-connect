@@ -30,7 +30,7 @@ public:
     ActivitiesProvider(QObject *parent, const QVariantList &args);
     Actions actionsFor(const QVariantHash &content) const;
 
-    bool executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters);
+    QVariant executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters);
 private:
 };
 

@@ -41,7 +41,7 @@ Provider::Actions Provider::actionsFor(const QVariantHash &content) const
     return NoAction;
 }
 
-bool Provider::executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters)
+QVariant Provider::executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters)
 {
     Q_UNUSED(action)
     Q_UNUSED(content)
