@@ -40,6 +40,7 @@ public:
 private:
     QString m_id;
     QWeakPointer<ShareLikeConnectEngine> m_slcEngine;
+    QVariantHash m_content;
 };
 
 }

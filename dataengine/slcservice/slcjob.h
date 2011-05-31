@@ -32,7 +32,7 @@ class SlcJob : public Plasma::ServiceJob
 Q_OBJECT
 
 public:
-    SlcJob(Provider *provider, const QString &operation, QMap<QString, QVariant> &parameters, QObject *parent = 0);
+    SlcJob(Provider *provider, const QString &operation, const QVariantHash &content, QMap<QString, QVariant> &parameters, QObject *parent = 0);
     ~SlcJob();
 
 protected:
@@ -40,6 +40,7 @@ protected:
 
 private:
     QWeakPointer<Provider> m_provider;
+    QVariantHash m_content;
 };
 
 }

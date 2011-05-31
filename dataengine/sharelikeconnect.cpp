@@ -76,6 +76,11 @@ Plasma::Service *ShareLikeConnectEngine::serviceForSource(const QString &source)
     }
 }
 
+QVariantHash ShareLikeConnectEngine::content()
+{
+    return containerForSource(TRACKER_SOURCE)->data();
+}
+
 void ShareLikeConnectEngine::contentChanged()
 {
     const QVariantHash &content = containerForSource(TRACKER_SOURCE)->data();
