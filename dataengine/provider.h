@@ -46,6 +46,8 @@ public:
 
     virtual Actions actionsFor(const QVariantHash &content) const;
 
+    virtual bool executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters);
+
 private:
     class Private;
     Private * const d;

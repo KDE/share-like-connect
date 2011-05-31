@@ -33,6 +33,16 @@ SLC::Provider::Actions ActivitiesProvider::actionsFor(const QVariantHash &conten
     return NoAction;
 }
 
+bool ActivitiesProvider::executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters)
+{
+    if (action != Connect) {
+        return false;
+    }
+
+    kDebug() << content << parameters;
+    return true;
+}
+
 //K_EXPORT_SLC_PROVIDER(activities, ActivitiesProvider)
 K_PLUGIN_FACTORY(factory, registerPlugin<ActivitiesProvider>();)
 K_EXPORT_PLUGIN(factory("sharelikeconnect_provider_activities"))
