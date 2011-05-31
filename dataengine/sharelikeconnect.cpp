@@ -69,13 +69,11 @@ ShareLikeConnectEngine::~ShareLikeConnectEngine()
 Plasma::Service *ShareLikeConnectEngine::serviceForSource(const QString &source)
 {
     Plasma::Service *service = 0;
-    if (source == "Share") {
-        service = new SlcService(this);
-    } else if (source == "Like") {
-    } else if (source == "Connect") {
+    if (source == "Share" || source == "Like" || source == "Connect") {
+        return new SlcService(this);
+    } else {
+        return 0;
     }
-
-    return service;
 }
 
 void ShareLikeConnectEngine::contentChanged()
