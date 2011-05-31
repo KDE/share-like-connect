@@ -17,17 +17,20 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef CURRENTCONTENTTRACKER_H
-#define CURRENTCONTENTTRACKER_H
+#ifndef CONTENTTRACKER_H
+#define CONTENTTRACKER_H
 
 #include <Plasma/DataContainer>
 
-class CurrentContentTracker : public Plasma::DataContainer
+class ContentTracker : public Plasma::DataContainer
 {
     Q_OBJECT
 
 public:
-    CurrentContentTracker(QObject *parent = 0);
+    ContentTracker(QObject *parent = 0);
+
+Q_SIGNALS:
+    void changed();
 
 private Q_SLOTS:
     void activeWindowChanged(WId wid);

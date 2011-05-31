@@ -20,17 +20,50 @@
 
 #include "sharelikeconnect.h"
 
-#include "currentcontenttracker.h"
-#include "sharecontainer.h"
+#include <KPluginInfo>
+#include <KService>
+#include <KServiceTypeTrader>
+
+#include "contenttracker.h"
+#include "provider.h"
 #include "shareservice/shareservice.h"
+
+static const QString TRACKER_SOURCE("Current Content");
 
 ShareLikeConnectEngine::ShareLikeConnectEngine(QObject *parent, const QVariantList &args)
     : Plasma::DataEngine(parent, args)
 {
-    addSource(new CurrentContentTracker(this));
-    m_shareContainer = new ShareContainer(this);
-    m_shareContainer->setObjectName("Share");
-    addSource(m_shareContainer);
+    setData("Share", QVariantHash());
+    setData("Like", QVariantHash());
+    setData("Connect", QVariantHash());
+
+    KService::List offers = KServiceTypeTrader::self()->query("Plasma/ShareLikeConnect");
+    foreach (const KService::Ptr &offer, offers) {
+        QVariantList args;
+        args << offer->name();
+        QString error;
+        SLC::Provider *provider = offer->createInstance<SLC::Provider>(0, args, &error);
+        if (!provider) {
+            kDebug() << "ShareLikeConnect failed to load" << offer->name() << offer->library() << "due to:" << error;
+            continue;
+        }
+
+        KPluginInfo info(offer);
+        m_providers.insert(info.pluginName(), provider);
+    }
+
+    kDebug() << "providers:" << m_providers.keys() << offers.count();
+    ContentTracker *tracker = new ContentTracker(this);
+    connect(tracker, SIGNAL(changed()), this, SLOT(contentChanged()));
+    tracker->setObjectName(TRACKER_SOURCE);
+    addSource(tracker);
+
+    contentChanged();
+}
+
+ShareLikeConnectEngine::~ShareLikeConnectEngine()
+{
+    qDeleteAll(m_providers);
 }
 
 Plasma::Service *ShareLikeConnectEngine::serviceForSource(const QString &source)
@@ -43,6 +76,36 @@ Plasma::Service *ShareLikeConnectEngine::serviceForSource(const QString &source)
     }
 
     return service;
+}
+
+void ShareLikeConnectEngine::contentChanged()
+{
+    const QVariantHash &content = containerForSource(TRACKER_SOURCE)->data();
+    removeAllData("Share");
+    removeAllData("Like");
+    removeAllData("Connect");
+
+    if (content["URI"].value<QUrl>().isEmpty()) {
+        return;
+    }
+
+    QHashIterator<QString, SLC::Provider *> it(m_providers);
+    while (it.hasNext()) {
+        it.next();
+        SLC::Provider *provider = it.value();
+        SLC::Provider::Actions actions = provider->actionsFor(content);
+        if (actions & SLC::Provider::Share) {
+            setData("Share", it.key(), provider->name());
+        }
+
+        if (actions & SLC::Provider::Like) {
+            setData("Like", it.key(), provider->name());
+        }
+
+        if (actions & SLC::Provider::Connect) {
+            setData("Connect", it.key(), provider->name());
+        }
+    }
 }
 
 // export the plugin; use the plugin name and the class name

@@ -23,7 +23,10 @@
 
 #include <Plasma/DataEngine>
 
-class ShareContainer;
+namespace SLC
+{
+    class Provider;
+} // namespace SLC
 
 class ShareLikeConnectEngine : public Plasma::DataEngine
 {
@@ -31,11 +34,15 @@ class ShareLikeConnectEngine : public Plasma::DataEngine
 
 public:
     ShareLikeConnectEngine(QObject *parent, const QVariantList &args);
+    ~ShareLikeConnectEngine();
 
     Plasma::Service *serviceForSource(const QString &source);
 
+private Q_SLOTS:
+    void contentChanged();
+
 private:
-    ShareContainer *m_shareContainer;
+    QHash<QString, SLC::Provider *> m_providers;
 };
 
 #endif

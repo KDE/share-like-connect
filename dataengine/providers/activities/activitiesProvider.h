@@ -17,30 +17,21 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "currentcontenttracker.h"
+#ifndef ACTIVITIESPROVIDER_H
+#define ACTIVITIESPROVIDER_H
 
-#include <KIcon>
-#include <KWindowSystem>
+#include <provider.h>
 
-CurrentContentTracker::CurrentContentTracker(QObject *parent)
-    : Plasma::DataContainer(parent)
+class ActivitiesProvider : public SLC::Provider
 {
-    setObjectName("Current Content");
-    connect(KWindowSystem::self(), SIGNAL(activeWindowChanged(WId)),
-            this, SLOT(activeWindowChanged(WId)));
+    Q_OBJECT
 
-    //FIXME: needs to track the actual content.
-    setData("URI", "http://kde.org");
-    setData("Mime Type", "text/x-html");
-    setData("Source", "KDE");
-    setData("Title", "KDE - Experience Freedom!");
-    setData("Thumbnail", KIcon("konqueror").pixmap(64, 64));
-    setData("Window ID", (int)KWindowSystem::activeWindow());
-}
+public:
+    ActivitiesProvider(QObject *parent, const QVariantList &args);
+    Actions actionsFor(const QVariantHash &content) const;
 
-void CurrentContentTracker::activeWindowChanged(WId wid)
-{
-    setData("Window ID", (int)wid);
-    checkForUpdate();
-}
+private:
+};
+
+#endif
 

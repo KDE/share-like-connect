@@ -1,14 +1,13 @@
 [Desktop Entry]
-Name=Share·Like·Connect
-Comment=Provider of actions for sharing resources
+Name=Activities
 Type=Service
 
-X-KDE-ServiceTypes=Plasma/DataEngine
-X-KDE-Library=plasma_dataengine_sharelikeconnect
+X-KDE-ServiceTypes=Plasma/ShareLikeConnect
+X-KDE-Library=sharelikeconnect_provider_activities
 
 X-KDE-PluginInfo-Author=Aaron Seigo
 X-KDE-PluginInfo-Email=aseigo@kde.org
-X-KDE-PluginInfo-Name=org.kde.sharelikeconnect
+X-KDE-PluginInfo-Name=org.kde.sharelikeconnect.activities
 X-KDE-PluginInfo-Version=1.0
 X-KDE-PluginInfo-Website=http://plasma.kde.org/
 X-KDE-PluginInfo-Category=
