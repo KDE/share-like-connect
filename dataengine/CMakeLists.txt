@@ -11,6 +11,6 @@ target_link_libraries(plasma_dataengine_sharelikeconnect ${KDE4_PLASMA_LIBS} ${K
 
 install(TARGETS plasma_dataengine_sharelikeconnect DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES plasma-dataengine-sharelikeconnect.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
+install(FILES plasma-sharelikeconnect-provider.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )
 
-install(FILES shareservice/shareservice.operations
-        DESTINATION ${DATA_INSTALL_DIR}/plasma/services)
+install(FILES shareservice/shareservice.operations DESTINATION ${DATA_INSTALL_DIR}/plasma/services)
