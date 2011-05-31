@@ -56,7 +56,10 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
         //TODO: first step
         QVariantHash result;
         foreach (const QString &activity, m_activityConsumer->listActivities()) {
-            result[activity] = activity;
+            KActivityInfo *info = new KActivityInfo(activity);
+            result[activity] = info->name();
+            //kDebug() << "Found activity: " << activity << info->name();
+            delete info;
         }
         return result;
     }

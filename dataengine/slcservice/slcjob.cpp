@@ -51,8 +51,8 @@ void SlcJob::start()
         providerParameters["URI"] = m_content["URI"];
         providerParameters["Comment"] = parameters()["Comment"];
         providerParameters["Target"] = parameters()["Target"];
-        QVariant success = m_provider.data()->executeAction(SLC::Provider::Connect, QVariantHash(), providerParameters);
-        setResult(success);
+        QVariant result = m_provider.data()->executeAction(SLC::Provider::Connect, QVariantHash(), providerParameters);
+        setResult(result);
         return;
     }
     setResult(false);
