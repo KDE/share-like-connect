@@ -49,7 +49,11 @@ Row {
             spacing: 5
 
             Repeater {
-                model: 5
+                model: PlasmaCore.DataModel {
+                    dataSource: slcSource
+                    sourceFilter: "Share"
+                    keyRoleFilter: ".*"
+                }
 
                 Text {
                     text: "Example menu item"
