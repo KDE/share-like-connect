@@ -85,6 +85,7 @@ void ShareLikeConnectEngine::contentChanged()
     removeAllData("Like");
     removeAllData("Connect");
 
+    kDebug() << "going to get content for" << content["URI"].toUrl();
     if (content["URI"].value<QUrl>().isEmpty()) {
         return;
     }
@@ -94,6 +95,7 @@ void ShareLikeConnectEngine::contentChanged()
         it.next();
         SLC::Provider *provider = it.value();
         SLC::Provider::Actions actions = provider->actionsFor(content);
+        kDebug() << "checkout" << it.key() << "with" << actions;
         if (actions & SLC::Provider::Share) {
             setData("Share", it.key(), provider->name());
         }

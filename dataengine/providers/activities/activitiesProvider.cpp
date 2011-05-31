@@ -26,7 +26,7 @@ ActivitiesProvider::ActivitiesProvider(QObject *parent, const QVariantList &args
 
 SLC::Provider::Actions ActivitiesProvider::actionsFor(const QVariantHash &content) const
 {
-    if (content.value("WId").toInt() > 0) {
+    if (content.value("Window ID").toInt() > 0) {
         return Connect;
     }
 
