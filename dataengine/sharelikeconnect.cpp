@@ -26,6 +26,7 @@
 ShareLikeConnectEngine::ShareLikeConnectEngine(QObject *parent, const QVariantList &args)
     : Plasma::DataEngine(parent, args)
 {
+    addSource(new CurrentContentTracker(this));
     m_shareContainer = new ShareContainer(this);
     m_shareContainer->setObjectName("Share");
     addSource(m_shareContainer);
@@ -38,14 +39,14 @@ bool ShareLikeConnectEngine::sourceRequestEvent(const QString &source)
 
 Plasma::Service *ShareLikeConnectEngine::serviceForSource(const QString &source)
 {
-    if (source == "Share") { 
-        ShareService *service = new ShareService(this);
-        return service;
-    
-    //TODO: Like and Connect
-    } else {
-        return 0;
+    Plasma::Service *service = 0;
+    if (source == "Share") {
+        service = new ShareService(this);
+    } else if (source == "Like") {
+    } else if (source == "Connect") {
     }
+
+    return service;
 }
 
 // export the plugin; use the plugin name and the class name
