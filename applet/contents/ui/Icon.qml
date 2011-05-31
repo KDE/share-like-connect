@@ -17,22 +17,24 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import Qt 4.7
+import QtQuick 1.0
 import org.kde.qtextracomponents 0.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 
-Row {
-    width: 48
-    height: 16
-    spacing: 5
-    Icon {
-      icon: QIcon("system-users")
+
+QIconItem {
+    id: iconItem
+    signal menuTriggered
+    width: height
+    anchors {
+        top: parent.top
+        bottom: parent.bottom
     }
-    Icon {
-      icon: QIcon("emblem-favorite")
-    }
-    Icon {
-      icon: QIcon("network-connect")
+
+    MouseArea {
+        anchors.fill: parent
+        onPressed: {
+            iconItem.menuTriggered()
+        }
     }
 }
-
