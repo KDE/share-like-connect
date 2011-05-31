@@ -25,9 +25,12 @@
 
 #include <soprano/vocabulary.h>
 
+#include <kactivityconsumer.h>
+
 ActivitiesProvider::ActivitiesProvider(QObject *parent, const QVariantList &args)
     : SLC::Provider(parent, args)
 {
+    m_activityConsumer = new KActivityConsumer(this);
 }
 
 SLC::Provider::Actions ActivitiesProvider::actionsFor(const QVariantHash &content) const
@@ -51,7 +54,11 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
     QStringList activityIds = parameters["Targets"].toStringList();
     if (activityIds.isEmpty()) {
         //TODO: first step
-        return true;
+        QVariantHash result;
+        foreach (const QString &activity, m_activityConsumer->listActivities()) {
+            result[activity] = activity;
+        }
+        return result;
     }
 
     Nepomuk::Resource fileRes(resourceUrl);
