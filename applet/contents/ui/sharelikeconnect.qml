@@ -36,7 +36,12 @@ Row {
       icon: QIcon("network-connect")
     }
     
-    
+    PlasmaCore.DataSource {
+        id: slcSource
+        engine: "org.kde.sharelikeconnect"
+        connectedSources: ["Current Content", "Share"]
+    }
+
     PlasmaCore.Dialog {
         id: dialog
         mainItem: Column {
