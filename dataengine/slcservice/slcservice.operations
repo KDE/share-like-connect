@@ -6,7 +6,7 @@
         <entry name="ActionName" type="String">
             <label>The name of the action to perform.</label>
         </entry>
-        <entry name="Target" type="StringList">
+        <entry name="Targets" type="StringList">
             <label>The items to connect with</label>
         </entry>
         <entry name="Comment" type="String">

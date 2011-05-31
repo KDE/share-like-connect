@@ -48,7 +48,7 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
     kDebug() << content << parameters;
 
     const QString resourceUrl = parameters["Url"].toString();
-    QStringList activityIds = parameters["Target"].toStringList();
+    QStringList activityIds = parameters["Targets"].toStringList();
     if (activityIds.isEmpty()) {
         //TODO: first step
         return true;
