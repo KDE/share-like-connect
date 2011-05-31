@@ -19,6 +19,7 @@
 
 import Qt 4.7
 import org.kde.qtextracomponents 0.1
+import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
 
 Row {
@@ -33,6 +34,27 @@ Row {
     }
     Icon {
       icon: QIcon("network-connect")
+    }
+    
+    
+    PlasmaCore.Dialog {
+        id: dialog
+        mainItem: Column {
+            id: menuColumn
+            spacing: 5
+
+            Repeater {
+                model: 5
+
+                Text {
+                    text: "Example menu item"
+                }
+                /*MobileComponents.MenuItem {
+                    id: menuItem
+                    resourceUrl: contextMenu.resourceUrl
+                }*/
+            }
+        }
     }
 }
 

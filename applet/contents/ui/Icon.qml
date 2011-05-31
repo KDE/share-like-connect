@@ -34,7 +34,14 @@ QIconItem {
     MouseArea {
         anchors.fill: parent
         onPressed: {
-            iconItem.menuTriggered()
+            if (dialog.visible) {
+                dialog.visible = false
+            } else {
+                var pos = dialog.popupPosition(iconItem)
+                dialog.x = pos.x
+                dialog.y = pos.y
+                dialog.visible = true
+            }
         }
     }
 }
