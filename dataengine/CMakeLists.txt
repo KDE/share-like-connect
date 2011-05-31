@@ -7,8 +7,8 @@ install(TARGETS sharelikeconnect ${INSTALL_TARGETS_DEFAULT_ARGS})
 set(sharelikeconnectengine_SRCS
     contenttracker.cpp
     sharelikeconnect.cpp
-    shareservice/shareservice.cpp
-    shareservice/sharejob.cpp
+    slcservice/slcservice.cpp
+    slcservice/slcjob.cpp
 )
 
 kde4_add_plugin(plasma_dataengine_sharelikeconnect ${sharelikeconnectengine_SRCS})
@@ -18,7 +18,7 @@ install(TARGETS plasma_dataengine_sharelikeconnect DESTINATION ${PLUGIN_INSTALL_
 install(FILES plasma-dataengine-sharelikeconnect.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
 install(FILES plasma-sharelikeconnect-provider.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )
 
-install(FILES shareservice/shareservice.operations DESTINATION ${DATA_INSTALL_DIR}/plasma/services)
+install(FILES slcservice/slcservice.operations DESTINATION ${DATA_INSTALL_DIR}/plasma/services)
 
 add_subdirectory(providers)
 

@@ -17,20 +17,26 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "shareservice.h"
-#include "sharejob.h"
+#ifndef SLC_SERVICE_H
+#define SLC_SERVICE_H
 
 
-ShareService::ShareService(QObject *parent, const QVariantList &args)
-    : Plasma::Service(parent, args)
+#include <Plasma/Service>
+#include <Plasma/ServiceJob>
+
+using namespace Plasma;
+
+class SlcService : public Plasma::Service
 {
-    setName("shareservice");
-}
+    Q_OBJECT
 
-ServiceJob *ShareService::createJob(const QString &operation,
-                                          QMap<QString, QVariant> &parameters)
-{
-    return new ShareJob(operation, parameters, this);
-}
+public:
+    SlcService(QObject *parent = 0, const QVariantList &args = QVariantList());
+    ServiceJob *createJob(const QString &operation,
+                          QMap<QString, QVariant> &parameters);
 
-#include "shareservice.moc"
+private:
+    QString m_id;
+};
+
+#endif

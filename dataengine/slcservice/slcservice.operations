@@ -6,8 +6,5 @@
         <entry name="ActionName" type="String">
             <label>The name of the action to perform.</label>
         </entry>
-        <entry name="Description" type="String">
-            <label>A description text for the sharing</label>
-        </entry>
     </group>
 </kcfg>

@@ -16,24 +16,33 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef SHAREJOB_H
-#define SHAREJOB_H
-
-// plasma
-#include <Plasma/ServiceJob>
+#include "slcjob.h"
 
 
-class ShareJob : public Plasma::ServiceJob
+#include <kdebug.h>
+
+SlcJob::SlcJob(const QString &operation, QMap<QString, QVariant> &parameters, QObject *parent)
+    : ServiceJob(parent->objectName(), operation, parameters, parent)
 {
+}
 
-Q_OBJECT
+SlcJob::~SlcJob()
+{
+}
 
-public:
-    ShareJob(const QString &operation, QMap<QString, QVariant> &parameters, QObject *parent = 0);
-    ~ShareJob();
+void SlcJob::start()
+{
+    const QString operation = operationName();
 
-protected:
-    void start();
-};
+    kDebug() << "starting operation" << operation;
 
-#endif
+    if (operation == "executeAction") {
+        kDebug() << parameters()["ActionName"].toString()
+                 << parameters()["Description"].toString();
+        setResult(true);
+        return;
+    }
+    setResult(false);
+}
+
+#include "slcjob.moc"

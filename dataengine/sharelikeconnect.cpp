@@ -26,7 +26,7 @@
 
 #include "contenttracker.h"
 #include "provider.h"
-#include "shareservice/shareservice.h"
+#include "slcservice/slcservice.h"
 
 static const QString TRACKER_SOURCE("Current Content");
 
@@ -70,7 +70,7 @@ Plasma::Service *ShareLikeConnectEngine::serviceForSource(const QString &source)
 {
     Plasma::Service *service = 0;
     if (source == "Share") {
-        service = new ShareService(this);
+        service = new SlcService(this);
     } else if (source == "Like") {
     } else if (source == "Connect") {
     }
