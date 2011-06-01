@@ -38,10 +38,12 @@ public:
     explicit ProviderScriptEngine(Plasma::Package *package, QObject *parent = 0);
 
     bool include(const QString &path);
+    bool callEventListeners(const QString &event, const QScriptValueList &args);
+    QScriptValue callFunction(QScriptValue &func, const QScriptValueList &args = QScriptValueList(), const QScriptValue &activator = QScriptValue());
+
+private:
     void reportError();
     bool checkForErrors(bool fatal);
-    QScriptValue callFunction(QScriptValue &func, const QScriptValueList &args = QScriptValueList(), const QScriptValue &activator = QScriptValue());
-    bool callEventListeners(const QString &event, const QScriptValueList &args);
     bool addEventListener(const QString &event, const QScriptValue &func);
     bool removeEventListener(const QString &event, const QScriptValue &func);
     static QScriptValue addEventListener(QScriptContext *context, QScriptEngine *engine);
