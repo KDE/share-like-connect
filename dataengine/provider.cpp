@@ -19,10 +19,6 @@
 
 #include "provider.h"
 
-#include <QFile>
-#include <QScriptEngine>
-
-#include <KGlobal>
 #include <KStandardDirs>
 
 #include "providerScriptEngine_p.h"
