@@ -1,7 +1,7 @@
-set(sharelikeconnect_SRCS provider.cpp)
+set(sharelikeconnect_SRCS provider.cpp providerScriptEngine.cpp)
 
 kde4_add_library(sharelikeconnect SHARED ${sharelikeconnect_SRCS})
-target_link_libraries(sharelikeconnect ${QT_QTCORE_LIBRARY})
+target_link_libraries(sharelikeconnect ${KDE4_PLASMA_LIBS} ${QT_QTSCRIPT_LIBRARY})
 install(TARGETS sharelikeconnect ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 set(sharelikeconnectengine_SRCS

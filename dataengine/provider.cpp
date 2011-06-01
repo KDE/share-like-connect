@@ -19,13 +19,36 @@
 
 #include "provider.h"
 
+#include <QFile>
+#include <QScriptEngine>
+
+#include <KGlobal>
+#include <KStandardDirs>
+
+#include "providerScriptEngine_p.h"
+
 namespace SLC
 {
 
 class Provider::Private
 {
 public:
+    Private()
+        : scriptEngine(0),
+          package(0)
+    {
+    }
+
+
+    ~Private()
+    {
+        delete scriptEngine;
+        delete package;
+    }
+
     QString name;
+    ProviderScriptEngine *scriptEngine;
+    Plasma::Package *package;
 };
 
 Provider::Provider(QObject *parent, const QVariantList &args)
@@ -33,6 +56,51 @@ Provider::Provider(QObject *parent, const QVariantList &args)
       d(new Private)
 {
     d->name = args.isEmpty() ? QString("Unnamed") : args[0].toString();
+}
+
+Provider::Provider(QObject *parent, const Plasma::Package &package)
+    : QObject(parent),
+      d(new Private)
+{
+    const QString mainscriptEngine = package.filePath("mainscriptEngine");
+    if (mainscriptEngine.isEmpty()) {
+        kDebug() << "no main scriptEngine, should not be possible!";
+        return;
+    }
+
+    d->package = new Plasma::Package(package);
+    d->scriptEngine = new ProviderScriptEngine(d->package, this);
+
+    QScriptValue value = d->scriptEngine->globalObject();
+    value.setProperty("addEventListener", d->scriptEngine->newFunction(ProviderScriptEngine::addEventListener));
+    value.setProperty("removeEventListener", d->scriptEngine->newFunction(ProviderScriptEngine::removeEventListener));
+
+    const QString translationsPath = package.filePath("translations");
+    if (!translationsPath.isEmpty()) {
+        KGlobal::dirs()->addResourceDir("locale", translationsPath);
+        KGlobal::locale()->insertCatalog(package.metadata().pluginName());
+    }
+
+    if (!d->scriptEngine->include(mainscriptEngine)) {
+        kDebug() << "no main scriptEngine, should not be possible!";
+        delete d->scriptEngine;
+        d->scriptEngine = 0;
+        delete d->package;
+        d->package = 0;
+    }
+}
+
+Provider::~Provider()
+{
+    if (d->package) {
+        const QString translationsPath = d->package->filePath("translations");
+        if (!translationsPath.isEmpty()) {
+            //FIXME: KGlobal::dirs()->removeResourceDir("locale", translationsPath);
+            KGlobal::locale()->removeCatalog(d->package->metadata().pluginName());
+        }
+    }
+
+    delete d;
 }
 
 Provider::Actions Provider::actionsFor(const QVariantHash &content) const

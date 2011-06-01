@@ -26,6 +26,8 @@
 
 #include <kdemacros.h>
 
+#include <Plasma/Package>
+
 namespace SLC
 {
 
@@ -41,6 +43,8 @@ public:
     Q_DECLARE_FLAGS(Actions, Action)
 
     Provider(QObject *parent, const QVariantList &args);
+    Provider(QObject *parent, const Plasma::Package &package);
+    ~Provider();
 
     QString name() const;
 
