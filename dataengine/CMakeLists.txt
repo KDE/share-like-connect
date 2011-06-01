@@ -6,6 +6,7 @@ install(TARGETS sharelikeconnect ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 set(sharelikeconnectengine_SRCS
     contenttracker.cpp
+    packageStructure.cpp
     sharelikeconnect.cpp
     slcservice/slcservice.cpp
     slcservice/slcjob.cpp
