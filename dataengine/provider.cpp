@@ -54,11 +54,13 @@ Provider::Provider(QObject *parent, const QVariantList &args)
     d->name = args.isEmpty() ? QString("Unnamed") : args[0].toString();
 }
 
-Provider::Provider(QObject *parent, const Plasma::Package &package)
+Provider::Provider(QObject *parent, const Plasma::Package &package, const QString &pluginName)
     : QObject(parent),
       d(new Private)
 {
-    const QString mainscriptEngine = package.filePath("mainscriptEngine");
+    d->name = pluginName;
+
+    const QString mainscriptEngine = package.filePath("mainscript");
     if (mainscriptEngine.isEmpty()) {
         kDebug() << "no main scriptEngine, should not be possible!";
         return;

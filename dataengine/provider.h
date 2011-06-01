@@ -43,7 +43,7 @@ public:
     Q_DECLARE_FLAGS(Actions, Action)
 
     Provider(QObject *parent, const QVariantList &args);
-    Provider(QObject *parent, const Plasma::Package &package);
+    Provider(QObject *parent, const Plasma::Package &package, const QString &pluginName);
     ~Provider();
 
     QString name() const;
