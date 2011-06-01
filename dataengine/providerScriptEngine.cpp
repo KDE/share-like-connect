@@ -34,6 +34,9 @@ ProviderScriptEngine::ProviderScriptEngine(Plasma::Package *package, QObject *pa
     : QScriptEngine(parent),
       m_package(package)
 {
+    QScriptValue value = globalObject();
+    value.setProperty("addEventListener", newFunction(ProviderScriptEngine::addEventListener));
+    value.setProperty("removeEventListener", newFunction(ProviderScriptEngine::removeEventListener));
 }
 
 bool ProviderScriptEngine::include(const QString &path)
