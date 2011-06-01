@@ -23,8 +23,10 @@
 #include <KPluginInfo>
 #include <KService>
 #include <KServiceTypeTrader>
+#include <KStandardDirs>
 
 #include "contenttracker.h"
+#include "packageStructure.h"
 #include "provider.h"
 #include "slcservice/slcservice.h"
 
@@ -39,17 +41,35 @@ ShareLikeConnectEngine::ShareLikeConnectEngine(QObject *parent, const QVariantLi
 
     KService::List offers = KServiceTypeTrader::self()->query("Plasma/ShareLikeConnect");
     foreach (const KService::Ptr &offer, offers) {
-        QVariantList args;
-        args << offer->name();
+        SLC::Provider *provider = 0;
+        KPluginInfo info(offer);
+        const QString name = info.pluginName();
+
         QString error;
-        SLC::Provider *provider = offer->createInstance<SLC::Provider>(0, args, &error);
+        if (offer->property("X-Plasma-API").toString().compare("javascript", Qt::CaseInsensitive) == 0) {
+            PackageStructure::Ptr structure(new PackageStructure(this));
+
+            QString path = structure->defaultPackageRoot() + '/' + name + '/';
+            path = KStandardDirs::locate("data", path + "metadata.desktop");
+            if (path.isEmpty()) {
+                error = i18n("Share Like Connect package %1 is invalid");
+            } else {
+                path.remove(QString("metadata.desktop"));
+                Plasma::Package package(path, structure);
+                if (package.isValid()) {
+                    provider = new SLC::Provider(this, package, name);
+                }
+            }
+        } else {
+            provider = offer->createInstance<SLC::Provider>(this, QVariantList() << name, &error);
+        }
+
         if (!provider) {
             kDebug() << "ShareLikeConnect failed to load" << offer->name() << offer->library() << "due to:" << error;
             continue;
         }
 
-        KPluginInfo info(offer);
-        m_providers.insert(info.pluginName(), provider);
+        m_providers.insert(name, provider);
     }
 
     kDebug() << "providers:" << m_providers.keys() << offers.count();
@@ -68,7 +88,6 @@ ShareLikeConnectEngine::~ShareLikeConnectEngine()
 
 Plasma::Service *ShareLikeConnectEngine::serviceForSource(const QString &source)
 {
-    Plasma::Service *service = 0;
     if (source == "Share" || source == "Like" || source == "Connect") {
         return new SLC::SlcService(this);
     } else {
