@@ -69,10 +69,6 @@ Provider::Provider(QObject *parent, const Plasma::Package &package, const QStrin
     d->package = new Plasma::Package(package);
     d->scriptEngine = new ProviderScriptEngine(d->package, this);
 
-    QScriptValue value = d->scriptEngine->globalObject();
-    value.setProperty("addEventListener", d->scriptEngine->newFunction(ProviderScriptEngine::addEventListener));
-    value.setProperty("removeEventListener", d->scriptEngine->newFunction(ProviderScriptEngine::removeEventListener));
-
     const QString translationsPath = package.filePath("translations");
     if (!translationsPath.isEmpty()) {
         KGlobal::dirs()->addResourceDir("locale", translationsPath);
@@ -101,17 +97,49 @@ Provider::~Provider()
     delete d;
 }
 
+template <class M>
+QScriptValue qScriptValueFromMap(QScriptEngine *eng, const M &map)
+{
+    //kDebug() << "qScriptValueFromMap called";
+    QScriptValue obj = eng->newObject();
+    typename M::const_iterator begin = map.constBegin();
+    typename M::const_iterator end = map.constEnd();
+    typename M::const_iterator it;
+    for (it = begin; it != end; ++it) {
+        if (it.value().type() == QVariant::Hash) {
+            obj.setProperty(it.key(), qScriptValueFromMap(eng, it.value().toHash()));
+        } else if (it.value().type() == QVariant::Map) {
+            obj.setProperty(it.key(), qScriptValueFromMap(eng, it.value().toMap()));
+        } else {
+            obj.setProperty(it.key(), qScriptValueFromValue(eng, it.value()));
+        }
+    }
+
+    return obj;
+}
+
 Provider::Actions Provider::actionsFor(const QVariantHash &content) const
 {
-    Q_UNUSED(content)
+    if (d->scriptEngine) {
+        QScriptValue func = d->scriptEngine->globalObject().property("actionsFor");
+        QScriptValueList args;
+        args << qScriptValueFromValue(d->scriptEngine, content);
+        return static_cast<Provider::Actions>(d->scriptEngine->callFunction(func, args).toInt32());
+    }
+
     return NoAction;
 }
 
 QVariant Provider::executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters)
 {
-    Q_UNUSED(action)
-    Q_UNUSED(content)
-    Q_UNUSED(parameters)
+    if (d->scriptEngine) {
+        QScriptValueList args;
+        args << action;
+        args << qScriptValueFromValue(d->scriptEngine, content);
+        args << qScriptValueFromValue(d->scriptEngine, parameters);
+        return d->scriptEngine->callEventListeners("executeAction", args);
+    }
+
     return false;
 }
 
