@@ -23,7 +23,9 @@ PackageStructure::PackageStructure(QObject *parent)
     : Plasma::PackageStructure(parent)
 {
     addFileDefinition("mainscript", "code/main", i18n("Main Script File"));
+    setRequired("mainscript", true);
     setMimetypes("mainscript", QStringList() << "text/plain");
+    setDefaultPackageRoot("plasma/sharelikeconnect/");
 }
 
 #include "packageStructure.moc"
