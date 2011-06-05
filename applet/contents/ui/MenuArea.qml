@@ -21,32 +21,35 @@ import QtQuick 1.0
 import org.kde.qtextracomponents 0.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 
+Column {
+    id: menuColumn
+    width:200
+    height: 200
+    spacing: 5
+    property alias menuModel: menuRepeater.model
 
-QIconItem {
-    id: iconItem
-    signal menuTriggered
-    width: height
-    property QtObject model
-    enabled: model.count>0?true:false
-    opacity: enabled?1:0.4
-    anchors {
-        top: parent.top
-        bottom: parent.bottom
-    }
+    Repeater {
+        id: menuRepeater
+        model: shareModel
 
-    MouseArea {
-        enabled: iconItem.enabled
-        anchors.fill: parent
-        onPressed: {
-            if (dialog.visible) {
-                dialog.visible = false
-            } else {
-                menuArea.menuModel = iconItem.model
-                var pos = dialog.popupPosition(iconItem)
-                dialog.x = pos.x
-                dialog.y = pos.y
-                dialog.visible = true
+        Text {
+            text: name
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    var service = activitySource.serviceForSource("Connect")
+                    var operation = service.operationDescription("executeAction")
+                    operatin["ActionName"] = providerId
+
+                    service.startOperationCall(operation)
+                    slcSource.data["Current Content"]["URI"]
+                }
             }
         }
+
+        /*MobileComponents.MenuItem {
+            id: menuItem
+            resourceUrl: slcSource.data["Current Content"]["URI"]
+        }*/
     }
 }

@@ -69,36 +69,10 @@ Row {
 
     PlasmaCore.Dialog {
         id: dialog
-        mainItem: Column {
-            id: menuColumn
-            width:200
+        mainItem: MenuArea {
+            id: menuArea
+            width: 200
             height: 200
-            spacing: 5
-
-            Repeater {
-                id: menuRepeater
-                model: shareModel
-
-                Text {
-                    text: name
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            var service = activitySource.serviceForSource("Connect")
-                            var operation = service.operationDescription("executeAction")
-                            operatin["ActionName"] = providerId
-
-                            service.startOperationCall(operation)
-                            slcSource.data["Current Content"]["URI"]
-                        }
-                    }
-                }
-
-                /*MobileComponents.MenuItem {
-                    id: menuItem
-                    resourceUrl: slcSource.data["Current Content"]["URI"]
-                }*/
-            }
         }
     }
 }
