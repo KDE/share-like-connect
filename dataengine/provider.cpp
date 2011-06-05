@@ -42,6 +42,7 @@ public:
         delete package;
     }
 
+    QString pluginName;
     QString name;
     ProviderScriptEngine *scriptEngine;
     Plasma::Package *package;
@@ -51,14 +52,16 @@ Provider::Provider(QObject *parent, const QVariantList &args)
     : QObject(parent),
       d(new Private)
 {
-    d->name = args.isEmpty() ? QString("Unnamed") : args[0].toString();
+    d->pluginName = args.isEmpty() ? QString("Unnamed") : args[0].toString();
+    d->name = args.length() < 2 ? QString("Unnamed") : args[1].toString();
 }
 
 Provider::Provider(QObject *parent, const Plasma::Package &package, const QString &pluginName)
     : QObject(parent),
       d(new Private)
 {
-    d->name = pluginName;
+    d->pluginName = pluginName;
+    d->name = package.metadata().name();
 
     const QString mainscriptEngine = package.filePath("mainscript");
     if (mainscriptEngine.isEmpty()) {

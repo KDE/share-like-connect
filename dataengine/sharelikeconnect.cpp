@@ -43,13 +43,14 @@ ShareLikeConnectEngine::ShareLikeConnectEngine(QObject *parent, const QVariantLi
     foreach (const KService::Ptr &offer, offers) {
         SLC::Provider *provider = 0;
         KPluginInfo info(offer);
-        const QString name = info.pluginName();
+        const QString name = info.name();
+        const QString pluginName = info.pluginName();
 
         QString error;
         if (offer->property("X-Plasma-API").toString().compare("javascript", Qt::CaseInsensitive) == 0) {
             PackageStructure::Ptr structure(new PackageStructure(this));
 
-            QString path = structure->defaultPackageRoot() + '/' + name + '/';
+            QString path = structure->defaultPackageRoot() + '/' + pluginName + '/';
             path = KStandardDirs::locate("data", path + "metadata.desktop");
             if (path.isEmpty()) {
                 error = i18n("Share Like Connect package %1 is invalid");
@@ -57,11 +58,11 @@ ShareLikeConnectEngine::ShareLikeConnectEngine(QObject *parent, const QVariantLi
                 path.remove(QString("metadata.desktop"));
                 Plasma::Package package(path, structure);
                 if (package.isValid()) {
-                    provider = new SLC::Provider(this, package, name);
+                    provider = new SLC::Provider(this, package, pluginName);
                 }
             }
         } else {
-            provider = offer->createInstance<SLC::Provider>(this, QVariantList() << name, &error);
+            provider = offer->createInstance<SLC::Provider>(this, QVariantList() << pluginName << name, &error);
         }
 
         if (!provider) {
@@ -69,7 +70,7 @@ ShareLikeConnectEngine::ShareLikeConnectEngine(QObject *parent, const QVariantLi
             continue;
         }
 
-        m_providers.insert(name, provider);
+        m_providers.insert(pluginName, provider);
     }
 
     kDebug() << "providers:" << m_providers.keys() << offers.count();
@@ -119,15 +120,24 @@ void ShareLikeConnectEngine::contentChanged()
         SLC::Provider::Actions actions = provider->actionsFor(content);
         kDebug() << "checkout" << it.key() << "with" << actions;
         if (actions & SLC::Provider::Share) {
-            setData("Share", it.key(), provider->name());
+            QVariantHash data;
+            data["providerId"] = it.key();
+            data["name"] = provider->name();
+            setData("Share", it.key(), data);
         }
 
         if (actions & SLC::Provider::Like) {
-            setData("Like", it.key(), provider->name());
+            QVariantHash data;
+            data["providerId"] = it.key();
+            data["name"] = provider->name();
+            setData("Like", it.key(), data);
         }
 
         if (actions & SLC::Provider::Connect) {
-            setData("Connect", it.key(), provider->name());
+            QVariantHash data;
+            data["providerId"] = it.key();
+            data["name"] = provider->name();
+            setData("Connect", it.key(), data);
         }
     }
 }
