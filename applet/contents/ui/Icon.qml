@@ -26,17 +26,22 @@ QIconItem {
     id: iconItem
     signal menuTriggered
     width: height
+    property QtObject model
+    enabled: model.count>0?true:false
+    opacity: enabled?1:0.4
     anchors {
         top: parent.top
         bottom: parent.bottom
     }
 
     MouseArea {
+        enabled: iconItem.enabled
         anchors.fill: parent
         onPressed: {
             if (dialog.visible) {
                 dialog.visible = false
             } else {
+                menuRepeater.model = iconItem.model
                 var pos = dialog.popupPosition(iconItem)
                 dialog.x = pos.x
                 dialog.y = pos.y

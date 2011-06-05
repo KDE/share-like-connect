@@ -28,21 +28,44 @@ Row {
     spacing: 5
     Icon {
       icon: QIcon("system-users")
+      model: shareModel
     }
     Icon {
       icon: QIcon("emblem-favorite")
+      model: likeModel
     }
     Icon {
       icon: QIcon("network-connect")
+      model: connectModel
     }
-    
+
+
     PlasmaCore.DataSource {
         id: slcSource
         engine: "org.kde.sharelikeconnect"
         connectedSources: ["Current Content", "Connect"]
     }
 
-    
+    PlasmaCore.DataModel {
+        id: shareModel
+        dataSource: slcSource
+        sourceFilter: "Share"
+        keyRoleFilter: ".*"
+    }
+
+    PlasmaCore.DataModel {
+        id: likeModel
+        dataSource: slcSource
+        sourceFilter: "Like"
+        keyRoleFilter: ".*"
+    }
+
+    PlasmaCore.DataModel {
+        id: connectModel
+        dataSource: slcSource
+        sourceFilter: "Connect"
+        keyRoleFilter: ".*"
+    }
 
     PlasmaCore.Dialog {
         id: dialog
@@ -54,11 +77,7 @@ Row {
 
             Repeater {
                 id: menuRepeater
-                model: PlasmaCore.DataModel {
-                    dataSource: slcSource
-                   sourceFilter: "Connect"
-                    keyRoleFilter: ".*"
-                }
+                model: shareModel
 
                 Text {
                     text: name
@@ -72,6 +91,7 @@ Row {
                             service.startOperationCall(operation)
                             slcSource.data["Current Content"]["URI"]
                         }
+                    }
                 }
 
                 /*MobileComponents.MenuItem {
