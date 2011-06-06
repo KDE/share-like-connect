@@ -30,6 +30,17 @@ Item {
     property int preferredWidth: 32*5
     signal rateClicked(int newRating)
 
+
+    PlasmaCore.DataSource {
+        id: metadataSource
+        engine: "org.kde.active.metadata"
+        connectedSources: [resourceUrl]
+        onDataChanged: {
+            var key = metadataSource.keysForSource(resourceUrl)[0]
+            containerItem.score = metadataSource.data[resourceUrl][key].numericRating
+        }
+    }
+
     Row {
         id: iconRow
         anchors.centerIn: parent
