@@ -23,7 +23,7 @@ import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
 
 Row {
-    width: 48
+    width: 120
     height: 16
     spacing: 5
     Icon {
