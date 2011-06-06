@@ -33,6 +33,19 @@ Item {
     state: "operations"
     property string pendingState: "operations"
 
+    function runItem(x, y)
+    {
+        var dialogX = x-dialog.x
+        var dialogY = y-dialog.y
+        var item = serviceMenu.childAt(dialogX, dialogY)
+        print("---------------------------" + item + " " + dialogX + " " + dialogY);
+        if (item && typeof item != "undefined") {
+            print("You clicked " + item)
+            var posInItem = serviceMenu.mapToItem(item, dialogX, dialogY)
+            item.run(posInItem.x, posInItem.y)
+        }
+    }
+
     SequentialAnimation {
         id: feedbackMessageAnimation
         property Item target

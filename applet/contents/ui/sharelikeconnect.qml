@@ -37,6 +37,7 @@ Row {
       service: "Like"
     }
     Icon {
+        id: connectIcon
       icon: QIcon("network-connect")
       model: connectModel
       service: "Connect"

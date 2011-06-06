@@ -20,6 +20,7 @@
 import QtQuick 1.0
 import org.kde.qtextracomponents 0.1
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 
 
 QIconItem {
@@ -35,7 +36,7 @@ QIconItem {
         bottom: parent.bottom
     }
 
-    MouseArea {
+    MobileComponents.MouseEventListener {
         enabled: iconItem.enabled
         anchors.fill: parent
         onPressed: {
@@ -49,6 +50,11 @@ QIconItem {
                 dialog.y = pos.y
                 dialog.visible = true
             }
+        }
+
+        onReleased: {
+            print(dialog.mainItem)
+            dialog.mainItem.runItem(mouse.screenX, mouse.screenY)
         }
     }
 }
