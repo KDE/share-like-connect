@@ -26,7 +26,7 @@ Item {
     id: main
     clip: true
     //FIXME: remove hardcoded sizes
-    width:200
+    width: 200
     height: 200
     property alias menuModel: menuRepeater.model
     property string actionName
@@ -61,7 +61,6 @@ Item {
                         anchors.fill: parent
                         function actionFirstStep(serviceJob)
                         {
-                            print(serviceJob)
                             secondStepModel.clear()
                             for (i in serviceJob.result) {
                                 secondStepModel.append({"resultId": i, "resultName": serviceJob.result[i]})
@@ -88,37 +87,9 @@ Item {
             }
         }
 
-        Column {
+        TargetChooser {
             width:200
             height: 200
-            spacing: 8
-
-            Repeater {
-                id: secondStepRepeater
-                model: secondStepModel
-
-                Text {
-                    text: resultName
-                    MouseArea {
-                        anchors.fill: parent
-
-                        onClicked: {
-                            var service = slcSource.serviceForSource(main.service)
-                            var operation = service.operationDescription("executeAction")
-                            operation["ActionName"] = main.actionName
-                            operation["Targets"] = [resultId]
-
-                            service.startOperationCall(operation)
-                            mainWidget.x = 0
-                        }
-                    }
-                }
-
-                /*MobileComponents.MenuItem {
-                    id: menuItem
-                    resourceUrl: slcSource.data["Current Content"]["URI"]
-                }*/
-            }
         }
     }
 }
