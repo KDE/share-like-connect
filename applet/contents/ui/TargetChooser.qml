@@ -22,13 +22,14 @@ import org.kde.qtextracomponents 0.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 
 Column {
+    id: menuColumn
     spacing: 8
 
     Repeater {
         id: secondStepRepeater
         model: secondStepModel
 
-        Text {
+        /*Text {
             text: resultName
             MouseArea {
                 anchors.fill: parent
@@ -43,6 +44,10 @@ Column {
                     mainWidget.x = 0
                 }
             }
+        }*/
+        MenuItem {
+            id: menuItem
+            resourceUrl: slcSource.data["Current Content"]["URI"]
         }
     }
 }

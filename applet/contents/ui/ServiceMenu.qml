@@ -30,7 +30,7 @@ Column {
         id: menuRepeater
         model: shareModel
 
-        Text {
+        /*Text {
             text: name
             MouseArea {
                 anchors.fill: parent
@@ -53,11 +53,11 @@ Column {
                     mainWidget.x = -200
                 }
             }
-        }
+        }*/
 
-        /*MobileComponents.MenuItem {
+        MenuItem {
             id: menuItem
             resourceUrl: slcSource.data["Current Content"]["URI"]
-        }*/
+        }
     }
 }

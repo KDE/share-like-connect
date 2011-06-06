@@ -29,8 +29,40 @@ Item {
     width: 200
     height: 200
     property alias menuModel: serviceMenu.model
-    property string actionName
     property string service
+    state: "operations"
+    property string pendingState: "operations"
+
+    SequentialAnimation {
+        id: feedbackMessageAnimation
+        property Item target
+
+        NumberAnimation {
+            target: feedbackMessageAnimation.target
+            properties: "scale"
+            to: 2
+            duration: 200
+            easing.type: "OutCubic"
+        }
+        PauseAnimation {
+            duration: 100
+        }
+        NumberAnimation {
+            target: feedbackMessageAnimation.target
+            properties: "scale"
+            to: 1
+            duration: 250
+            easing.type: "OutElastic"
+        }
+        ScriptAction {
+            script: {
+                main.state = main.pendingState
+                if (main.state == "operations") {
+                    dialog.visible = false
+                }
+            }
+        }
+    }
 
     ListModel {
         id: secondStepModel
@@ -62,4 +94,28 @@ Item {
             id: commentForm
         }
     }
+
+    states: [
+        State {
+            name: "operations"
+            PropertyChanges {
+                target: mainWidget
+                x: 0
+            }
+        },
+        State {
+            name: "targets"
+            PropertyChanges {
+                target: mainWidget
+                x: -200
+            }
+        },
+        State {
+            name: "comment"
+            PropertyChanges {
+                target: mainWidget
+                x: -400
+            }
+        }
+    ]
 }

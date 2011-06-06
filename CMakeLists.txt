@@ -12,4 +12,5 @@ include_directories(${KDE4_INCLUDES})
 add_subdirectory(activecontentservice)
 add_subdirectory(applet)
 add_subdirectory(dataengine)
+add_subdirectory(components)
 

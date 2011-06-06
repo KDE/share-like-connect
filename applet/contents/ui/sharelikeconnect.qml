@@ -42,6 +42,14 @@ Row {
       service: "Connect"
     }
 
+    PlasmaCore.Theme {
+        id: theme
+    }
+
+    PlasmaCore.Svg {
+        id: lineSvg
+        imagePath: "widgets/line"
+    }
 
     PlasmaCore.DataSource {
         id: slcSource
