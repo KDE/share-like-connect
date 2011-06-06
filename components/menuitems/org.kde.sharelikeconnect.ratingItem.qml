@@ -24,13 +24,15 @@ import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 
 
 Item {
+    id: containerItem
     property int score
-    property int implicitHeight: 22
-    property int implicitWidth: 22*5
+    property int preferredHeight: 32
+    property int preferredWidth: 32*5
     signal rateClicked(int newRating)
 
     Row {
         id: iconRow
+        anchors.centerIn: parent
         spacing: 0
         MobileComponents.RatingIcon {
             id: rating2
@@ -61,36 +63,24 @@ Item {
 
     function rateResource(resourceUrl, rating)
     {
-        print("XXXXX MMM Rating " + resourceUrl + " *****: " + rating )
-        if (resourceUrl == "") {
-            print("url empty.");
-            return;
-        }
-        return;
-        var service = metadataSource.serviceForSource(sourceName)
-        var operation = service.operationDescription("rate")
+        var service = slcSource.serviceForSource(main.service)
+        var operation = service.operationDescription("executeAction")
+        operation["ActionName"] = model["providerId"]
+        operation["Targets"] = [rating]
 
-        operation["ResourceUrl"] = resourceUrl;
-        operation["Rating"] = rating;
-        service.startOperationCall(operation)
+
+        job = service.startOperationCall(operation)
     }
 
     function run(x, y)
     {
-        var star = iconRow.childAt(x, y);
+        var pos = iconRow.mapFromItem(containerItem, x, y)
+        var star = iconRow.childAt(pos.x, pos.y);
         if (star && star.baseRating) {
             print("released with rating " + star.baseRating + " Item: " + resourceUrl);
             rateResource(resourceUrl, star.baseRating);
         } else{
             print("released but could not figure out rating" + star);
-        }
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        hoverEnabled: true
-        onPositionChanged: {
-            print("highlight ladieda ..." + mouse.x);
         }
     }
 }
