@@ -28,7 +28,7 @@ Item {
     //FIXME: remove hardcoded sizes
     width: 200
     height: 200
-    property alias menuModel: menuRepeater.model
+    property alias menuModel: serviceMenu.model
     property string actionName
     property string service
 
@@ -45,6 +45,7 @@ Item {
             }
         }
         ServiceMenu {
+            id: serviceMenu
             width: 200
             height: 200
         }

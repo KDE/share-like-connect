@@ -24,6 +24,7 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 Column {
     id: menuColumn
     spacing: 8
+    property alias model: menuRepeater.model
 
     Repeater {
         id: menuRepeater
