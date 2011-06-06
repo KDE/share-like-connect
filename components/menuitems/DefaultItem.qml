@@ -36,11 +36,19 @@ Text {
     }
     color: theme.textColor
 
-    function populateTargets(serviceJob)
+    function checkResult(serviceJob)
     {
-        secondStepModel.clear()
-        for (i in serviceJob.result) {
-            secondStepModel.append({"target": i, "name": serviceJob.result[i], "providerId": providerId})
+        //TODO: error message?
+        if (serviceJob.result == true || serviceJob.result == false) {
+            main.pendingState = "operations"
+        } else if (serviceJob.result == "Comment") {
+            main.pendingState = "comment"
+        } else {
+            secondStepModel.clear()
+            for (i in serviceJob.result) {
+                secondStepModel.append({"target": i, "name": serviceJob.result[i], "providerId": providerId})
+            }
+            main.pendingState = "targets"
         }
     }
 
@@ -54,11 +62,7 @@ Text {
         }
 
         job = service.startOperationCall(operation)
-        if (model["target"] == undefined) {
-            job.finished.connect(populateTargets)
-            main.pendingState = "targets"
-        } else {
-            main.pendingState = "operations"
-        }
+
+        job.finished.connect(checkResult)
     }
 }
