@@ -27,6 +27,7 @@ QIconItem {
     signal menuTriggered
     width: height
     property QtObject model
+    property string service
     enabled: model.count>0?true:false
     opacity: enabled?1:0.4
     anchors {
@@ -42,6 +43,7 @@ QIconItem {
                 dialog.visible = false
             } else {
                 menuArea.menuModel = iconItem.model
+                menuArea.service = iconItem.service
                 var pos = dialog.popupPosition(iconItem)
                 dialog.x = pos.x
                 dialog.y = pos.y

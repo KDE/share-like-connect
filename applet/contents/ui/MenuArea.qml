@@ -30,6 +30,7 @@ Item {
     height: 200
     property alias menuModel: menuRepeater.model
     property string actionName
+    property string service
 
     ListModel {
         id: secondStepModel
@@ -68,7 +69,7 @@ Item {
                         }
 
                         onClicked: {
-                            var service = slcSource.serviceForSource("Connect")
+                            var service = slcSource.serviceForSource(main.service)
                             var operation = service.operationDescription("executeAction")
                             operation["ActionName"] = providerId
                             main.actionName = providerId
@@ -102,7 +103,7 @@ Item {
                         anchors.fill: parent
 
                         onClicked: {
-                            var service = slcSource.serviceForSource("Connect")
+                            var service = slcSource.serviceForSource(main.service)
                             var operation = service.operationDescription("executeAction")
                             operation["ActionName"] = main.actionName
                             operation["Targets"] = [resultId]

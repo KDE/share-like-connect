@@ -29,14 +29,17 @@ Row {
     Icon {
       icon: QIcon("system-users")
       model: shareModel
+      service: "Share"
     }
     Icon {
       icon: QIcon("emblem-favorite")
       model: likeModel
+      service: "Like"
     }
     Icon {
       icon: QIcon("network-connect")
       model: connectModel
+      service: "Connect"
     }
 
 
