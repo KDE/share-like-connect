@@ -50,10 +50,10 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
 
     kDebug() << content << parameters;
 
-    const QString resourceUrl = parameters["Url"].toString();
+    const QString resourceUrl = content["URI"].toString();
     QStringList activityIds = parameters["Targets"].toStringList();
+    //first step
     if (activityIds.isEmpty()) {
-        //TODO: first step
         QVariantHash result;
         foreach (const QString &activity, m_activityConsumer->listActivities()) {
             KActivityInfo *info = new KActivityInfo(activity);
@@ -62,16 +62,17 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
             delete info;
         }
         return result;
+    //second step
+    } else {
+        Nepomuk::Resource fileRes(resourceUrl);
+
+        foreach (const QString &activityId, activityIds) {
+            Nepomuk::Resource acRes("activities://" + activityId);
+            acRes.addProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
+        }
+
+        return true;
     }
-
-    Nepomuk::Resource fileRes(resourceUrl);
-
-    foreach (const QString &activityId, activityIds) {
-        Nepomuk::Resource acRes("activities://" + activityId);
-        acRes.addProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
-    }
-
-    return true;
 }
 
 //K_EXPORT_SLC_PROVIDER(activities, ActivitiesProvider)

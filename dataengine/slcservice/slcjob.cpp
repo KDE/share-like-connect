@@ -48,10 +48,9 @@ void SlcJob::start()
     if (operation == "executeAction") {
         kDebug() << parameters()["ActionName"].toString();
         QVariantHash providerParameters;
-        providerParameters["URI"] = m_content["URI"];
         providerParameters["Comment"] = parameters()["Comment"];
         providerParameters["Targets"] = parameters()["Targets"];
-        QVariant result = m_provider.data()->executeAction(SLC::Provider::Connect, QVariantHash(), providerParameters);
+        QVariant result = m_provider.data()->executeAction(SLC::Provider::Connect, m_content, providerParameters);
         setResult(result);
         return;
     }

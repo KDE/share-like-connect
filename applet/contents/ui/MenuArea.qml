@@ -100,13 +100,6 @@ Item {
                     text: resultName
                     MouseArea {
                         anchors.fill: parent
-                        function actionFirstStep(serviceJob)
-                        {
-                            print(serviceJob)
-                            for (i in serviceJob.result) {
-                                print(i)
-                            }
-                        }
 
                         onClicked: {
                             var service = slcSource.serviceForSource("Connect")
