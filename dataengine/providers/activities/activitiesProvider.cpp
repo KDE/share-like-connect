@@ -64,7 +64,14 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
         return result;
     //second step
     } else {
+        QUrl typeUrl;
+
         Nepomuk::Resource fileRes(resourceUrl);
+        if (content.value("Mime Type").toString() == "text/x-html") {
+            typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark");
+            fileRes.addType(typeUrl);
+            fileRes.setDescription(resourceUrl);
+        }
 
         foreach (const QString &activityId, activityIds) {
             Nepomuk::Resource acRes("activities://" + activityId);
