@@ -46,6 +46,43 @@ Item {
         }
     }
 
+    function highlightItem(x, y)
+    {
+        var dialogX = x-dialog.x
+        var dialogY = y-dialog.y
+        var item = serviceMenu.childAt(dialogX, dialogY)
+
+        if (item) {
+            var itemPos = serviceMenu.mapFromItem(item, 0, 0)
+            highlightFrame.x = itemPos.x
+            highlightFrame.y = itemPos.y
+            highlightFrame.width = serviceMenu.width
+            highlightFrame.height = item.height
+            highlightFrame.opacity = 1
+        } else {
+            highlightFrame.opacity = 0
+        }
+    }
+
+    PlasmaCore.FrameSvgItem {
+        id: highlightFrame
+        imagePath: "widgets/viewitem"
+        prefix: "hover"
+        opacity: 0
+        Behavior on y {
+            NumberAnimation {
+                duration: 250
+                easing.type: Easing.InOutQuad
+            }
+        }
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 250
+                easing.type: Easing.InOutQuad
+            }
+        }
+    }
+
     SequentialAnimation {
         id: feedbackMessageAnimation
         property Item target

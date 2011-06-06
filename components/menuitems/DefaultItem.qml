@@ -26,8 +26,9 @@ Text {
     //font.pointSize: 14
 
     horizontalAlignment: Text.AlignHCenter
-    property int implicitWidth: paintedWidth
-    property int implicitHeight: paintedHeight
+    verticalAlignment: Text.AlignVCenter
+    property int preferredWidth: paintedWidth
+    property int preferredHeight: Math.max(30, paintedHeight)
 
     text: name
 

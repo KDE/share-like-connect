@@ -52,8 +52,11 @@ QIconItem {
             }
         }
 
+        onPositionChanged: {
+            dialog.mainItem.highlightItem(mouse.screenX, mouse.screenY)
+        }
+
         onReleased: {
-            print(dialog.mainItem)
             dialog.mainItem.runItem(mouse.screenX, mouse.screenY)
         }
     }

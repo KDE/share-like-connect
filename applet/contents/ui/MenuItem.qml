@@ -24,8 +24,7 @@ import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 Column {
     id: menuItem
     spacing: 5
-    height: 30
-    anchors.margins: 8
+    //height: Math.min(30, itemLoader.preferredHeight)
     property string resourceUrl
 
     PlasmaCore.SvgItem {
@@ -42,8 +41,8 @@ Column {
 
     Loader {
         id: itemLoader
-        width: Math.max(item.implicitWidth, menuColumn.width)
-        height: item.implicitHeight
+        width: Math.max(item.preferredWidth, menuColumn.width)
+        height: item.preferredHeight
 
         source: fallback.resolvePath("slcmenuitems", [providerId+"Item.qml", "DefaultItem.qml"])
 
