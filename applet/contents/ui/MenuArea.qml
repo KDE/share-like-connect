@@ -38,53 +38,15 @@ Item {
 
     Row {
         id: mainWidget
-        //TODO: less code duplication
         Behavior on x {
             NumberAnimation {
                 duration: 250
                 easing.type: Easing.InOutQuad
             }
         }
-        Column {
-            id: menuColumn
-            width:200
+        ServiceMenu {
+            width: 200
             height: 200
-            spacing: 8
-
-            Repeater {
-                id: menuRepeater
-                model: shareModel
-
-                Text {
-                    text: name
-                    MouseArea {
-                        anchors.fill: parent
-                        function actionFirstStep(serviceJob)
-                        {
-                            secondStepModel.clear()
-                            for (i in serviceJob.result) {
-                                secondStepModel.append({"resultId": i, "resultName": serviceJob.result[i]})
-                            }
-                        }
-
-                        onClicked: {
-                            var service = slcSource.serviceForSource(main.service)
-                            var operation = service.operationDescription("executeAction")
-                            operation["ActionName"] = providerId
-                            main.actionName = providerId
-
-                            job = service.startOperationCall(operation)
-                            job.finished.connect(actionFirstStep)
-                            mainWidget.x = -200
-                        }
-                    }
-                }
-
-                /*MobileComponents.MenuItem {
-                    id: menuItem
-                    resourceUrl: slcSource.data["Current Content"]["URI"]
-                }*/
-            }
         }
 
         TargetChooser {
