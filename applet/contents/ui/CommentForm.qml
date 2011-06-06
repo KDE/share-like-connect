@@ -23,6 +23,9 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 
 Item {
+    //FIXME: no hardcoded sizes
+    width: 200
+    height: 200
     PlasmaCore.FrameSvgItem {
         id: menuFrame
         imagePath: "widgets/lineedit"

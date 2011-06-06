@@ -30,31 +30,6 @@ Column {
         id: menuRepeater
         model: shareModel
 
-        /*Text {
-            text: name
-            MouseArea {
-                anchors.fill: parent
-                function actionFirstStep(serviceJob)
-                {
-                    secondStepModel.clear()
-                    for (i in serviceJob.result) {
-                        secondStepModel.append({"resultId": i, "resultName": serviceJob.result[i]})
-                    }
-                }
-
-                onClicked: {
-                    var service = slcSource.serviceForSource(main.service)
-                    var operation = service.operationDescription("executeAction")
-                    operation["ActionName"] = providerId
-                    main.actionName = providerId
-
-                    job = service.startOperationCall(operation)
-                    job.finished.connect(actionFirstStep)
-                    mainWidget.x = -200
-                }
-            }
-        }*/
-
         MenuItem {
             id: menuItem
             resourceUrl: slcSource.data["Current Content"]["URI"]

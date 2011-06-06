@@ -82,8 +82,6 @@ Row {
         id: dialog
         mainItem: MenuArea {
             id: menuArea
-            width: 200
-            height: 200
         }
     }
 }

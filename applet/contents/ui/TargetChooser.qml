@@ -29,22 +29,6 @@ Column {
         id: secondStepRepeater
         model: secondStepModel
 
-        /*Text {
-            text: resultName
-            MouseArea {
-                anchors.fill: parent
-
-                onClicked: {
-                    var service = slcSource.serviceForSource(main.service)
-                    var operation = service.operationDescription("executeAction")
-                    operation["ActionName"] = main.actionName
-                    operation["Targets"] = [resultId]
-
-                    service.startOperationCall(operation)
-                    mainWidget.x = 0
-                }
-            }
-        }*/
         MenuItem {
             id: menuItem
             resourceUrl: slcSource.data["Current Content"]["URI"]

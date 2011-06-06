@@ -27,7 +27,7 @@ Item {
     clip: true
     //FIXME: remove hardcoded sizes
     width: 200
-    height: 200
+    height: mainWidget.height
     property alias menuModel: serviceMenu.model
     property string service
     state: "operations"
@@ -78,19 +78,16 @@ Item {
         }
         ServiceMenu {
             id: serviceMenu
-            width: 200
-            height: 200
+            width: main.width
         }
 
         TargetChooser {
             id: targetChooser
-            width:200
-            height: 200
+            width:main.width
         }
 
         CommentForm {
-            width:200
-            height: 200
+            width:main.width
             id: commentForm
         }
     }
@@ -101,20 +98,23 @@ Item {
             PropertyChanges {
                 target: mainWidget
                 x: 0
+                height: serviceMenu.height
             }
         },
         State {
             name: "targets"
             PropertyChanges {
                 target: mainWidget
-                x: -200
+                x: -main.width
+                height: targetChooser.height
             }
         },
         State {
             name: "comment"
             PropertyChanges {
                 target: mainWidget
-                x: -400
+                x: -main.width*2
+                height: commentForm.height
             }
         }
     ]
