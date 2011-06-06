@@ -54,7 +54,7 @@ Row {
     PlasmaCore.DataSource {
         id: slcSource
         engine: "org.kde.sharelikeconnect"
-        connectedSources: ["Current Content", "Connect"]
+        connectedSources: ["Current Content", "Share", "Like", "Connect"]
     }
 
     PlasmaCore.DataModel {
