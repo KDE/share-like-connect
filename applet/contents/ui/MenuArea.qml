@@ -69,6 +69,7 @@ Item {
         imagePath: "widgets/viewitem"
         prefix: "hover"
         opacity: 0
+        visible: main.state == "operations"
         Behavior on y {
             NumberAnimation {
                 duration: 250
