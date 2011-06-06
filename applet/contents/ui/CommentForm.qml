@@ -20,46 +20,31 @@
 import QtQuick 1.0
 import org.kde.qtextracomponents 0.1
 import org.kde.plasma.core 0.1 as PlasmaCore
-
+import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 
 Item {
-    id: main
-    clip: true
-    //FIXME: remove hardcoded sizes
-    width: 200
-    height: 200
-    property alias menuModel: serviceMenu.model
-    property string actionName
-    property string service
-
-    ListModel {
-        id: secondStepModel
+    PlasmaCore.FrameSvgItem {
+        id: menuFrame
+        imagePath: "widgets/lineedit"
+        prefix: "sunken"
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            bottom: okButton.top
+        }
+        PlasmaWidgets.TextEdit {
+            anchors.fill: parent
+            anchors.margins: 5
+        }
     }
 
-    Row {
-        id: mainWidget
-        Behavior on x {
-            NumberAnimation {
-                duration: 250
-                easing.type: Easing.InOutQuad
-            }
-        }
-        ServiceMenu {
-            id: serviceMenu
-            width: 200
-            height: 200
-        }
-
-        TargetChooser {
-            id: targetChooser
-            width:200
-            height: 200
-        }
-
-        CommentForm {
-            width:200
-            height: 200
-            id: commentForm
+    PlasmaWidgets.PushButton {
+        id: okButton
+        text: i18n("Ok")
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
         }
     }
 }
