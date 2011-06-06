@@ -48,8 +48,6 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
         return false;
     }
 
-    kDebug() << content << parameters;
-
     const QString resourceUrl = content["URI"].toString();
     QStringList activityIds = parameters["Targets"].toStringList();
     //first step
