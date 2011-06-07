@@ -50,6 +50,7 @@ Text {
                 secondStepModel.append({"target": i, "name": serviceJob.result[i], "providerId": providerId})
             }
             main.pendingState = "targets"
+            targetChooser.sourceName = sourceName
         }
     }
 
