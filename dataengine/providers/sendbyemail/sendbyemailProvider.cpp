@@ -28,11 +28,18 @@ SendByEmailProvider::SendByEmailProvider(QObject *parent, const QVariantList &ar
 
 SLC::Provider::Actions SendByEmailProvider::actionsFor(const QVariantHash &content) const
 {
-    return Share;
+    KUrl fileUrl(content.value("URI").toString());
+    if (fileUrl.isLocalFile()) {
+        return Share;
+    } else {
+        return NoAction;
+    }
 }
 
 QVariant SendByEmailProvider::executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters)
 {
+    Q_UNUSED(parameters)
+
     if (action != Connect) {
         return false;
     }
