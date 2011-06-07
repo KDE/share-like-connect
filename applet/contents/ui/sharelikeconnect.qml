@@ -67,7 +67,9 @@ Row {
             adjustPosition()
         }
         onVisibleChanged: {
-            if (!visible) {
+            if (visible) {
+                setAttribute(Qt.WA_X11NetWmWindowTypePopupMenu, true)
+            } else {
                 menuArea.state = "operations"
             }
         }
