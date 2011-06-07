@@ -48,11 +48,6 @@ Row {
         id: theme
     }
 
-    PlasmaCore.Svg {
-        id: lineSvg
-        imagePath: "widgets/line"
-    }
-
     PlasmaCore.DataSource {
         id: slcSource
         engine: "org.kde.sharelikeconnect"
