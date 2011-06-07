@@ -21,35 +21,31 @@ import Qt 4.7
 import org.kde.qtextracomponents 0.1
 import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.slccomponents 0.1 as SlcComponents
 
-Row {
-    width: 120
-    height: 16
-    spacing: 5
-    Icon {
-        icon: QIcon("system-users")
-        service: "Share"
-        model: dialog.mainItem.shareModel
+PlasmaCore.Dialog {
+    id: dialog
+    property Item parentItem
+    windowFlags: Qt.Popup
+    mainItem: MenuArea {
+        id: menuArea
     }
-    Icon {
-        icon: QIcon("emblem-favorite")
-        service: "Like"
-        model: dialog.mainItem.likeModel
+    function adjustPosition()
+    {
+        var pos = dialog.popupPosition(parentItem)
+        dialog.x = pos.x
+        dialog.y = pos.y
     }
-    Icon {
-        id: connectIcon
-        icon: QIcon("network-connect")
-        service: "Connect"
-        model: dialog.mainItem.connectModel
+    onHeightChanged: {
+        adjustPosition()
     }
-
-    PlasmaCore.Theme {
-        id: theme
+    onWidthChanged: {
+        adjustPosition()
     }
-
-    SlcComponents.SlcMenu {
-        id: dialog
+    onVisibleChanged: {
+        if (visible) {
+            setAttribute(Qt.WA_X11NetWmWindowTypePopupMenu, true)
+        } else {
+            menuArea.state = "operations"
+        }
     }
 }
-

@@ -44,18 +44,18 @@ QIconItem {
                 dialog.visible = false
             } else {
                 if (iconItem.service == "Share") {
-                    menuArea.shareVisible = true
-                    menuArea.likeVisible = false
-                    menuArea.connectVisible = false
+                    dialog.mainItem.shareVisible = true
+                    dialog.mainItem.likeVisible = false
+                    dialog.mainItem.connectVisible = false
                 } else if (iconItem.service == "Like") {
-                    menuArea.shareVisible = false
-                    menuArea.likeVisible = true
-                    menuArea.connectVisible = false
+                    dialog.mainItem.shareVisible = false
+                    dialog.mainItem.likeVisible = true
+                    dialog.mainItem.connectVisible = false
                 //Connect
                 } else {
-                    menuArea.shareVisible = false
-                    menuArea.likeVisible = false
-                    menuArea.connectVisible = true
+                    dialog.mainItem.shareVisible = false
+                    dialog.mainItem.likeVisible = false
+                    dialog.mainItem.connectVisible = true
                 }
                 dialog.parentItem = iconItem
                 dialog.adjustPosition();

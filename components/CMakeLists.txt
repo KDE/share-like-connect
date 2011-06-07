@@ -9,5 +9,6 @@ install(FILES MenuArea.qml DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/plasma/slc
 install(FILES MenuItem.qml DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/plasma/slccomponents)
 install(FILES ServiceMenu.qml DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/plasma/slccomponents)
 install(FILES TargetChooser.qml DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/plasma/slccomponents)
+install(FILES SlcMenu.qml DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/plasma/slccomponents)
 
 install(FILES qmldir DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/plasma/slccomponents)
