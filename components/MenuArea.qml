@@ -34,6 +34,31 @@ Item {
     state: "operations"
     property string pendingState: "operations"
 
+    property QtObject slcSource: PlasmaCore.DataSource {
+        engine: "org.kde.sharelikeconnect"
+        connectedSources: ["Current Content", "Share", "Like", "Connect"]
+    }
+
+    property QtObject shareModel: PlasmaCore.DataModel {
+        id: shareModel
+        dataSource: slcSource
+        sourceFilter: "Share"
+        keyRoleFilter: ".*"
+    }
+
+    property QtObject likeModel: PlasmaCore.DataModel {
+        dataSource: slcSource
+        sourceFilter: "Like"
+        keyRoleFilter: ".*"
+    }
+
+    property QtObject connectModel: PlasmaCore.DataModel {
+        dataSource: slcSource
+        sourceFilter: "Connect"
+        keyRoleFilter: ".*"
+    }
+
+
     function runItem(x, y)
     {
         var dialogX = x-dialog.x

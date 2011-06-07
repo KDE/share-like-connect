@@ -30,49 +30,22 @@ Row {
     Icon {
         icon: QIcon("system-users")
         service: "Share"
-        model: shareModel
+        model: menuArea.shareModel
     }
     Icon {
         icon: QIcon("emblem-favorite")
         service: "Like"
-        model: likeModel
+        model: menuArea.likeModel
     }
     Icon {
         id: connectIcon
         icon: QIcon("network-connect")
         service: "Connect"
-        model: connectModel
+        model: menuArea.connectModel
     }
 
     PlasmaCore.Theme {
         id: theme
-    }
-
-    PlasmaCore.DataSource {
-        id: slcSource
-        engine: "org.kde.sharelikeconnect"
-        connectedSources: ["Current Content", "Share", "Like", "Connect"]
-    }
-
-    PlasmaCore.DataModel {
-        id: shareModel
-        dataSource: slcSource
-        sourceFilter: "Share"
-        keyRoleFilter: ".*"
-    }
-
-    PlasmaCore.DataModel {
-        id: likeModel
-        dataSource: slcSource
-        sourceFilter: "Like"
-        keyRoleFilter: ".*"
-    }
-
-    PlasmaCore.DataModel {
-        id: connectModel
-        dataSource: slcSource
-        sourceFilter: "Connect"
-        keyRoleFilter: ".*"
     }
 
     PlasmaCore.Dialog {
