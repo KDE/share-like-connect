@@ -24,14 +24,55 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 Column {
     id: menuColumn
     spacing: 8
-    property alias model: menuRepeater.model
 
+    Text {
+        text: i18n("Share")
+        color: theme.textColor
+        font.bold: true
+        visible: shareVisible
+    }
     Repeater {
-        id: menuRepeater
+        id: shareRepeater
         model: shareModel
+        visible: shareVisible
 
         MenuItem {
-            id: menuItem
+            visible: shareVisible
+            sourceName: "Share"
+            resourceUrl: slcSource.data["Current Content"]["URI"]
+        }
+    }
+
+    Text {
+        text: i18n("Like")
+        color: theme.textColor
+        font.bold: true
+        visible: likeVisible
+    }
+    Repeater {
+        id: likeRepeater
+        model: likeModel
+
+        MenuItem {
+            visible: likeVisible
+            sourceName: "Like"
+            resourceUrl: slcSource.data["Current Content"]["URI"]
+        }
+    }
+
+    Text {
+        text: i18n("Connect")
+        color: theme.textColor
+        font.bold: true
+        visible: connectVisible
+    }
+    Repeater {
+        id: connectRepeater
+        model: connectModel
+
+        MenuItem {
+            visible: connectVisible
+            sourceName: "Connect"
             resourceUrl: slcSource.data["Current Content"]["URI"]
         }
     }

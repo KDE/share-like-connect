@@ -74,7 +74,7 @@ Item {
 
     function rateResource(resourceUrl, rating)
     {
-        var service = slcSource.serviceForSource(main.service)
+        var service = slcSource.serviceForSource(sourceName)
         var operation = service.operationDescription("executeAction")
         operation["ActionName"] = model["providerId"]
         operation["Targets"] = [rating]

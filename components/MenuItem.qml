@@ -26,6 +26,7 @@ Column {
     spacing: 5
     //height: Math.min(30, itemLoader.preferredHeight)
     property string resourceUrl
+    property string sourceName
 
     PlasmaCore.SvgItem {
         svg: lineSvg

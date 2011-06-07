@@ -28,8 +28,9 @@ Item {
     //FIXME: remove hardcoded sizes
     width: 200
     height: mainWidget.height
-    property alias menuModel: serviceMenu.model
-    property string service
+    property bool shareVisible: true
+    property bool likeVisible: true
+    property bool connectVisible: true
     state: "operations"
     property string pendingState: "operations"
 

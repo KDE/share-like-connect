@@ -43,8 +43,20 @@ QIconItem {
             if (dialog.visible) {
                 dialog.visible = false
             } else {
-                menuArea.menuModel = iconItem.model
-                menuArea.service = iconItem.service
+                if (iconItem.service == "Share") {
+                    menuArea.shareVisible = true
+                    menuArea.likeVisible = false
+                    menuArea.connectVisible = false
+                } else if (iconItem.service == "Like") {
+                    menuArea.shareVisible = false
+                    menuArea.likeVisible = true
+                    menuArea.connectVisible = false
+                //Connect
+                } else {
+                    menuArea.shareVisible = false
+                    menuArea.likeVisible = false
+                    menuArea.connectVisible = true
+                }
                 var pos = dialog.popupPosition(iconItem)
                 dialog.x = pos.x
                 dialog.y = pos.y

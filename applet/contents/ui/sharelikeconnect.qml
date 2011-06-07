@@ -21,6 +21,7 @@ import Qt 4.7
 import org.kde.qtextracomponents 0.1
 import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.slccomponents 0.1 as SlcComponents
 
 Row {
     width: 120
@@ -28,19 +29,19 @@ Row {
     spacing: 5
     Icon {
       icon: QIcon("system-users")
-      model: shareModel
       service: "Share"
+      model: shareModel
     }
     Icon {
       icon: QIcon("emblem-favorite")
-      model: likeModel
       service: "Like"
+      model: likeModel
     }
     Icon {
         id: connectIcon
       icon: QIcon("network-connect")
-      model: connectModel
       service: "Connect"
+      model: connectModel
     }
 
     PlasmaCore.Theme {
@@ -81,7 +82,7 @@ Row {
 
     PlasmaCore.Dialog {
         id: dialog
-        mainItem: MenuArea {
+        mainItem: SlcComponents.MenuArea {
             id: menuArea
         }
     }

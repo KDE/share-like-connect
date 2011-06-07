@@ -55,7 +55,7 @@ Text {
 
     function run(x, y)
     {
-        var service = slcSource.serviceForSource(main.service)
+        var service = slcSource.serviceForSource(sourceName)
         var operation = service.operationDescription("executeAction")
         operation["ActionName"] = model["providerId"]
         if (model["target"] != undefined) {
