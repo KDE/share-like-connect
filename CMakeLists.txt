@@ -8,6 +8,7 @@ include (MacroLibrary)
 
 add_definitions(${KDE4_DEFINITIONS})
 include_directories(${KDE4_INCLUDES})
+add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
 add_subdirectory(activecontentservice)
 add_subdirectory(applet)
