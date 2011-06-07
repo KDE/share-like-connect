@@ -51,6 +51,7 @@ Row {
     PlasmaCore.Dialog {
         id: dialog
         property Item parentItem
+        windowFlags: Qt.Popup
         mainItem: SlcComponents.MenuArea {
             id: menuArea
         }
