@@ -50,8 +50,26 @@ Row {
 
     PlasmaCore.Dialog {
         id: dialog
+        property Item parentItem
         mainItem: SlcComponents.MenuArea {
             id: menuArea
+        }
+        function adjustPosition()
+        {
+            var pos = dialog.popupPosition(parentItem)
+            dialog.x = pos.x
+            dialog.y = pos.y
+        }
+        onHeightChanged: {
+            adjustPosition()
+        }
+        onWidthChanged: {
+            adjustPosition()
+        }
+        onVisibleChanged: {
+            if (!visible) {
+                menuArea.state = "operations"
+            }
         }
     }
 }

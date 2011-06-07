@@ -29,12 +29,11 @@ Column {
         text: i18n("Share")
         color: theme.textColor
         font.bold: true
-        visible: shareVisible
+        visible: shareVisible&&shareModel.count>0
     }
     Repeater {
         id: shareRepeater
         model: shareModel
-        visible: shareVisible
 
         MenuItem {
             visible: shareVisible
@@ -47,7 +46,7 @@ Column {
         text: i18n("Like")
         color: theme.textColor
         font.bold: true
-        visible: likeVisible
+        visible: likeVisible&&likeModel.count>0
     }
     Repeater {
         id: likeRepeater
@@ -64,7 +63,7 @@ Column {
         text: i18n("Connect")
         color: theme.textColor
         font.bold: true
-        visible: connectVisible
+        visible: connectVisible&&connectModel.count>0
     }
     Repeater {
         id: connectRepeater

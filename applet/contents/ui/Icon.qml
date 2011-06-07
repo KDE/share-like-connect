@@ -57,9 +57,8 @@ QIconItem {
                     menuArea.likeVisible = false
                     menuArea.connectVisible = true
                 }
-                var pos = dialog.popupPosition(iconItem)
-                dialog.x = pos.x
-                dialog.y = pos.y
+                dialog.parentItem = iconItem
+                dialog.adjustPosition();
                 dialog.visible = true
             }
         }
