@@ -28,20 +28,20 @@ Row {
     height: 16
     spacing: 5
     Icon {
-      icon: QIcon("system-users")
-      service: "Share"
-      model: shareModel
+        icon: QIcon("system-users")
+        service: "Share"
+        model: shareModel
     }
     Icon {
-      icon: QIcon("emblem-favorite")
-      service: "Like"
-      model: likeModel
+        icon: QIcon("emblem-favorite")
+        service: "Like"
+        model: likeModel
     }
     Icon {
         id: connectIcon
-      icon: QIcon("network-connect")
-      service: "Connect"
-      model: connectModel
+        icon: QIcon("network-connect")
+        service: "Connect"
+        model: connectModel
     }
 
     PlasmaCore.Theme {
