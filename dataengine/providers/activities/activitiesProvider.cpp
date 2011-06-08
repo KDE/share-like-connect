@@ -25,12 +25,12 @@
 
 #include <soprano/vocabulary.h>
 
-#include <kactivityconsumer.h>
+#include <kactivities/consumer.h>
 
 ActivitiesProvider::ActivitiesProvider(QObject *parent, const QVariantList &args)
     : SLC::Provider(parent, args)
 {
-    m_activityConsumer = new KActivityConsumer(this);
+    m_activityConsumer = new Activities::Consumer(this);
 }
 
 SLC::Provider::Actions ActivitiesProvider::actionsFor(const QVariantHash &content) const
@@ -54,7 +54,7 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
     if (activityIds.isEmpty()) {
         QVariantHash result;
         foreach (const QString &activity, m_activityConsumer->listActivities()) {
-            KActivityInfo *info = new KActivityInfo(activity);
+            Activities::Info *info = new Activities::Info(activity);
             result[activity] = info->name();
             //kDebug() << "Found activity: " << activity << info->name();
             delete info;
