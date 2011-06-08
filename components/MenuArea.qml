@@ -61,8 +61,8 @@ Item {
 
     function runItem(x, y)
     {
-        var dialogX = x-dialog.x
-        var dialogY = y-dialog.y
+        var dialogX = x-dialog.x-dialog.margins.right
+        var dialogY = y-dialog.y-dialog.margins.top
         var item = serviceMenu.childAt(dialogX, dialogY)
         print("---------------------------" + item + " " + dialogX + " " + dialogY);
         if (item && typeof item != "undefined") {
@@ -74,8 +74,8 @@ Item {
 
     function highlightItem(x, y)
     {
-        var dialogX = x-dialog.x
-        var dialogY = y-dialog.y
+        var dialogX = x-dialog.x-dialog.margins.right
+        var dialogY = y-dialog.y-dialog.margins.top
         var item = serviceMenu.childAt(dialogX, dialogY)
 
         if (item) {
