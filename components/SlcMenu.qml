@@ -31,7 +31,7 @@ PlasmaCore.Dialog {
     }
     function adjustPosition()
     {
-        var pos = dialog.popupPosition(parentItem)
+        var pos = dialog.popupPosition(parentItem, Qt.AlignCenter)
         dialog.x = pos.x
         dialog.y = pos.y
     }
