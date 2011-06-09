@@ -47,7 +47,7 @@ Text {
         } else {
             secondStepModel.clear()
             for (i in serviceJob.result) {
-                secondStepModel.append({"target": i, "name": serviceJob.result[i], "providerId": providerId})
+                secondStepModel.append({"target": serviceJob.result[i]["target"], "name": serviceJob.result[i]["name"], "providerId": providerId})
             }
             main.pendingState = "targets"
             targetChooser.sourceName = sourceName

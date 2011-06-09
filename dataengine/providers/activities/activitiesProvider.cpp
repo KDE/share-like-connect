@@ -52,11 +52,19 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
     QStringList activityIds = parameters["Targets"].toStringList();
     //first step
     if (activityIds.isEmpty()) {
-        QVariantHash result;
+        QList<QVariant> result;
+        QVariantHash item;
+        item["target"] = m_activityConsumer->currentActivity();
+        item["name"] = i18n("Current activity");
+        result << item;
+
         foreach (const QString &activity, m_activityConsumer->listActivities()) {
             KActivityInfo *info = new KActivityInfo(activity);
-            result[activity] = info->name();
+            QVariantHash item;
+            item["target"] = activity;
+            item["name"] = info->name();
             //kDebug() << "Found activity: " << activity << info->name();
+            result << item;
             delete info;
         }
         return result;
