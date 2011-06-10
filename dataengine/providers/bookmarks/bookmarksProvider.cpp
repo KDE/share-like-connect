@@ -35,11 +35,29 @@ BookmarksProvider::BookmarksProvider(QObject *parent, const QVariantList &args)
 SLC::Provider::Actions BookmarksProvider::actionsFor(const QVariantHash &content) const
 {
     QUrl url(content.value("URI").toString());
-    if (content.value("Window ID").toInt() > 0 && url.scheme() == "http") {
+    if (content.value("Window ID").toInt() > 0 &&
+        (url.scheme() == "http" ||
+         content.value("Mime Type").toString() == "text/x-html")) {
         return Like;
     }
 
     return NoAction;
+}
+
+QString BookmarksProvider::actionName(const QVariantHash &content, Action action)
+{
+    QUrl url(content.value("URI").toString());
+    if (content.value("Window ID").toInt() > 0 &&
+        (url.scheme() == "http" ||
+         content.value("Mime Type").toString() == "text/x-html")) {
+        Nepomuk::Resource bookmarkRes(url.toString());
+        if (bookmarkRes.exists()) {
+            return i18n("remove bookmark");
+        } else {
+            return i18n("add bookmark");
+        }
+    }
+    return Provider::actionName(content, action);
 }
 
 QVariant BookmarksProvider::executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters)

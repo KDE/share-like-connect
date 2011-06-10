@@ -122,21 +122,21 @@ void ShareLikeConnectEngine::contentChanged()
         if (actions & SLC::Provider::Share) {
             QVariantHash data;
             data["providerId"] = it.key();
-            data["name"] = provider->name();
+            data["name"] = provider->actionName(content, SLC::Provider::Share);
             setData("Share", it.key(), data);
         }
 
         if (actions & SLC::Provider::Like) {
             QVariantHash data;
             data["providerId"] = it.key();
-            data["name"] = provider->name();
+            data["name"] = provider->actionName(content, SLC::Provider::Like);
             setData("Like", it.key(), data);
         }
 
         if (actions & SLC::Provider::Connect) {
             QVariantHash data;
             data["providerId"] = it.key();
-            data["name"] = provider->name();
+            data["name"] = provider->actionName(content, SLC::Provider::Connect);
             setData("Connect", it.key(), data);
         }
     }

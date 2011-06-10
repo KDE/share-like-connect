@@ -133,6 +133,22 @@ Provider::Actions Provider::actionsFor(const QVariantHash &content) const
     return NoAction;
 }
 
+QString Provider::actionName(const QVariantHash &content, Action action)
+{
+    if (d->scriptEngine) {
+        QScriptValue func = d->scriptEngine->globalObject().property("actionName");
+        QScriptValueList args;
+        args << qScriptValueFromValue(d->scriptEngine, content);
+        args << qScriptValueFromValue(d->scriptEngine, (int)action);
+        QString result = d->scriptEngine->callFunction(func, args).toString();
+        if (!result.isEmpty()) {
+            return result;
+        }
+    }
+
+    return d->name;
+}
+
 QVariant Provider::executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters)
 {
     if (d->scriptEngine) {

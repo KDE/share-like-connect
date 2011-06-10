@@ -32,6 +32,7 @@ class BookmarksProvider : public SLC::Provider
 public:
     BookmarksProvider(QObject *parent, const QVariantList &args);
     Actions actionsFor(const QVariantHash &content) const;
+    QString actionName(const QVariantHash &content, Action action);
 
     QVariant executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters);
 };
