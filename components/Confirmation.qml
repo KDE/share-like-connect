@@ -25,6 +25,7 @@ import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 Column {
     //FIXME: no hardcoded sizes
     width: 200
+    height: childrenRect.height+5
     spacing: 8
 
     Text {
