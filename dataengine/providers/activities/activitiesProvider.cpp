@@ -77,6 +77,7 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
             typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark");
             fileRes.addType(typeUrl);
             fileRes.setDescription(resourceUrl);
+            fileRes.setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks"), resourceUrl);
         }
 
         foreach (const QString &activityId, activityIds) {

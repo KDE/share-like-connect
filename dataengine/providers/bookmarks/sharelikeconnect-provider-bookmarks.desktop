@@ -1,0 +1,16 @@
+[Desktop Entry]
+Name=Bookmarks
+Type=Service
+
+X-KDE-ServiceTypes=Plasma/ShareLikeConnect
+X-KDE-Library=sharelikeconnect_provider_bookmarks
+
+X-KDE-PluginInfo-Author=Marco Martin
+X-KDE-PluginInfo-Email=mart@kde.org
+X-KDE-PluginInfo-Name=org.kde.sharelikeconnect.bookmarks
+X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-Website=http://plasma.kde.org/
+X-KDE-PluginInfo-Category=
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=LGPL
+X-KDE-PluginInfo-EnabledByDefault=true
