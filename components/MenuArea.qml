@@ -168,12 +168,14 @@ Item {
 
         TargetChooser {
             id: targetChooser
+            visible: main.state == "targets"
             width:main.width
         }
 
         CommentForm {
-            width:main.width
             id: commentForm
+            visible: main.state == "comment"
+            width:main.width
         }
 
         Confirmation {
@@ -195,7 +197,7 @@ Item {
             name: "targets"
             PropertyChanges {
                 target: mainWidget
-                x: -main.width
+                x: -targetChooser.x
                 height: targetChooser.height
             }
         },
@@ -203,7 +205,7 @@ Item {
             name: "comment"
             PropertyChanges {
                 target: mainWidget
-                x: -main.width*2
+                x: -commentForm.x
                 height: commentForm.height
             }
         },
@@ -211,7 +213,7 @@ Item {
             name: "confirmation"
             PropertyChanges {
                 target: mainWidget
-                x: -main.width*3
+                x: -confirmation.x
                 height: confirmation.height
             }
         }
