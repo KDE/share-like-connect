@@ -33,6 +33,7 @@ Item {
     property bool connectVisible: true
     state: "operations"
     property string pendingState: "operations"
+    property string confirmationMessage
 
     property QtObject slcSource: PlasmaCore.DataSource {
         engine: "org.kde.sharelikeconnect"
@@ -172,6 +173,11 @@ Item {
             width:main.width
             id: commentForm
         }
+
+        Confirmation {
+            id: confirmation
+            width:main.width
+        }
     }
 
     states: [
@@ -197,6 +203,14 @@ Item {
                 target: mainWidget
                 x: -main.width*2
                 height: commentForm.height
+            }
+        },
+        State {
+            name: "confirmation"
+            PropertyChanges {
+                target: mainWidget
+                x: -main.width*3
+                height: confirmation.height
             }
         }
     ]

@@ -42,8 +42,14 @@ Text {
         //TODO: error message?
         if (serviceJob.result == true || serviceJob.result == false) {
             main.pendingState = "operations"
+        //is it asking for confirmation?
+        } else if (serviceJob.result["Confirmation"]) {
+            confirmationMessage = serviceJob.result["Confirmation"]
+            main.pendingState = "confirmation"
+        //is it asking for a comment?
         } else if (serviceJob.result == "Comment") {
             main.pendingState = "comment"
+        //is it proposing a series of targets?
         } else {
             secondStepModel.clear()
             for (i in serviceJob.result) {

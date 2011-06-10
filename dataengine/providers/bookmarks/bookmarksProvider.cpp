@@ -50,12 +50,22 @@ QVariant BookmarksProvider::executeAction(SLC::Provider::Action action, const QV
 
     const QUrl resourceUrl(content.value("URI").toString());
     Nepomuk::Resource bookmarkRes(resourceUrl.toString());
+    bool confirmed = false;
+    if (!parameters["Targets"].toStringList().isEmpty()) {
+        confirmed = (parameters["Targets"].toStringList().first() == "confirmed");
+    }
 
     //the bookmark exists already? remove
     if (bookmarkRes.exists()) {
-        //TODO: ask for confirmation
-        bookmarkRes.remove();
-        return true;
+        //delete is dangerous: ask confirmation
+        if (confirmed) {
+            bookmarkRes.remove();
+            return true;
+        } else {
+            QVariantHash result;
+            result["Confirmation"] = i18n("Are you sure to delete this bookmark? \nAll of its associations with activities will be removed as well.");
+            return result;
+        }
     //create bookmark
     } else {
         QUrl typeUrl;
