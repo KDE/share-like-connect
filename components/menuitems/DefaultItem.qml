@@ -39,30 +39,38 @@ Text {
 
     function checkResult(serviceJob)
     {
+        main.providerId = providerId
+
         //TODO: error message?
         if (serviceJob.result == true || serviceJob.result == false) {
             main.pendingState = "operations"
+            main.sourceName = ""
         //is it asking for confirmation?
         } else if (serviceJob.result["Confirmation"]) {
             confirmationMessage = serviceJob.result["Confirmation"]
             main.pendingState = "confirmation"
+            main.sourceName = sourceName
         //is it asking for a comment?
         } else if (serviceJob.result == "Comment") {
             main.pendingState = "comment"
+            main.sourceName = sourceName
         //is it proposing a series of targets?
         } else {
             secondStepModel.clear()
             for (i in serviceJob.result) {
-                secondStepModel.append({"target": serviceJob.result[i]["target"], "name": serviceJob.result[i]["name"], "providerId": providerId})
+                secondStepModel.append({"target": serviceJob.result[i]["target"], "name": serviceJob.result[i]["name"]})
             }
             main.pendingState = "targets"
-            targetChooser.sourceName = sourceName
+            main.sourceName = sourceName
         }
     }
 
     function run(x, y)
     {
         var service = slcSource.serviceForSource(sourceName)
+        if (!service) {
+            service = slcSource.serviceForSource(main.sourceName)
+        }
         var operation = service.operationDescription("executeAction")
         operation["ActionName"] = model["providerId"]
         if (model["target"] != undefined) {

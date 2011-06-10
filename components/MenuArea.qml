@@ -34,6 +34,8 @@ Item {
     state: "operations"
     property string pendingState: "operations"
     property string confirmationMessage
+    property string providerId
+    property string sourceName
 
     property QtObject slcSource: PlasmaCore.DataSource {
         engine: "org.kde.sharelikeconnect"

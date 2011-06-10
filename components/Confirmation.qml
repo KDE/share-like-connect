@@ -45,14 +45,22 @@ Column {
         PlasmaWidgets.PushButton {
             id: yesButton
             text: i18n("Yes")
+            onClicked: {
+                var service = slcSource.serviceForSource(main.sourceName)
+                var operation = service.operationDescription("executeAction")
+                operation["ActionName"] = main.providerId
+                operation["Targets"] = ["confirmed"]
+
+                job = service.startOperationCall(operation)
+
+                dialog.visible = false
+            }
         }
 
         PlasmaWidgets.PushButton {
             id: noButton
             text: i18n("No")
             onClicked: {
-                main.pendingState = "operations"
-                main.state = "operations"
                 dialog.visible = false
             }
         }
