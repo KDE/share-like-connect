@@ -38,7 +38,7 @@ SLC::Provider::Actions RatingProvider::actionsFor(const QVariantHash &content) c
 
 QVariant RatingProvider::executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters)
 {
-    if (action != Connect) {
+    if (action != Like) {
         return false;
     }
 

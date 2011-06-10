@@ -19,15 +19,23 @@
 
 #include "slcservice.h"
 #include "slcjob.h"
-#include "provider.h"
 
 namespace SLC {
 
-SlcService::SlcService(ShareLikeConnectEngine *parent, const QVariantList &args)
+SlcService::SlcService(const QString &action, ShareLikeConnectEngine *parent, const QVariantList &args)
     : Plasma::Service(parent, args),
       m_slcEngine(parent)
 {
     setName("slcservice");
+
+    if (action == "Share") {
+        m_action = Provider::Share;
+    } else if (action == "Like") {
+        m_action = Provider::Like;
+    //Connect
+    } else {
+        m_action = Provider::Connect;
+    }
 }
 
 Plasma::ServiceJob *SlcService::createJob(const QString &operation,
@@ -40,7 +48,7 @@ Plasma::ServiceJob *SlcService::createJob(const QString &operation,
 
     Provider *provider = m_slcEngine.data()->providers().value(action);
 
-    return new SlcJob(provider, operation, m_slcEngine.data()->content(), parameters, this);
+    return new SlcJob(m_action, provider, operation, m_slcEngine.data()->content(), parameters, this);
 }
 
 }

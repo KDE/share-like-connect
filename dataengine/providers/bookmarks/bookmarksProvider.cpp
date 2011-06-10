@@ -44,7 +44,7 @@ SLC::Provider::Actions BookmarksProvider::actionsFor(const QVariantHash &content
 
 QVariant BookmarksProvider::executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters)
 {
-    if (action != Connect) {
+    if (action != Like) {
         return false;
     }
 

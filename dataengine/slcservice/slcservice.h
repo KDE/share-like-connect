@@ -25,6 +25,7 @@
 #include <Plasma/ServiceJob>
 
 #include "sharelikeconnect.h"
+#include "provider.h"
 
 namespace SLC {
 
@@ -33,7 +34,7 @@ class SlcService : public Plasma::Service
     Q_OBJECT
 
 public:
-    SlcService(ShareLikeConnectEngine *parent = 0, const QVariantList &args = QVariantList());
+    SlcService(const QString &action, ShareLikeConnectEngine *parent = 0, const QVariantList &args = QVariantList());
     Plasma::ServiceJob *createJob(const QString &operation,
                           QMap<QString, QVariant> &parameters);
 
@@ -41,6 +42,7 @@ private:
     QString m_id;
     QWeakPointer<ShareLikeConnectEngine> m_slcEngine;
     QVariantHash m_content;
+    Provider::Action m_action;
 };
 
 }
