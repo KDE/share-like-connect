@@ -33,21 +33,11 @@
 ContentTracker::ContentTracker(QObject *parent)
     : Plasma::DataContainer(parent)
 {
-    connect(KWindowSystem::self(), SIGNAL(activeWindowChanged(WId)),
-            this, SLOT(activeWindowChanged(WId)));
-
     connectToActivityManager();
     QDBusServiceWatcher *watcher = new QDBusServiceWatcher("org.kde.kactivitymanagerd", QDBusConnection::sessionBus(),
                                              QDBusServiceWatcher::WatchForOwnerChange, this);
     connect(watcher, SIGNAL(serviceOwnerChanged(QString,QString,QString)),
             this, SLOT(serviceChange(QString,QString,QString)));
-}
-
-void ContentTracker::activeWindowChanged(WId wid)
-{
-    setData("Window ID", (int)wid);
-    checkForUpdate();
-    emit changed();
 }
 
 void ContentTracker::focusedResourceUriCallback(const QString &result)
@@ -64,6 +54,7 @@ void ContentTracker::focusChanged(const QString &uri, const QString &mimetype)
     setData("Title", "KDE - Experience Freedom!");
     setData("Thumbnail", KIcon("konqueror").pixmap(64, 64));
     setData("Window ID", (int)KWindowSystem::activeWindow());
+    emit changed();
 }
 
 void ContentTracker::connectToActivityManager()
