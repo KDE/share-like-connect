@@ -30,6 +30,7 @@ Column {
         color: theme.textColor
         font.bold: true
         visible: shareVisible&&shareModel.count>0
+        anchors.horizontalCenter: parent.horizontalCenter
     }
     Repeater {
         id: shareRepeater
@@ -47,6 +48,7 @@ Column {
         color: theme.textColor
         font.bold: true
         visible: likeVisible&&likeModel.count>0
+        anchors.horizontalCenter: parent.horizontalCenter
     }
     Repeater {
         id: likeRepeater
@@ -64,6 +66,7 @@ Column {
         color: theme.textColor
         font.bold: true
         visible: connectVisible&&connectModel.count>0
+        anchors.horizontalCenter: parent.horizontalCenter
     }
     Repeater {
         id: connectRepeater
