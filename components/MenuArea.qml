@@ -81,7 +81,7 @@ Item {
         var dialogY = y-dialog.y-dialog.margins.top
         var item = serviceMenu.childAt(dialogX, dialogY)
 
-        if (item) {
+        if (item && item.sourceName) {
             var itemPos = serviceMenu.mapFromItem(item, 0, 0)
             highlightFrame.x = itemPos.x
             highlightFrame.y = itemPos.y
