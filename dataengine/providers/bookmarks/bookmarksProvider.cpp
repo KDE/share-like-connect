@@ -90,7 +90,7 @@ QVariant BookmarksProvider::executeAction(SLC::Provider::Action action, const QV
 
         if (resourceUrl.scheme() == "http" ||
             content.value("Mime Type").toString() == "text/x-html") {
-            typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark");
+            typeUrl = QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark");
             bookmarkRes.addType(typeUrl);
             bookmarkRes.setDescription(resourceUrl.toString());
             bookmarkRes.setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks"), resourceUrl.toString());

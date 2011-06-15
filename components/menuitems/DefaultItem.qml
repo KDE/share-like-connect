@@ -72,7 +72,11 @@ Text {
             service = slcSource.serviceForSource(main.sourceName)
         }
         var operation = service.operationDescription("executeAction")
-        operation["ActionName"] = model["providerId"]
+        if (model["providerId"]) {
+            operation["ActionName"] = model["providerId"]
+        } else {
+            operation["ActionName"] = main.providerId
+        }
         if (model["target"] != undefined) {
             operation["Targets"] = [model["target"]]
         }

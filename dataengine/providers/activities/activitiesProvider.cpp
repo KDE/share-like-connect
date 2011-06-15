@@ -50,6 +50,7 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
 
     const QString resourceUrl = content["URI"].toString();
     QStringList activityIds = parameters["Targets"].toStringList();
+
     //first step
     if (activityIds.isEmpty()) {
         QList<QVariant> result;
