@@ -22,6 +22,9 @@
 
 #include <Plasma/DataContainer>
 
+class QDBusPendingCallWatcher;
+class OrgKdeActivityManagerSLCInterface;
+
 class ContentTracker : public Plasma::DataContainer
 {
     Q_OBJECT
@@ -32,8 +35,16 @@ public:
 Q_SIGNALS:
     void changed();
 
+protected:
+    void connectToActivityManager();
+
 private Q_SLOTS:
-    void activeWindowChanged(WId wid);
+    void focusChanged(const QString &uri, const QString &mimetype);
+    void focusedResourceUriCallback(const QString &result);
+    void serviceChange(const QString& name, const QString& oldOwner, const QString& newOwner);
+
+private:
+    OrgKdeActivityManagerSLCInterface *activityManagerIface;
 };
 
 #endif

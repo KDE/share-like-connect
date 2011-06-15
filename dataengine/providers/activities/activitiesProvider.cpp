@@ -25,12 +25,12 @@
 
 #include <soprano/vocabulary.h>
 
-#include <kactivityconsumer.h>
+#include <kactivities/consumer.h>
 
 ActivitiesProvider::ActivitiesProvider(QObject *parent, const QVariantList &args)
     : SLC::Provider(parent, args)
 {
-    m_activityConsumer = new KActivityConsumer(this);
+    m_activityConsumer = new Activities::Consumer(this);
 }
 
 SLC::Provider::Actions ActivitiesProvider::actionsFor(const QVariantHash &content) const
