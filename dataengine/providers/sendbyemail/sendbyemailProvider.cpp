@@ -40,7 +40,7 @@ QVariant SendByEmailProvider::executeAction(SLC::Provider::Action action, const 
 {
     Q_UNUSED(parameters)
 
-    if (action != Connect) {
+    if (action != Share) {
         return false;
     }
 
