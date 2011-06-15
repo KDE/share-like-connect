@@ -101,7 +101,7 @@ Item {
     PlasmaCore.FrameSvgItem {
         id: highlightFrame
         imagePath: "widgets/viewitem"
-        prefix: "hover"
+        prefix: "selected+hover"
         opacity: 0
         visible: main.state == "operations"
         Behavior on y {
