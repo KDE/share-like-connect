@@ -25,12 +25,23 @@ Column {
     id: menuColumn
     spacing: 8
 
-    Text {
-        text: i18n("Share")
-        color: theme.textColor
-        font.bold: true
+    PlasmaCore.FrameSvgItem {
+        imagePath: "widgets/extender-dragger"
+        prefix: "grouped"
         visible: shareVisible&&shareModel.count>0
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
+        height: childrenRect.height+margins.top+margins.bottom
+        Text {
+            y: parent.margins.top
+            text: i18n("Share")
+            color: theme.textColor
+            font.bold: true
+            anchors.horizontalCenter: parent.horizontalCenter
+            opacity: 0.6
+        }
     }
     Repeater {
         id: shareRepeater
@@ -43,13 +54,25 @@ Column {
         }
     }
 
-    Text {
-        text: i18n("Like")
-        color: theme.textColor
-        font.bold: true
+    PlasmaCore.FrameSvgItem {
+        imagePath: "widgets/extender-dragger"
+        prefix: "grouped"
         visible: likeVisible&&likeModel.count>0
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
+        height: childrenRect.height+margins.top+margins.bottom
+        Text {
+            y: parent.margins.top
+            text: i18n("Like")
+            color: theme.textColor
+            font.bold: true
+            anchors.horizontalCenter: parent.horizontalCenter
+            opacity: 0.6
+        }
     }
+
     Repeater {
         id: likeRepeater
         model: likeModel
@@ -61,12 +84,23 @@ Column {
         }
     }
 
-    Text {
-        text: i18n("Connect")
-        color: theme.textColor
-        font.bold: true
+    PlasmaCore.FrameSvgItem {
+        imagePath: "widgets/extender-dragger"
+        prefix: "grouped"
         visible: connectVisible&&connectModel.count>0
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
+        height: childrenRect.height+margins.top+margins.bottom
+        Text {
+            y: parent.margins.top
+            text: i18n("Connect")
+            color: theme.textColor
+            font.bold: true
+            anchors.horizontalCenter: parent.horizontalCenter
+            opacity: 0.6
+        }
     }
     Repeater {
         id: connectRepeater
