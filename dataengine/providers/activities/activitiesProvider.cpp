@@ -59,7 +59,7 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
         result << item;
 
         foreach (const QString &activity, m_activityConsumer->listActivities()) {
-            KActivityInfo *info = new KActivityInfo(activity);
+            Activities::Info *info = new Activities::Info(activity);
             QVariantHash item;
             item["target"] = activity;
             item["name"] = info->name();
