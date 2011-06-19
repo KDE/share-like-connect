@@ -19,6 +19,8 @@
 
 #include "activitiesProvider.h"
 
+#include <KService>
+
 #include <Nepomuk/Query/Query>
 #include <Nepomuk/Resource>
 #include <Nepomuk/Variant>
@@ -74,11 +76,20 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
         QUrl typeUrl;
 
         Nepomuk::Resource fileRes(resourceUrl);
+        //Bookmark?
         if (content.value("Mime Type").toString() == "text/x-html") {
             typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark");
             fileRes.addType(typeUrl);
             fileRes.setDescription(resourceUrl);
             fileRes.setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks"), resourceUrl);
+        } else if (resourceUrl.endsWith(".desktop")) {
+            typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Application");
+            fileRes.addType(typeUrl);
+            KService::Ptr service = KService::serviceByDesktopPath(QUrl(resourceUrl).path());
+            if (service) {
+                fileRes.setLabel(service->name());
+                fileRes.setSymbols(QStringList() << service->icon());
+            }
         }
 
         foreach (const QString &activityId, activityIds) {
