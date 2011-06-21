@@ -23,7 +23,11 @@
 
 #include <Nepomuk/Query/Query>
 #include <Nepomuk/Resource>
+#include <Nepomuk/Query/ResourceTerm>
+#include <Nepomuk/Query/Result>
+#include <Nepomuk/Query/QueryServiceClient>
 #include <Nepomuk/Variant>
+#include <nepomuk/comparisonterm.h>
 
 #include <soprano/vocabulary.h>
 
@@ -53,12 +57,28 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
     const QString resourceUrl = content["URI"].toString();
     QStringList activityIds = parameters["Targets"].toStringList();
 
+    //find out what activities if any this resource is connected to
+    //TODO: restrict the query to only activities, but they aren't part of the ontology yet
+    Nepomuk::Query::ComparisonTerm term(Soprano::Vocabulary::NAO::isRelated(), Nepomuk::Query::ResourceTerm(Nepomuk::Resource(resourceUrl)));
+    Nepomuk::Query::Query query = Nepomuk::Query::Query(term);
+    //FIXME: this should be fast enough?
+    QList<Nepomuk::Query::Result> resources = Nepomuk::Query::QueryServiceClient::syncQuery(query);
+
+    QSet<QString> activities;
+    foreach (Nepomuk::Query::Result res, resources) {
+        Nepomuk::Resource resource = res.resource();
+        activities.insert(resource.property(QUrl("http://www.semanticdesktop.org/ontologies/2007/01/19/nie#url")).toString());
+    }
+
     //first step
     if (activityIds.isEmpty()) {
+
+        //list activities
         QList<QVariant> result;
         QVariantHash item;
         item["target"] = m_activityConsumer->currentActivity();
         item["name"] = i18n("Current activity");
+        item["connected"] = activities.contains("activities://"%m_activityConsumer->currentActivity());
         result << item;
 
         foreach (const QString &activity, m_activityConsumer->listActivities()) {
@@ -66,7 +86,9 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
             QVariantHash item;
             item["target"] = activity;
             item["name"] = info->name();
+            item["connected"] = activities.contains("activities://"%activity);
             //kDebug() << "Found activity: " << activity << info->name();
+
             result << item;
             delete info;
         }
@@ -94,7 +116,13 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
 
         foreach (const QString &activityId, activityIds) {
             Nepomuk::Resource acRes("activities://" + activityId);
-            acRes.addProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
+            //remove connection
+            if (activities.contains("activities://"%activityId)) {
+                acRes.removeProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
+            //add connection
+            } else {
+                acRes.addProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
+            }
         }
 
         return true;

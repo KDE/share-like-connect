@@ -34,6 +34,14 @@ Column {
             id: menuItem
             resourceUrl: slcSource.data["Current Content"]["URI"]
             sourceName: menuColumn.sourceName
+            Rectangle {
+                width: 8
+                height: 8
+                radius: 4
+                color: theme.textColor
+                anchors.verticalCenter: parent.verticalCenter
+                visible: model["connected"]
+            }
         }
     }
 }

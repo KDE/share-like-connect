@@ -21,40 +21,43 @@ import QtQuick 1.0
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 
-Column {
+Item {
     id: menuItem
-    spacing: 5
-    //height: Math.min(30, itemLoader.preferredHeight)
     property string resourceUrl
     property string sourceName
+    height: childrenRect.height
+    width: childrenRect.width
+    Column {
+        spacing: 5
+        //height: Math.min(30, itemLoader.preferredHeight)
 
-    PlasmaCore.SvgItem {
-        svg: lineSvg
-        elementId: "horizontal-line"
-        width: parent.width
-        height: lineSvg.elementSize("horizontal-line").height
-        visible: menuItem.y > 0
-    }
+        PlasmaCore.SvgItem {
+            svg: lineSvg
+            elementId: "horizontal-line"
+            width: parent.width
+            height: lineSvg.elementSize("horizontal-line").height
+            visible: menuItem.y > 0
+        }
 
-    MobileComponents.FallbackComponent {
-        id: fallback
-    }
+        MobileComponents.FallbackComponent {
+            id: fallback
+        }
 
-    Loader {
-        id: itemLoader
-        width: Math.max(item.preferredWidth, menuColumn.width)
-        height: item.preferredHeight
+        Loader {
+            id: itemLoader
+            width: Math.max(item.preferredWidth, menuColumn.width)
+            height: item.preferredHeight
 
-        source: fallback.resolvePath("slcmenuitems", [providerId+"Item.qml", "DefaultItem.qml"])
+            source: fallback.resolvePath("slcmenuitems", [providerId+"Item.qml", "DefaultItem.qml"])
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                menuItem.run(mouse.x, mouse.y)
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    menuItem.run(mouse.x, mouse.y)
+                }
             }
         }
     }
-
 
     function run(x, y)
     {
