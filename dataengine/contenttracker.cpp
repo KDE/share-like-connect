@@ -47,7 +47,7 @@ void ContentTracker::focusedResourceUriCallback(const QString &result)
 
 void ContentTracker::focusChanged(const QString &uri, const QString &mimetype)
 {
-    kDebug()<< uri<< mimetype;
+    kDebug() << "New URI" << uri << mimetype;
     setData("URI", uri);
     setData("Mime Type", mimetype);
     setData("Source", "KDE");

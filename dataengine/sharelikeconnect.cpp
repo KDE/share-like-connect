@@ -140,6 +140,9 @@ void ShareLikeConnectEngine::contentChanged()
             setData("Connect", it.key(), data);
         }
     }
+
+    //FIXME: why this is necessary?
+    forceImmediateUpdateOfAllVisualizations();
 }
 
 QHash<QString, SLC::Provider *> ShareLikeConnectEngine::providers() const
