@@ -1,8 +1,6 @@
-set(sharelikeconnect_SRCS provider.cpp providerScriptEngine.cpp)
-
-kde4_add_library(sharelikeconnect SHARED ${sharelikeconnect_SRCS})
-target_link_libraries(sharelikeconnect ${KDE4_PLASMA_LIBS} ${QT_QTSCRIPT_LIBRARY})
-install(TARGETS sharelikeconnect ${INSTALL_TARGETS_DEFAULT_ARGS})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/providerlib)
+add_subdirectory(providerlib)
+add_subdirectory(providers)
 
 set(sharelikeconnectengine_SRCS
     contenttracker.cpp
@@ -23,6 +21,4 @@ install(FILES plasma-dataengine-sharelikeconnect.desktop DESTINATION ${SERVICES_
 install(FILES plasma-sharelikeconnect-provider.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )
 
 install(FILES slcservice/slcservice.operations DESTINATION ${DATA_INSTALL_DIR}/plasma/services)
-
-add_subdirectory(providers)
 

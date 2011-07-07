@@ -32,11 +32,14 @@ namespace SLC
 
 ProviderScriptEngine::ProviderScriptEngine(Plasma::Package *package, QObject *parent)
     : QScriptEngine(parent),
-      m_package(package)
+      m_package(package),
+      m_allowedUrls(HttpUrls)
 {
     QScriptValue value = globalObject();
     value.setProperty("addEventListener", newFunction(ProviderScriptEngine::addEventListener));
     value.setProperty("removeEventListener", newFunction(ProviderScriptEngine::removeEventListener));
+    registerOpenUrl(value);
+    registerGetUrl(value);
 }
 
 bool ProviderScriptEngine::include(const QString &path)
