@@ -1,9 +1,9 @@
 [Desktop Entry]
-Comment=Share Like Connect plasmoid
+Name=Share Like Connect
+Comment=Quick associations for active content
 Encoding=UTF-8
 Icon=
 Keywords=
-Name=sharelikeconnect
 Type=Service
 X-KDE-ParentApp=
 X-KDE-PluginInfo-Author=Marco Martin
