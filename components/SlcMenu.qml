@@ -26,21 +26,26 @@ PlasmaCore.Dialog {
     id: dialog
     property Item parentItem
     windowFlags: Qt.Popup
+
     mainItem: MenuArea {
         id: menuArea
     }
+
     function adjustPosition()
     {
         var pos = dialog.popupPosition(parentItem, Qt.AlignCenter)
         dialog.x = pos.x
         dialog.y = pos.y
     }
+
     onHeightChanged: {
         adjustPosition()
     }
+
     onWidthChanged: {
         adjustPosition()
     }
+
     onVisibleChanged: {
         // setAttribute(Qt.WA_X11NetWmWindowTypePopupMenu, true)
         if (!visible) {
