@@ -108,11 +108,11 @@ void ShareLikeConnectEngine::contentChanged()
     removeAllData("Like");
     removeAllData("Connect");
 
-    kDebug() << "going to get content for" << content["URI"].toUrl();
     if (content["URI"].value<QUrl>().isEmpty()) {
         return;
     }
 
+    kDebug() << "going to get content for" << content["URI"].toUrl();
     QHashIterator<QString, SLC::Provider *> it(m_providers);
     while (it.hasNext()) {
         it.next();
