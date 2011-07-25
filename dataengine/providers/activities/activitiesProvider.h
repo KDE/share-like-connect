@@ -35,6 +35,9 @@ public:
     Actions actionsFor(const QVariantHash &content) const;
 
     QVariant executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters);
+
+    QString actionName(const QVariantHash &content, Action action);
+
 private:
     Activities::Consumer *m_activityConsumer;
 };

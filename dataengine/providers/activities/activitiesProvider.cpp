@@ -48,6 +48,23 @@ SLC::Provider::Actions ActivitiesProvider::actionsFor(const QVariantHash &conten
     return NoAction;
 }
 
+QString ActivitiesProvider::actionName(const QVariantHash &content, Action action)
+{
+    Nepomuk::Resource acRes("activities://" + m_activityConsumer->currentActivity());
+
+    if (content.value("Window ID").toInt() > 0) {
+        QUrl url(content.value("URI").toString());
+        Nepomuk::Resource res(url.toString());
+        if (res.exists() && res.isRelatedOf().contains(acRes)) {
+            return i18n("Disconnect from activity");
+        } else {
+            return i18n("Connect to activity");
+        }
+    }
+
+    return Provider::actionName(content, action);
+}
+
 QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters)
 {
     if (action != Connect) {
@@ -55,7 +72,7 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
     }
 
     const QString resourceUrl = content["URI"].toString();
-    QStringList activityIds = parameters["Targets"].toStringList();
+    QString activityId = m_activityConsumer->currentActivity();
 
     //find out what activities if any this resource is connected to
     //TODO: restrict the query to only activities, but they aren't part of the ontology yet
@@ -70,63 +87,36 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
         activities.insert(resource.property(QUrl("http://www.semanticdesktop.org/ontologies/2007/01/19/nie#url")).toString());
     }
 
-    //first step
-    if (activityIds.isEmpty()) {
+    QUrl typeUrl;
 
-        //list activities
-        QList<QVariant> result;
-        QVariantHash item;
-        item["target"] = m_activityConsumer->currentActivity();
-        item["name"] = i18n("Current activity");
-        item["connected"] = activities.contains("activities://"%m_activityConsumer->currentActivity());
-        result << item;
-
-        foreach (const QString &activity, m_activityConsumer->listActivities()) {
-            Activities::Info *info = new Activities::Info(activity);
-            QVariantHash item;
-            item["target"] = activity;
-            item["name"] = info->name();
-            item["connected"] = activities.contains("activities://"%activity);
-            //kDebug() << "Found activity: " << activity << info->name();
-
-            result << item;
-            delete info;
+    Nepomuk::Resource fileRes(resourceUrl);
+    //Bookmark?
+    if (content.value("Mime Type").toString() == "text/x-html") {
+        typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark");
+        fileRes.addType(typeUrl);
+        fileRes.setDescription(resourceUrl);
+        fileRes.setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks"), resourceUrl);
+    } else if (resourceUrl.endsWith(".desktop")) {
+        typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Application");
+        fileRes.addType(typeUrl);
+        KService::Ptr service = KService::serviceByDesktopPath(QUrl(resourceUrl).path());
+        if (service) {
+            fileRes.setLabel(service->name());
+            fileRes.setSymbols(QStringList() << service->icon());
         }
-        return result;
-    //second step
-    } else {
-        QUrl typeUrl;
-
-        Nepomuk::Resource fileRes(resourceUrl);
-        //Bookmark?
-        if (content.value("Mime Type").toString() == "text/x-html") {
-            typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark");
-            fileRes.addType(typeUrl);
-            fileRes.setDescription(resourceUrl);
-            fileRes.setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks"), resourceUrl);
-        } else if (resourceUrl.endsWith(".desktop")) {
-            typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Application");
-            fileRes.addType(typeUrl);
-            KService::Ptr service = KService::serviceByDesktopPath(QUrl(resourceUrl).path());
-            if (service) {
-                fileRes.setLabel(service->name());
-                fileRes.setSymbols(QStringList() << service->icon());
-            }
-        }
-
-        foreach (const QString &activityId, activityIds) {
-            Nepomuk::Resource acRes("activities://" + activityId);
-            //remove connection
-            if (activities.contains("activities://"%activityId)) {
-                acRes.removeProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
-            //add connection
-            } else {
-                acRes.addProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
-            }
-        }
-
-        return true;
     }
+
+    Nepomuk::Resource acRes("activities://" + activityId);
+    //remove connection
+    if (activities.contains("activities://"%activityId)) {
+        acRes.removeProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
+    //add connection
+    } else {
+        acRes.addProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
+    }
+
+
+    return true;
 }
 
 //K_EXPORT_SLC_PROVIDER(activities, ActivitiesProvider)
