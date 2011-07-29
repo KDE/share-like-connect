@@ -66,14 +66,18 @@ ShareLikeConnectEngine::ShareLikeConnectEngine(QObject *parent, const QVariantLi
         }
 
         if (!provider) {
+#ifndef NDEBUG
             kDebug() << "ShareLikeConnect failed to load" << offer->name() << offer->library() << "due to:" << error;
+#endif
             continue;
         }
 
         m_providers.insert(pluginName, provider);
     }
 
+#ifndef NDEBUG
     kDebug() << "providers:" << m_providers.keys() << offers.count();
+#endif
     ContentTracker *tracker = new ContentTracker(this);
     connect(tracker, SIGNAL(changed()), this, SLOT(contentChanged()));
     tracker->setObjectName(TRACKER_SOURCE);
@@ -112,13 +116,17 @@ void ShareLikeConnectEngine::contentChanged()
         return;
     }
 
+#ifndef NDEBUG
     kDebug() << "going to get content for" << content["URI"].toUrl();
+#endif
     QHashIterator<QString, SLC::Provider *> it(m_providers);
     while (it.hasNext()) {
         it.next();
         SLC::Provider *provider = it.value();
         SLC::Provider::Actions actions = provider->actionsFor(content);
+#ifndef NDEBUG
         kDebug() << "checkout" << it.key() << "with" << actions;
+#endif
         if (actions & SLC::Provider::Share) {
             QVariantHash data;
             data["providerId"] = it.key();

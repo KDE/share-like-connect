@@ -73,7 +73,9 @@ QScriptValue ProviderScriptEngine::getUrl(QScriptContext *context, QScriptEngine
 
     ProviderScriptEngine *env = ProviderScriptEngine::findProviderScriptEngine(engine);
     if (!env) {
+#ifndef NDEBUG
         //kDebug() << "findProviderScriptEngine failed";
+#endif
         return engine->undefinedValue();
     }
 

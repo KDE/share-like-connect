@@ -65,7 +65,9 @@ Provider::Provider(QObject *parent, const Plasma::Package &package, const QStrin
 
     const QString mainscriptEngine = package.filePath("mainscript");
     if (mainscriptEngine.isEmpty()) {
+#ifndef NDEBUG
         kDebug() << "no main scriptEngine, should not be possible!";
+#endif
         return;
     }
 
@@ -79,7 +81,9 @@ Provider::Provider(QObject *parent, const Plasma::Package &package, const QStrin
     }
 
     if (!d->scriptEngine->include(mainscriptEngine)) {
+#ifndef NDEBUG
         kDebug() << "no main scriptEngine, should not be possible!";
+#endif
         delete d->scriptEngine;
         d->scriptEngine = 0;
         delete d->package;
@@ -103,7 +107,9 @@ Provider::~Provider()
 template <class M>
 QScriptValue qScriptValueFromMap(QScriptEngine *eng, const M &map)
 {
+#ifndef NDEBUG
     //kDebug() << "qScriptValueFromMap called";
+#endif
     QScriptValue obj = eng->newObject();
     typename M::const_iterator begin = map.constBegin();
     typename M::const_iterator end = map.constEnd();

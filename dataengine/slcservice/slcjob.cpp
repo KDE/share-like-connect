@@ -44,10 +44,14 @@ void SlcJob::start()
 
     const QString operation = operationName();
 
+#ifndef NDEBUG
     kDebug() << "starting operation" << operation;
+#endif
 
     if (operation == "executeAction") {
+#ifndef NDEBUG
         kDebug() << parameters()["ActionName"].toString();
+#endif
         QVariantHash providerParameters;
         providerParameters["Comment"] = parameters()["Comment"];
         providerParameters["Targets"] = parameters()["Targets"];

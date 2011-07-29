@@ -47,7 +47,9 @@ void ContentTracker::focusedResourceUriCallback(const QString &result)
 
 void ContentTracker::focusChanged(const QString &uri, const QString &mimetype)
 {
+#ifndef NDEBUG
     kDebug() << "New URI" << uri << mimetype;
+#endif
     setData("URI", uri);
     setData("Mime Type", mimetype);
     setData("Source", "KDE");
@@ -74,7 +76,9 @@ void ContentTracker::connectToActivityManager()
 
 void ContentTracker::serviceChange(const QString& name, const QString& oldOwner, const QString& newOwner)
 {
+#ifndef NDEBUG
     kDebug()<< "Service" << name << "status change, old owner:" << oldOwner << "new:" << newOwner;
+#endif
 
     if (newOwner.isEmpty()) {
         //unregistered
