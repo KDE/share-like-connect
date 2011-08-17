@@ -24,8 +24,9 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.slccomponents 0.1 as SlcComponents
 
 Row {
-    width: 100
-    height: 16
+    property int minimumWidth: childrenRect.width
+    property int minimumHeight: 16
+
     spacing: 5
     Icon {
         icon: QIcon("system-users")
