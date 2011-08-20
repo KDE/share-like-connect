@@ -55,7 +55,7 @@ Item {
                 height: 22
                 icon: QIcon("rating")
                 property int baseRating: (index+1)*2
-                opacity: (score > index*2)? 1: 0.3
+                enabled: (score > index*2)
             }
         }
     }
