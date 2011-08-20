@@ -29,7 +29,8 @@ SendByEmailProvider::SendByEmailProvider(QObject *parent, const QVariantList &ar
 SLC::Provider::Actions SendByEmailProvider::actionsFor(const QVariantHash &content) const
 {
     KUrl fileUrl(content.value("URI").toString());
-    if (fileUrl.isLocalFile()) {
+
+    if (fileUrl.isLocalFile() && !fileUrl.path().endsWith(".desktop")) {
         return Share;
     } else {
         return NoAction;
