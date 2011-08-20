@@ -52,9 +52,10 @@ void ContentTracker::focusChanged(const QString &uri, const QString &mimetype)
 #endif
     setData("URI", uri);
     setData("Mime Type", mimetype);
-    setData("Source", "KDE");
-    setData("Title", "KDE - Experience Freedom!");
-    setData("Thumbnail", KIcon("konqueror").pixmap(64, 64));
+    //TODO: all of this
+    //setData("Source", "KDE");
+    //setData("Title", "KDE - Experience Freedom!");
+    //setData("Thumbnail", KIcon("konqueror").pixmap(64, 64));
     setData("Window ID", (int)KWindowSystem::activeWindow());
     emit changed();
 }
