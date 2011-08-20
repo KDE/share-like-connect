@@ -45,6 +45,7 @@ Column {
 
     Text {
         id: titleText
+        visible: text != ""
         anchors {
             left: parent.left
             right: parent.right
