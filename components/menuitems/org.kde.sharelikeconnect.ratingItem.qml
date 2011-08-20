@@ -21,6 +21,7 @@
 import QtQuick 1.0
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
+import org.kde.qtextracomponents 0.1
 
 
 Item {
@@ -45,30 +46,17 @@ Item {
         id: iconRow
         anchors.centerIn: parent
         spacing: 0
-        MobileComponents.RatingIcon {
-            id: rating2
-            baseRating: 2
-            enabled: score > 1
-        }
-        MobileComponents.RatingIcon {
-            id: rating4
-            baseRating: 4
-            enabled: score > 3
-        }
-        MobileComponents.RatingIcon {
-            id: rating6
-            baseRating: 6
-            enabled: score > 5
-        }
-        MobileComponents.RatingIcon {
-            id: rating8
-            baseRating: 8
-            enabled: score > 7
-        }
-        MobileComponents.RatingIcon {
-            id: rating10
-            baseRating: 10
-            enabled: score > 9
+        Repeater {
+            model: 5
+
+            QIconItem {
+                id: rating2
+                width: 22
+                height: 22
+                icon: QIcon("rating")
+                property int baseRating: (index+1)*2
+                opacity: (score > index*2)? 1: 0.3
+            }
         }
     }
 
@@ -87,6 +75,7 @@ Item {
     {
         var pos = iconRow.mapFromItem(containerItem, x, y)
         var star = iconRow.childAt(pos.x, pos.y);
+
         if (star && star.baseRating) {
             print("released with rating " + star.baseRating + " Item: " + resourceUrl);
             rateResource(resourceUrl, star.baseRating);
