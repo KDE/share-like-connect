@@ -25,6 +25,34 @@ Column {
     id: menuColumn
     spacing: 8
 
+    property string resourceUrl: slcSource.data["Current Content"]["URI"]
+
+    onResourceUrlChanged: {
+        var title = String(menuColumn.resourceUrl)
+
+        if (title.indexOf("file://") == 0) {
+            titleText.text = title.substring(title.lastIndexOf("/") + 1)
+        } else if (title.indexOf("http") == 0) {
+            title = title.replace("http://", "");
+            title = title.replace("https://", "");
+            title = title.replace("www.", "");
+            titleText.text = title.substring(0, title.indexOf("/"))
+        } else {
+            titleText.text = ""
+        }
+
+    }
+
+    Text {
+        id: titleText
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
+        horizontalAlignment: Text.AlignHCenter
+        elide: Text.ElideMiddle
+    }
+
     PlasmaCore.FrameSvgItem {
         imagePath: "widgets/extender-dragger"
         prefix: "grouped"
@@ -50,7 +78,7 @@ Column {
         MenuItem {
             visible: shareVisible
             sourceName: "Share"
-            resourceUrl: slcSource.data["Current Content"]["URI"]
+            resourceUrl: menuColumn.resourceUrl
         }
     }
 
@@ -80,7 +108,7 @@ Column {
         MenuItem {
             visible: likeVisible
             sourceName: "Like"
-            resourceUrl: slcSource.data["Current Content"]["URI"]
+            resourceUrl: menuColumn.resourceUrl
         }
     }
 
@@ -109,7 +137,7 @@ Column {
         MenuItem {
             visible: connectVisible
             sourceName: "Connect"
-            resourceUrl: slcSource.data["Current Content"]["URI"]
+            resourceUrl: menuColumn.resourceUrl
         }
     }
 }
