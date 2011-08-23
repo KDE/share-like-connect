@@ -19,6 +19,7 @@
  */
 
 #include "ratingProvider.h"
+#include "datamanagement.h"
 
 #include <Nepomuk/Query/Query>
 #include <Nepomuk/Resource>
@@ -56,7 +57,8 @@ QVariant RatingProvider::executeAction(SLC::Provider::Action action, const QVari
         fileRes.setDescription(resourceUrl);
     }
 
-    fileRes.setRating(rating);
+    //fileRes.setRating(rating);
+    Nepomuk::setProperty(QList<QUrl>() << fileRes.resourceUri(), QUrl("http://www.semanticdesktop.org/ontologies/2007/08/15/nao#numericRating"), QVariantList() << rating);
 
     return true;
 }
