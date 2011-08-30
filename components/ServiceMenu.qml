@@ -28,6 +28,12 @@ Column {
     property string resourceUrl: slcSource.data["Current Content"]["URI"]
 
     onResourceUrlChanged: {
+        if (slcSource.data["Current Content"]["Title"]) {
+            titleText.text = slcSource.data["Current Content"]["Title"]
+            return
+        }
+
+        //fallback
         var title = String(menuColumn.resourceUrl)
 
         if (title.indexOf("file://") == 0) {
