@@ -37,6 +37,15 @@ Item {
     property string providerId
     property string sourceName
 
+    Connections {
+        target: dialog
+        onVisibleChanged: {
+            if (!dialog.visible) {
+                highlightFrame.opacity = 0
+            }
+        }
+    }
+
     property QtObject slcSource: PlasmaCore.DataSource {
         engine: "org.kde.sharelikeconnect"
         connectedSources: ["Current Content", "Share", "Like", "Connect"]
