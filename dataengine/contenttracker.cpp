@@ -45,13 +45,14 @@ void ContentTracker::focusedResourceUriCallback(const QString &result)
     kWarning()<<result;
 }
 
-void ContentTracker::focusChanged(const QString &uri, const QString &mimetype)
+void ContentTracker::focusChanged(const QString &uri, const QString &mimetype, const QString &title)
 {
 #ifndef NDEBUG
-    kDebug() << "New URI" << uri << mimetype;
+    kDebug() << "New URI" << uri << mimetype << title;
 #endif
     setData("URI", uri);
     setData("Mime Type", mimetype);
+    setData("Title", title);
     //TODO: all of this
     //setData("Source", "KDE");
     //setData("Title", "KDE - Experience Freedom!");
@@ -67,7 +68,7 @@ void ContentTracker::connectToActivityManager()
     if (activityManagerIface->isValid()) {
         activityManagerIface->callWithCallback("focussedResourceURI", QList<QVariant>(), this, SLOT(focusedResourceUriCallback(const QString &)));
 
-        connect(activityManagerIface, SIGNAL(focusChanged(const QString &, const QString &)), this, SLOT(focusChanged(const QString &, const QString &)));
+        connect(activityManagerIface, SIGNAL(focusChanged(const QString &, const QString &, const QString &)), this, SLOT(focusChanged(const QString &, const QString &, const QString &)));
     } else {
         delete activityManagerIface;
         activityManagerIface = 0;

@@ -39,7 +39,7 @@ protected:
     void connectToActivityManager();
 
 private Q_SLOTS:
-    void focusChanged(const QString &uri, const QString &mimetype);
+    void focusChanged(const QString &uri, const QString &mimetype, const QString &title);
     void focusedResourceUriCallback(const QString &result);
     void serviceChange(const QString& name, const QString& oldOwner, const QString& newOwner);
 
