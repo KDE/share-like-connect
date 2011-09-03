@@ -27,7 +27,8 @@ Row {
     property int minimumWidth: childrenRect.width
     property int minimumHeight: 16
 
-    spacing: 5
+    spacing: 8
+
     Icon {
         icon: QIcon("system-users")
         service: "Share"
