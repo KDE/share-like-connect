@@ -38,7 +38,7 @@ Item {
         connectedSources: [resourceUrl]
         onDataChanged: {
             var key = metadataSource.keysForSource(resourceUrl)[0]
-            containerItem.score = metadataSource.data[resourceUrl][key].numericRating
+            containerItem.score = metadataSource.data[resourceUrl][key].numericRating ? metadataSource.data[resourceUrl][key].numericRating : 0
         }
     }
 
