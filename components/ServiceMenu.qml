@@ -26,58 +26,60 @@ Column {
     spacing: 8
 
     property string resourceUrl: slcSource.data["Current Content"]["URI"]
+    property string contentTitle: ''
 
     onResourceUrlChanged: {
-        if (slcSource.data["Current Content"]["Title"]) {
-            titleText.text = slcSource.data["Current Content"]["Title"]
-            return
+        var title = slcSource.data["Current Content"]["Title"]
+        if (!title) {
+            //fallback to the url
+            title = String(menuColumn.resourceUrl)
+
+            if (title.indexOf("file://") == 0) {
+                title = title.substring(title.lastIndexOf("/") + 1)
+            } else if (title.indexOf("http") == 0) {
+                title = title.replace("http://", "");
+                title = title.replace("https://", "");
+                title = title.replace("www.", "");
+                title = title.substring(0, title.indexOf("/"))
+            } else {
+                title = ""
+            }
         }
 
-        //fallback
-        var title = String(menuColumn.resourceUrl)
-
-        if (title.indexOf("file://") == 0) {
-            titleText.text = title.substring(title.lastIndexOf("/") + 1)
-        } else if (title.indexOf("http") == 0) {
-            title = title.replace("http://", "");
-            title = title.replace("https://", "");
-            title = title.replace("www.", "");
-            titleText.text = title.substring(0, title.indexOf("/"))
-        } else {
-            titleText.text = ""
-        }
-
-    }
-
-    Text {
-        id: titleText
-        visible: text != ""
-        anchors {
-            left: parent.left
-            right: parent.right
-        }
-        horizontalAlignment: Text.AlignHCenter
-        elide: Text.ElideMiddle
+        contentTitle = title
     }
 
     PlasmaCore.FrameSvgItem {
         imagePath: "widgets/extender-dragger"
         prefix: "grouped"
-        visible: shareVisible&&shareModel.count>0
+        visible: shareVisible && shareModel.count > 0
         anchors {
             left: parent.left
             right: parent.right
         }
-        height: childrenRect.height+margins.top+margins.bottom
+        height: childrenRect.height + margins.top + margins.bottom
         Text {
+            id: shareTitle
             y: parent.margins.top
             text: i18n("Share")
             color: theme.textColor
             font.bold: true
             anchors.horizontalCenter: parent.horizontalCenter
             opacity: 0.6
+            elide: Text.ElideMiddle
+        }
+        Text {
+            id: shareContentTitle
+            y: shareTitle.y + shareTitle.height
+            text: contentTitle
+            visible: text != ''
+            color: theme.textColor
+            anchors.horizontalCenter: parent.horizontalCenter
+            opacity: 0.6
+            elide: Text.ElideRight
         }
     }
+
     Repeater {
         id: shareRepeater
         model: shareModel
@@ -92,19 +94,30 @@ Column {
     PlasmaCore.FrameSvgItem {
         imagePath: "widgets/extender-dragger"
         prefix: "grouped"
-        visible: likeVisible&&likeModel.count>0
+        visible: likeVisible && likeModel.count > 0
         anchors {
             left: parent.left
             right: parent.right
         }
-        height: childrenRect.height+margins.top+margins.bottom
+        height: childrenRect.height + margins.top + margins.bottom
         Text {
+            id: likeTitle
             y: parent.margins.top
             text: i18n("Like")
             color: theme.textColor
             font.bold: true
             anchors.horizontalCenter: parent.horizontalCenter
             opacity: 0.6
+        }
+        Text {
+            id: likeContentTitle
+            y: likeTitle.y + likeTitle.height
+            text: contentTitle
+            visible: text != ''
+            color: theme.textColor
+            anchors.horizontalCenter: parent.horizontalCenter
+            opacity: 0.6
+            elide: Text.ElideRight
         }
     }
 
@@ -122,21 +135,34 @@ Column {
     PlasmaCore.FrameSvgItem {
         imagePath: "widgets/extender-dragger"
         prefix: "grouped"
-        visible: connectVisible&&connectModel.count>0
+        visible: connectVisible && connectModel.count > 0
         anchors {
             left: parent.left
             right: parent.right
         }
-        height: childrenRect.height+margins.top+margins.bottom
+        height: childrenRect.height + margins.top + margins.bottom
         Text {
+            id: connectTitle
             y: parent.margins.top
             text: i18n("Connect")
             color: theme.textColor
             font.bold: true
             anchors.horizontalCenter: parent.horizontalCenter
             opacity: 0.6
+            elide: Text.ElideMiddle
+        }
+        Text {
+            id: connectContentTitle
+            y: connectTitle.y + connectTitle.height
+            text: contentTitle
+            visible: text != ''
+            color: theme.textColor
+            anchors.horizontalCenter: parent.horizontalCenter
+            opacity: 0.6
+            elide: Text.ElideRight
         }
     }
+
     Repeater {
         id: connectRepeater
         model: connectModel
