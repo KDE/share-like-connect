@@ -26,7 +26,7 @@ Item {
     id: main
     clip: true
     //FIXME: remove hardcoded sizes
-    width: 200
+    width: serviceMenu.width
     height: mainWidget.height
     property bool shareVisible: true
     property bool likeVisible: true
@@ -36,6 +36,10 @@ Item {
     property string confirmationMessage
     property string providerId
     property string sourceName
+
+    PlasmaCore.Theme {
+        id: theme
+    }
 
     Connections {
         target: dialog
@@ -172,24 +176,24 @@ Item {
         }
         ServiceMenu {
             id: serviceMenu
-            width: main.width
+            //width: main.width
         }
 
         TargetChooser {
             id: targetChooser
             visible: main.state == "targets"
-            width:main.width
+            width: serviceMenu.width
         }
 
         CommentForm {
             id: commentForm
             visible: main.state == "comment"
-            width:main.width
+            width: serviceMenu.width
         }
 
         Confirmation {
             id: confirmation
-            width:main.width
+            width: serviceMenu.width
         }
     }
 
