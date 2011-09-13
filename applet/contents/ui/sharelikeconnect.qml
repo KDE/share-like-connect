@@ -52,6 +52,7 @@ Row {
 
     SlcComponents.SlcMenu {
         id: dialog
+        location: plasmoid.location
     }
 }
 
