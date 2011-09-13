@@ -27,6 +27,7 @@ Item {
     clip: true
     width: serviceMenu.width
     height: mainWidget.height
+
     property bool shareVisible: true
     property bool likeVisible: true
     property bool connectVisible: true
@@ -167,6 +168,7 @@ Item {
 
     Row {
         id: mainWidget
+        spacing: 20
         Behavior on x {
             NumberAnimation {
                 duration: 250
