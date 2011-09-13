@@ -25,7 +25,6 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 Item {
     id: main
     clip: true
-    //FIXME: remove hardcoded sizes
     width: serviceMenu.width
     height: mainWidget.height
     property bool shareVisible: true
@@ -203,6 +202,7 @@ Item {
             PropertyChanges {
                 target: mainWidget
                 x: 0
+                width: serviceMenu.width
                 height: serviceMenu.height
             }
         },
@@ -211,6 +211,7 @@ Item {
             PropertyChanges {
                 target: mainWidget
                 x: -targetChooser.x
+                width: targetChooser.width
                 height: targetChooser.height
             }
         },
@@ -219,6 +220,7 @@ Item {
             PropertyChanges {
                 target: mainWidget
                 x: -commentForm.x
+                width: commentForm.width
                 height: commentForm.height
             }
         },
@@ -227,6 +229,7 @@ Item {
             PropertyChanges {
                 target: mainWidget
                 x: -confirmation.x
+                width: confirmation.width
                 height: confirmation.height
             }
         }
