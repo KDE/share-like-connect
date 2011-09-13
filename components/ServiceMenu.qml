@@ -26,10 +26,11 @@ Column {
     spacing: 8
 
     property string resourceUrl: slcSource.data["Current Content"]["URI"]
-    property string contentTitle: ''
+    property string contentTitle
 
     onResourceUrlChanged: {
         var title = slcSource.data["Current Content"]["Title"]
+print("AAAAA"+title)
         if (!title) {
             //fallback to the url
             title = String(menuColumn.resourceUrl)
@@ -52,7 +53,7 @@ Column {
     PlasmaCore.FrameSvgItem {
         imagePath: "widgets/extender-dragger"
         prefix: "grouped"
-        visible: shareVisible && shareModel.count > 0
+        visible: shareVisible && shareModel.count > 0 && !likeVisible && !connectVisible
         anchors {
             left: parent.left
             right: parent.right
@@ -94,7 +95,7 @@ Column {
     PlasmaCore.FrameSvgItem {
         imagePath: "widgets/extender-dragger"
         prefix: "grouped"
-        visible: likeVisible && likeModel.count > 0
+        visible: likeVisible && likeModel.count > 0 && !shareVisible && !connectVisible
         anchors {
             left: parent.left
             right: parent.right
@@ -135,7 +136,7 @@ Column {
     PlasmaCore.FrameSvgItem {
         imagePath: "widgets/extender-dragger"
         prefix: "grouped"
-        visible: connectVisible && connectModel.count > 0
+        visible: connectVisible && connectModel.count > 0 && !shareVisible && !likeVisible
         anchors {
             left: parent.left
             right: parent.right
@@ -155,9 +156,13 @@ Column {
             id: connectContentTitle
             y: connectTitle.y + connectTitle.height
             text: contentTitle
-            visible: text != ''
+            visible: text != ""
             color: theme.textColor
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+            horizontalAlignment: Text.AlignHCenter
             opacity: 0.6
             elide: Text.ElideRight
         }
