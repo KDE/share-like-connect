@@ -30,7 +30,7 @@ Column {
 
     onResourceUrlChanged: {
         var title = slcSource.data["Current Content"]["Title"]
-print("AAAAA"+title)
+
         if (!title) {
             //fallback to the url
             title = String(menuColumn.resourceUrl)
