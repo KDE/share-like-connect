@@ -3,11 +3,11 @@ set(activitiesProvider_SRCS
 )
 
 find_package(Nepomuk REQUIRED)
-
+find_package(KActivities REQUIRED)
 
 include_directories(${CMAKE_SOURCE_DIR}/dataengine)
 kde4_add_plugin(sharelikeconnect_provider_activities ${activitiesProvider_SRCS})
-target_link_libraries(sharelikeconnect_provider_activities ${KDE4_KDECORE_LIBS} ${NEPOMUK_LIBRARIES} ${NEPOMUK_QUERY_LIBRARIES} ${SOPRANO_LIBRARIES} ${SOPRANO_CLIENT_LIBRARIES} kactivities sharelikeconnect)
+target_link_libraries(sharelikeconnect_provider_activities ${KDE4_KDECORE_LIBS} ${NEPOMUK_LIBRARIES} ${NEPOMUK_QUERY_LIBRARIES} ${SOPRANO_LIBRARIES} ${SOPRANO_CLIENT_LIBRARIES} ${KACTIVITIES_LIBS} sharelikeconnect)
 
 install(TARGETS sharelikeconnect_provider_activities DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES sharelikeconnect-provider-activities.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
