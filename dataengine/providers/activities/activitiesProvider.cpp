@@ -50,24 +50,6 @@ SLC::Provider::Actions ActivitiesProvider::actionsFor(const QVariantHash &conten
     return NoAction;
 }
 
-QString ActivitiesProvider::actionName(const QVariantHash &content, Action action)
-{
-    Nepomuk::Resource acRes(m_activityConsumer->currentActivity(), Nepomuk::Vocabulary::KEXT::Activity());
-
-    if (content.value("Window ID").toInt() > 0) {
-        QUrl url(content.value("URI").toString());
-        Nepomuk::Resource res(url.toString());
-
-        if (res.exists() && res.isRelatedOf().contains(acRes)) {
-            return i18n("Disconnect from activity");
-        } else {
-            return i18n("Connect to activity");
-        }
-    }
-
-    return Provider::actionName(content, action);
-}
-
 QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters)
 {
     if (action != Connect) {
@@ -75,7 +57,7 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
     }
 
     const QString resourceUrl = content["URI"].toString();
-    QString activityId = m_activityConsumer->currentActivity();
+    QStringList activityIds = parameters["Targets"].toStringList();
 
     //find out what activities if any this resource is connected to
     //TODO: restrict the query to only activities, but they aren't part of the ontology yet
@@ -90,6 +72,32 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
         activities.insert(resource.property(QUrl("http://nepomuk.kde.org/ontologies/2010/11/29/kext#activityIdentifier")).toString());
     }
 
+    //first step
+    if (activityIds.isEmpty()) {
+
+        //list activities
+        QList<QVariant> result;
+        QVariantHash item;
+        item["target"] = m_activityConsumer->currentActivity();
+        item["name"] = i18n("Current activity");
+        item["connected"] = activities.contains(m_activityConsumer->currentActivity());
+        result << item;
+
+        foreach (const QString &activity, m_activityConsumer->listActivities()) {
+            Activities::Info *info = new Activities::Info(activity);
+            QVariantHash item;
+            item["target"] = activity;
+            item["name"] = info->name();
+            item["connected"] = activities.contains(activity);
+            //kDebug() << "Found activity: " << activity << info->name();
+
+            result << item;
+            delete info;
+        }
+        return result;
+    }
+
+    //second step
     QUrl typeUrl;
 
     Nepomuk::Resource fileRes(resourceUrl);
@@ -110,15 +118,16 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
         }
     }
 
-    Nepomuk::Resource acRes(activityId, Nepomuk::Vocabulary::KEXT::Activity());
-    //remove connection
-    if (activities.contains(activityId)) {
-        acRes.removeProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
-    //add connection
-    } else {
-        acRes.addProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
+    foreach (const QString &activityId, activityIds) {
+        Nepomuk::Resource acRes(activityId, Nepomuk::Vocabulary::KEXT::Activity());
+        //remove connection
+        if (activities.contains(activityId)) {
+            acRes.removeProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
+        //add connection
+        } else {
+            acRes.addProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
+        }
     }
-
 
     return true;
 }
