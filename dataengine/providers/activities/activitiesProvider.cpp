@@ -33,6 +33,8 @@
 
 #include <kactivities/consumer.h>
 
+#include "kext.h"
+
 ActivitiesProvider::ActivitiesProvider(QObject *parent, const QVariantList &args)
     : SLC::Provider(parent, args)
 {
@@ -50,11 +52,12 @@ SLC::Provider::Actions ActivitiesProvider::actionsFor(const QVariantHash &conten
 
 QString ActivitiesProvider::actionName(const QVariantHash &content, Action action)
 {
-    Nepomuk::Resource acRes("activities://" + m_activityConsumer->currentActivity());
+    Nepomuk::Resource acRes(m_activityConsumer->currentActivity(), Nepomuk::Vocabulary::KEXT::Activity());
 
     if (content.value("Window ID").toInt() > 0) {
         QUrl url(content.value("URI").toString());
         Nepomuk::Resource res(url.toString());
+
         if (res.exists() && res.isRelatedOf().contains(acRes)) {
             return i18n("Disconnect from activity");
         } else {
@@ -84,7 +87,7 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
     QSet<QString> activities;
     foreach (Nepomuk::Query::Result res, resources) {
         Nepomuk::Resource resource = res.resource();
-        activities.insert(resource.property(QUrl("http://www.semanticdesktop.org/ontologies/2007/01/19/nie#url")).toString());
+        activities.insert(resource.property(QUrl("http://nepomuk.kde.org/ontologies/2010/11/29/kext#activityIdentifier")).toString());
     }
 
     QUrl typeUrl;
@@ -107,9 +110,9 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
         }
     }
 
-    Nepomuk::Resource acRes("activities://" + activityId);
+    Nepomuk::Resource acRes(activityId, Nepomuk::Vocabulary::KEXT::Activity());
     //remove connection
-    if (activities.contains("activities://"%activityId)) {
+    if (activities.contains(activityId)) {
         acRes.removeProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
     //add connection
     } else {
