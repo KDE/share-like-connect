@@ -37,8 +37,11 @@ Item {
         engine: "org.kde.active.metadata"
         connectedSources: [resourceUrl]
         onDataChanged: {
-            var key = metadataSource.keysForSource(resourceUrl)[0]
-            containerItem.score = metadataSource.data[resourceUrl][key].numericRating ? metadataSource.data[resourceUrl][key].numericRating : 0
+            //FIXME: ugly as hell, will use the new nepomuk bindings as soon as merged
+            for (i in metadataSource.data[resourceUrl]) {
+                containerItem.score = metadataSource.data[resourceUrl][i]["numericRating"]
+                break
+            }
         }
     }
 
