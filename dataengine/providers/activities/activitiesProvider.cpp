@@ -38,7 +38,7 @@
 ActivitiesProvider::ActivitiesProvider(QObject *parent, const QVariantList &args)
     : SLC::Provider(parent, args)
 {
-    m_activityConsumer = new Activities::Consumer(this);
+    m_activityConsumer = new KActivities::Consumer(this);
 }
 
 SLC::Provider::Actions ActivitiesProvider::actionsFor(const QVariantHash &content) const
@@ -84,7 +84,7 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
         result << item;
 
         foreach (const QString &activity, m_activityConsumer->listActivities()) {
-            Activities::Info *info = new Activities::Info(activity);
+            KActivities::Info *info = new KActivities::Info(activity);
             QVariantHash item;
             item["target"] = activity;
             item["name"] = info->name();

@@ -22,7 +22,7 @@
 
 #include <provider.h>
 
-namespace Activities {
+namespace KActivities {
     class Consumer;
 }
 
@@ -36,7 +36,7 @@ public:
 
     QVariant executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters);
 private:
-    Activities::Consumer *m_activityConsumer;
+    KActivities::Consumer *m_activityConsumer;
 };
 
 #endif
