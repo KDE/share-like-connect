@@ -52,9 +52,9 @@ QString BookmarksProvider::actionName(const QVariantHash &content, Action action
          content.value("Mime Type").toString() == "text/x-html")) {
         Nepomuk::Resource bookmarkRes(url.toString());
         if (bookmarkRes.exists()) {
-            return i18n("remove bookmark");
+            return i18n("Remove bookmark");
         } else {
-            return i18n("add bookmark");
+            return i18n("Add bookmark");
         }
     }
     return Provider::actionName(content, action);
