@@ -53,7 +53,10 @@ ShareLikeConnectEngine::ShareLikeConnectEngine(QObject *parent, const QVariantLi
             QString path = structure->defaultPackageRoot() + '/' + pluginName + '/';
             path = KStandardDirs::locate("data", path + "metadata.desktop");
             if (path.isEmpty()) {
-                error = i18n("Share Like Connect package %1 is invalid");
+#ifndef NDEBUG
+                // only for debug, do not translate
+                error = QString("Share Like Connect package %1 is invalid").arg(pluginName);
+#endif
             } else {
                 path.remove(QString("metadata.desktop"));
                 Plasma::Package package(path, structure);

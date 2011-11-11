@@ -46,7 +46,9 @@ bool ProviderScriptEngine::include(const QString &path)
 {
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        kWarning() << i18n("Unable to load scriptEngine file: %1", path);
+#ifndef NDEBUG
+        kWarning() << "Unable to load scriptEngine file:" << path;
+#endif
         return false;
     }
 
@@ -84,11 +86,12 @@ void ProviderScriptEngine::reportError()
     QString file = error.property("fileName").toString();
     file.remove(m_package->path());
 
-    const QString failureMsg = i18n("Error in %1 on line %2.<br><br>%3",
-                                    file, error.property("lineNumber").toString(),
-                                    error.toString());
+#ifndef NDEBUG
+    const QString failureMsg = QString("Error in %1 on line %2.<br><br>%3")
+                                      .arg(file, error.property("lineNumber").toString(), error.toString());
     kDebug() << failureMsg;
     kDebug() << uncaughtExceptionBacktrace();
+#endif
 }
 
 QScriptValue ProviderScriptEngine::callFunction(QScriptValue &func, const QScriptValueList &args, const QScriptValue &activator)
