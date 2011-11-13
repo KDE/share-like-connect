@@ -1,5 +1,11 @@
 [Desktop Entry]
 Name=Rating
+Name[nds]=Beweerten
+Name[pt]=Classificação
+Name[pt_BR]=Avaliação
+Name[sv]=Betyg
+Name[uk]=Оцінка
+Name[x-test]=xxRatingxx
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/ShareLikeConnect

@@ -2,6 +2,11 @@
 Type=ServiceType
 X-KDE-ServiceType=Plasma/ShareLikeConnect
 Comment=A Share·Like·Connect Plasma DataEngine add-on
+Comment[pt]=Uma extensão do motor de dados do Plasma para o Share·Like
+Comment[pt_BR]=Uma extensão do mecanismo de dados do Plasma para o Share·Like
+Comment[sv]=Plasma-datagränssnitt för Share-Like-Connect
+Comment[uk]=Додаток рушія даних Плазми Share·Like·Connect
+Comment[x-test]=xxA Share·Like·Connect Plasma DataEngine add-onxx
 
 [PropertyDef::X-Plasma-ShareLikeConnect]
 Type=QStringList

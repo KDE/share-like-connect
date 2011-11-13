@@ -1,5 +1,11 @@
 [Desktop Entry]
 Name=Send by email
+Name[nds]=Mit Nettpost loosstüern
+Name[pt]=Enviar por e-mail
+Name[pt_BR]=Enviar por e-mail
+Name[sv]=Skicka med e-post
+Name[uk]=Надіслати ел. поштою
+Name[x-test]=xxSend by emailxx
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/ShareLikeConnect

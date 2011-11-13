@@ -1,6 +1,16 @@
 [Desktop Entry]
 Name=Share·Like·Connect
+Name[pt]=Ligação·Share·Like
+Name[pt_BR]=Conexão·Share·Like
+Name[sv]=Share·Like·Connect
+Name[uk]=Share·Like·Connect
+Name[x-test]=xxShare·Like·Connectxx
 Comment=Provider of actions for sharing resources
+Comment[pt]=Fornecedor de acções para partilhar os recursos
+Comment[pt_BR]=Provedor de ações para compartilhar os recursos
+Comment[sv]=Tillhandahåller åtgärder för att dela resurser
+Comment[uk]=Засіб визначення дій для спільних ресурсів
+Comment[x-test]=xxProvider of actions for sharing resourcesxx
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/DataEngine

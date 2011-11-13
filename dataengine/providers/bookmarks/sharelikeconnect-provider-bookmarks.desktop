@@ -1,5 +1,11 @@
 [Desktop Entry]
 Name=Bookmarks
+Name[nds]=Leestekens
+Name[pt]=Favoritos
+Name[pt_BR]=Favoritos
+Name[sv]=Bokmärken
+Name[uk]=Закладки
+Name[x-test]=xxBookmarksxx
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/ShareLikeConnect
