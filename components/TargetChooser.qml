@@ -30,17 +30,21 @@ Column {
         id: secondStepRepeater
         model: secondStepModel
 
-        MenuItem {
-            id: menuItem
-            resourceUrl: slcSource.data["Current Content"]["URI"]
-            sourceName: menuColumn.sourceName
-            Rectangle {
-                width: 8
-                height: 8
-                radius: 4
-                color: theme.textColor
-                anchors.verticalCenter: parent.verticalCenter
+        Row {
+            PlasmaCore.SvgItem {
+                svg: PlasmaCore.Svg {
+                    imagePath: "widgets/checkmarks"
+                }
+                elementId: "checkbox"
+                width: naturalSize.width
+                height: naturalSize.height
                 visible: model["connected"]
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            MenuItem {
+                id: menuItem
+                resourceUrl: slcSource.data["Current Content"]["URI"]
+                sourceName: menuColumn.sourceName
             }
         }
     }

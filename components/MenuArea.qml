@@ -180,24 +180,20 @@ Item {
         }
         ServiceMenu {
             id: serviceMenu
-            //width: main.width
         }
 
         TargetChooser {
             id: targetChooser
             visible: main.state == "targets"
-            width: serviceMenu.width
         }
 
         CommentForm {
             id: commentForm
             visible: main.state == "comment"
-            width: serviceMenu.width
         }
 
         Confirmation {
             id: confirmation
-            width: serviceMenu.width
         }
     }
 
