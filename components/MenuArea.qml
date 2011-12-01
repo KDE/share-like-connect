@@ -25,8 +25,8 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 Item {
     id: main
     clip: true
-    width: serviceMenu.width
-    height: mainWidget.height
+    width: mainWidget.currentItem.width
+    height: mainWidget.currentItem.height
 
     property bool shareVisible: true
     property bool likeVisible: true
@@ -169,6 +169,9 @@ Item {
     Row {
         id: mainWidget
         spacing: 20
+        property Item currentItem: serviceMenu
+        x: -serviceMenu.x
+
         Behavior on x {
             NumberAnimation {
                 duration: 250
@@ -203,36 +206,28 @@ Item {
             name: "operations"
             PropertyChanges {
                 target: mainWidget
-                x: 0
-                width: serviceMenu.width
-                height: serviceMenu.height
+                currentItem: serviceMenu
             }
         },
         State {
             name: "targets"
             PropertyChanges {
                 target: mainWidget
-                x: -targetChooser.x
-                width: targetChooser.width
-                height: targetChooser.height
+                currentItem: targetChooser
             }
         },
         State {
             name: "comment"
             PropertyChanges {
                 target: mainWidget
-                x: -commentForm.x
-                width: commentForm.width
-                height: commentForm.height
+                currentItem: commentForm
             }
         },
         State {
             name: "confirmation"
             PropertyChanges {
                 target: mainWidget
-                x: -confirmation.x
-                width: confirmation.width
-                height: confirmation.height
+                currentItem: confirmation
             }
         }
     ]
