@@ -24,7 +24,7 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 
 Column {
     //FIXME: no hardcoded sizes
-    width: 200
+    width: childrenRect.width
     height: childrenRect.height+5
     spacing: 8
 

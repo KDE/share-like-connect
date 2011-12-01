@@ -170,7 +170,7 @@ Item {
         id: mainWidget
         spacing: 20
         property Item currentItem: serviceMenu
-        x: -serviceMenu.x
+        x: -currentItem.x
 
         Behavior on x {
             NumberAnimation {
