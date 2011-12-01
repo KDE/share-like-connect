@@ -18,7 +18,7 @@
  */
 
 
-import QtQuick 1.0
+import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 import org.kde.qtextracomponents 0.1
@@ -27,8 +27,10 @@ import org.kde.qtextracomponents 0.1
 Item {
     id: containerItem
     property int score
-    property int preferredHeight: 32
-    property int preferredWidth: 32*5
+
+    implicitHeight: 32
+    implicitWidth: 32*5
+
     signal rateClicked(int newRating)
 
 
@@ -37,7 +39,7 @@ Item {
         engine: "org.kde.active.metadata"
         connectedSources: [resourceUrl]
         onDataChanged: {
-            containerItem.score = metadataSource.data[resourceUrl]["numericRating"]
+            containerItem.score = metadataSource.data[resourceUrl]["numericRating"] != undefined ? metadataSource.data[resourceUrl]["numericRating"] : 0
         }
     }
 

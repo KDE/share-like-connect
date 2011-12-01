@@ -17,51 +17,52 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 1.0
+import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.components 0.1 as PlasmaComponents
 
 
-Text {
-    id: menuItemBody
-    //font.pointSize: 14
+Item {
+    width: Math.max(implicitWidth, parent.width)
+    implicitWidth: menuItemBody.paintedWidth
+    implicitHeight: Math.max(30, menuItemBody.paintedHeight)
 
-    horizontalAlignment: Text.AlignHCenter
-    verticalAlignment: Text.AlignVCenter
-    property int preferredWidth: paintedWidth
-    property int preferredHeight: Math.max(30, paintedHeight)
+    PlasmaComponents.Label {
+        id: menuItemBody
+        //font.pointSize: 14
+        anchors.fill: parent
 
-    text: name
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
 
-    PlasmaCore.Theme {
-        id: theme
-    }
-    color: theme.textColor
+        text: name
 
-    function checkResult(serviceJob)
-    {
-        main.providerId = providerId
+        function checkResult(serviceJob)
+        {
+            main.providerId = providerId
 
-        //TODO: error message?
-        if (serviceJob.result == true || serviceJob.result == false) {
-            main.pendingState = "operations"
-            main.sourceName = ""
-        //is it asking for confirmation?
-        } else if (serviceJob.result["Confirmation"]) {
-            confirmationMessage = serviceJob.result["Confirmation"]
-            main.pendingState = "confirmation"
-            main.sourceName = sourceName
-        //is it asking for a comment?
-        } else if (serviceJob.result == "Comment") {
-            main.pendingState = "comment"
-            main.sourceName = sourceName
-        //is it proposing a series of targets?
-        } else {
-            secondStepModel.clear()
-            for (i in serviceJob.result) {
-                secondStepModel.append({"target": serviceJob.result[i]["target"], "name": serviceJob.result[i]["name"], "connected": serviceJob.result[i]["connected"]})
+            //TODO: error message?
+            if (serviceJob.result == true || serviceJob.result == false) {
+                main.pendingState = "operations"
+                main.sourceName = ""
+            //is it asking for confirmation?
+            } else if (serviceJob.result["Confirmation"]) {
+                confirmationMessage = serviceJob.result["Confirmation"]
+                main.pendingState = "confirmation"
+                main.sourceName = sourceName
+            //is it asking for a comment?
+            } else if (serviceJob.result == "Comment") {
+                main.pendingState = "comment"
+                main.sourceName = sourceName
+            //is it proposing a series of targets?
+            } else {
+                secondStepModel.clear()
+                for (i in serviceJob.result) {
+                    secondStepModel.append({"target": serviceJob.result[i]["target"], "name": serviceJob.result[i]["name"], "connected": serviceJob.result[i]["connected"]})
+                }
+                main.pendingState = "targets"
+                main.sourceName = sourceName
             }
-            main.pendingState = "targets"
-            main.sourceName = sourceName
         }
     }
 
@@ -83,6 +84,6 @@ Text {
 
         job = service.startOperationCall(operation)
 
-        job.finished.connect(checkResult)
+        job.finished.connect(menuItemBody.checkResult)
     }
 }

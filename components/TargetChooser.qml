@@ -30,8 +30,14 @@ Column {
         id: secondStepRepeater
         model: secondStepModel
 
-        Row {
+
+        MenuItem {
+            id: menuItem
+            resourceUrl: slcSource.data["Current Content"]["URI"]
+            sourceName: menuColumn.sourceName
+            width: implicitWidth + checkboxSvg.naturalSize.width
             PlasmaCore.SvgItem {
+                id: checkboxSvg
                 svg: PlasmaCore.Svg {
                     imagePath: "widgets/checkmarks"
                 }
@@ -40,11 +46,6 @@ Column {
                 height: naturalSize.height
                 visible: model["connected"]
                 anchors.verticalCenter: parent.verticalCenter
-            }
-            MenuItem {
-                id: menuItem
-                resourceUrl: slcSource.data["Current Content"]["URI"]
-                sourceName: menuColumn.sourceName
             }
         }
     }

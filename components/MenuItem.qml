@@ -17,7 +17,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 1.0
+import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 
@@ -25,11 +25,14 @@ Item {
     id: menuItem
     property string resourceUrl
     property string sourceName
-    height: childrenRect.height
-    width: childrenRect.width
+
+    implicitHeight: mainColumn.height
+    implicitWidth: mainColumn.width
+
     Column {
+        id: mainColumn
         spacing: 5
-        //height: Math.min(30, itemLoader.preferredHeight)
+        //height: Math.min(30, itemLoader.implicitHeight)
 
         PlasmaCore.SvgItem {
             svg: lineSvg
@@ -45,8 +48,8 @@ Item {
 
         Loader {
             id: itemLoader
-            width: Math.max(item.preferredWidth, menuColumn.width)
-            height: item.preferredHeight
+            width: item ? Math.max(item.implicitWidth, serviceMenu.width) : 0
+            height: item ? item.implicitHeight : 0
 
             source: fallback.resolvePath("slcmenuitems", [providerId+"Item.qml", "DefaultItem.qml"])
 
