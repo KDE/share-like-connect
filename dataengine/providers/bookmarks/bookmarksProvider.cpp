@@ -51,7 +51,7 @@ QString BookmarksProvider::actionName(const QVariantHash &content, Action action
         (url.scheme() == "http" ||
          content.value("Mime Type").toString() == "text/html")) {
         Nepomuk::Resource bookmarkRes(url.toString());
-        if (bookmarkRes.exists()) {
+        if (bookmarkRes.exists() && bookmarkRes.types().contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark"))) {
             return i18n("Remove bookmark");
         } else {
             return i18n("Add bookmark");
