@@ -102,8 +102,8 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
 
     Nepomuk::Resource fileRes(resourceUrl);
     //Bookmark?
-    if (QUrl(resourceUrl).scheme() == "http" ||
-        content.value("Mime Type").toString() == "text/x-html") {
+    if (QUrl(resourceUrl).scheme().startsWith("http") ||
+        content.value("Mime Type").toString() == "text/html") {
         typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark");
 
         QList <QUrl> types;
