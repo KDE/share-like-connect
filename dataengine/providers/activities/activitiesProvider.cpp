@@ -105,12 +105,20 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
     if (QUrl(resourceUrl).scheme() == "http" ||
         content.value("Mime Type").toString() == "text/x-html") {
         typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark");
-        fileRes.addType(typeUrl);
+
+        QList <QUrl> types;
+        types << typeUrl;
+        fileRes.setTypes(types);
+
         fileRes.setDescription(resourceUrl);
         fileRes.setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks"), resourceUrl);
     } else if (resourceUrl.endsWith(".desktop")) {
         typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Application");
-        fileRes.addType(typeUrl);
+
+        QList <QUrl> types;
+        types << typeUrl;
+        fileRes.setTypes(types);
+
         KService::Ptr service = KService::serviceByDesktopPath(QUrl(resourceUrl).path());
         if (service) {
             fileRes.setLabel(service->name());
