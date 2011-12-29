@@ -2,6 +2,7 @@
 Type=ServiceType
 X-KDE-ServiceType=Plasma/ShareLikeConnect
 Comment=A Share·Like·Connect Plasma DataEngine add-on
+Comment[nl]=Een add-on voor Plasma-gegevens-engine voor Share-Like-Connect
 Comment[pt]=Uma extensão do motor de dados do Plasma para o Share·Like
 Comment[pt_BR]=Uma extensão do mecanismo de dados do Plasma para o Share·Like
 Comment[sv]=Plasma-datagränssnitt för Share-Like-Connect
