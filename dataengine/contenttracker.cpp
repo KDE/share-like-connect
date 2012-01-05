@@ -34,7 +34,7 @@ ContentTracker::ContentTracker(QObject *parent)
     : Plasma::DataContainer(parent)
 {
     connectToActivityManager();
-    QDBusServiceWatcher *watcher = new QDBusServiceWatcher("org.kde.kactivitymanagerd", QDBusConnection::sessionBus(),
+    QDBusServiceWatcher *watcher = new QDBusServiceWatcher("org.kde.ActivityManager", QDBusConnection::sessionBus(),
                                              QDBusServiceWatcher::WatchForOwnerChange, this);
     connect(watcher, SIGNAL(serviceOwnerChanged(QString,QString,QString)),
             this, SLOT(serviceChange(QString,QString,QString)));
@@ -63,7 +63,7 @@ void ContentTracker::focusChanged(const QString &uri, const QString &mimetype, c
 
 void ContentTracker::connectToActivityManager()
 {
-    activityManagerIface = new OrgKdeActivityManagerSLCInterface("org.kde.kactivitymanagerd", "/SLC",
+    activityManagerIface = new OrgKdeActivityManagerSLCInterface("org.kde.ActivityManager", "/SLC",
                                     QDBusConnection::sessionBus());
     if (activityManagerIface->isValid()) {
         activityManagerIface->callWithCallback("focussedResourceURI", QList<QVariant>(), this, SLOT(focusedResourceUriCallback(const QString &)));
