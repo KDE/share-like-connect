@@ -64,12 +64,17 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
     Nepomuk::Query::ComparisonTerm term(Soprano::Vocabulary::NAO::isRelated(), Nepomuk::Query::ResourceTerm(Nepomuk::Resource(resourceUrl)));
     Nepomuk::Query::Query query = Nepomuk::Query::Query(term);
     //FIXME: this should be fast enough?
+
     QList<Nepomuk::Query::Result> resources = Nepomuk::Query::QueryServiceClient::syncQuery(query);
 
     QSet<QString> activities;
     foreach (Nepomuk::Query::Result res, resources) {
         Nepomuk::Resource resource = res.resource();
-        activities.insert(resource.property(QUrl("http://nepomuk.kde.org/ontologies/2010/11/29/kext#activityIdentifier")).toString());
+        QString activityId = resource.property(QUrl("http://nepomuk.kde.org/ontologies/2010/11/29/kext#activityIdentifier")).toString();
+
+        if (!activityId.isEmpty()) {
+            activities.insert(activityId);
+        }
     }
 
     //first step
@@ -78,9 +83,10 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
         //list activities
         QList<QVariant> result;
         QVariantHash item;
+        KActivities::Info *info = new KActivities::Info(m_activityConsumer->currentActivity());
         item["target"] = m_activityConsumer->currentActivity();
         item["name"] = i18n("Current activity");
-        item["connected"] = activities.contains(m_activityConsumer->currentActivity());
+        item["connected"] = (bool)info->linkedResources().contains(resourceUrl);
         result << item;
 
         foreach (const QString &activity, m_activityConsumer->listActivities()) {
@@ -88,8 +94,8 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
             QVariantHash item;
             item["target"] = activity;
             item["name"] = info->name();
-            item["connected"] = activities.contains(activity);
-            //kDebug() << "Found activity: " << activity << info->name();
+            item["connected"] = (bool)info->linkedResources().contains(resourceUrl);
+            kWarning() << "Found activity: " << activity << info->name();
 
             result << item;
             delete info;
@@ -128,12 +134,15 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
 
     foreach (const QString &activityId, activityIds) {
         Nepomuk::Resource acRes(activityId, Nepomuk::Vocabulary::KEXT::Activity());
+        KActivities::Info *info = new KActivities::Info(activityId);
         //remove connection
-        if (activities.contains(activityId)) {
-            acRes.removeProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
+        if ((bool)info->linkedResources().contains(resourceUrl)) {
+            //acRes.removeProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
+            info->unlinkResource(resourceUrl);
         //add connection
         } else {
-            acRes.addProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
+            //acRes.addProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
+            info->linkResource(resourceUrl);
         }
     }
 
