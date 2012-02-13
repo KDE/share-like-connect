@@ -77,7 +77,7 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
             item["target"] = activity;
             item["name"] = info->name();
             item["connected"] = (bool)info->linkedResources().contains(resourceUrl);
-            kWarning() << "Found activity: " << activity << info->name();
+            kDebug() << "Found activity: " << activity << info->name();
 
             result << item;
             delete info;
