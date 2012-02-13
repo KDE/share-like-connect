@@ -59,24 +59,6 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
     const QString resourceUrl = content["URI"].toString();
     QStringList activityIds = parameters["Targets"].toStringList();
 
-    //find out what activities if any this resource is connected to
-    //TODO: restrict the query to only activities, but they aren't part of the ontology yet
-    Nepomuk::Query::ComparisonTerm term(Soprano::Vocabulary::NAO::isRelated(), Nepomuk::Query::ResourceTerm(Nepomuk::Resource(resourceUrl)));
-    Nepomuk::Query::Query query = Nepomuk::Query::Query(term);
-    //FIXME: this should be fast enough?
-
-    QList<Nepomuk::Query::Result> resources = Nepomuk::Query::QueryServiceClient::syncQuery(query);
-
-    QSet<QString> activities;
-    foreach (Nepomuk::Query::Result res, resources) {
-        Nepomuk::Resource resource = res.resource();
-        QString activityId = resource.property(QUrl("http://nepomuk.kde.org/ontologies/2010/11/29/kext#activityIdentifier")).toString();
-
-        if (!activityId.isEmpty()) {
-            activities.insert(activityId);
-        }
-    }
-
     //first step
     if (activityIds.isEmpty()) {
 
@@ -133,15 +115,12 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
     }
 
     foreach (const QString &activityId, activityIds) {
-        Nepomuk::Resource acRes(activityId, Nepomuk::Vocabulary::KEXT::Activity());
         KActivities::Info *info = new KActivities::Info(activityId);
         //remove connection
         if ((bool)info->linkedResources().contains(resourceUrl)) {
-            //acRes.removeProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
             info->unlinkResource(resourceUrl);
         //add connection
         } else {
-            //acRes.addProperty(Soprano::Vocabulary::NAO::isRelated(), fileRes);
             info->linkResource(resourceUrl);
         }
     }
