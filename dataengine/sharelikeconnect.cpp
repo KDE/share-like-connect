@@ -48,7 +48,7 @@ ShareLikeConnectEngine::ShareLikeConnectEngine(QObject *parent, const QVariantLi
 
         QString error;
         if (offer->property("X-Plasma-API").toString().compare("javascript", Qt::CaseInsensitive) == 0) {
-            PackageStructure::Ptr structure(new PackageStructure(this));
+            ::PackageStructure::Ptr structure(new ::PackageStructure(this));
 
             QString path = structure->defaultPackageRoot() + '/' + pluginName + '/';
             path = KStandardDirs::locate("data", path + "metadata.desktop");
