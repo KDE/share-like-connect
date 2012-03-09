@@ -33,8 +33,6 @@
 
 #include <kactivities/consumer.h>
 
-#include "kext.h"
-
 ActivitiesProvider::ActivitiesProvider(QObject *parent, const QVariantList &args)
     : SLC::Provider(parent, args)
 {

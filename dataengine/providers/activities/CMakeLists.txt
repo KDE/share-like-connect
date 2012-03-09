@@ -7,12 +7,6 @@ set(activitiesProvider_SRCS
     activitiesProvider.cpp
 )
 
-soprano_add_ontology(
-    activitiesProvider_SRCS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../../ontologies/kext.trig
-    "KEXT" "Nepomuk::Vocabulary" "trig"
-)
-
 find_package(Nepomuk REQUIRED)
 find_package(KActivities REQUIRED)
 
