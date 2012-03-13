@@ -76,6 +76,7 @@ ShareLikeConnectEngine::ShareLikeConnectEngine(QObject *parent, const QVariantLi
         }
 
         m_providers.insert(pluginName, provider);
+        connect(provider, SIGNAL(changed()), this, SLOT(contentChanged()));
     }
 
 #ifndef NDEBUG

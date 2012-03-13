@@ -53,6 +53,9 @@ public:
 
     virtual QVariant executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters);
 
+Q_SIGNALS:
+    void changed();
+
 private:
     class Private;
     Private * const d;

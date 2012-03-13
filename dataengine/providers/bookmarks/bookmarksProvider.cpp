@@ -78,6 +78,7 @@ QVariant BookmarksProvider::executeAction(SLC::Provider::Action action, const QV
         //delete is dangerous: ask confirmation
         if (confirmed) {
             bookmarkRes.remove();
+            emit changed();
             return true;
         } else {
             QVariantHash result;
@@ -98,6 +99,7 @@ QVariant BookmarksProvider::executeAction(SLC::Provider::Action action, const QV
 
             bookmarkRes.setDescription(resourceUrl.toString());
             bookmarkRes.setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks"), resourceUrl.toString());
+            emit changed();
         }
 
 
