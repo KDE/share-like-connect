@@ -30,7 +30,7 @@ SLC::Provider::Actions SendByEmailProvider::actionsFor(const QVariantHash &conte
 {
     KUrl fileUrl(content.value("URI").toString());
 
-    if (fileUrl.isLocalFile() && !fileUrl.path().endsWith(".desktop")) {
+    if (fileUrl.isLocalFile() && !fileUrl.path().endsWith(QLatin1String(".desktop"))) {
         return Share;
     } else {
         return NoAction;
@@ -46,12 +46,13 @@ QVariant SendByEmailProvider::executeAction(SLC::Provider::Action action, const 
     }
 
     const QString resourceUrl = content["URI"].toString();
+    const QString fileName = resourceUrl.section('/', -1);
 
     //only one step
     //TODO: propose some names as second step, fill out some fields
     KToolInvocation::invokeMailer(QString(), QString(),
-                                  QString(), QString(),
-                                  QString(), QString(),
+                                  QString(), i18n("Email subject", "[Share-like-connect] Sharing %1", fileName),
+                                  i18nc("Email body", "I want to share %1 with you.", fileName), QString(),
                                   QStringList() << resourceUrl);
 
     return true;
