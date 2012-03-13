@@ -74,7 +74,7 @@ QVariant BookmarksProvider::executeAction(SLC::Provider::Action action, const QV
     }
 
     //the bookmark exists already? remove
-    if (bookmarkRes.exists()) {
+    if (bookmarkRes.exists() && bookmarkRes.types().contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark"))) {
         //delete is dangerous: ask confirmation
         if (confirmed) {
             bookmarkRes.remove();
