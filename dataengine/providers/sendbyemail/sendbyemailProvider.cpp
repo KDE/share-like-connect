@@ -51,7 +51,7 @@ QVariant SendByEmailProvider::executeAction(SLC::Provider::Action action, const 
     //only one step
     //TODO: propose some names as second step, fill out some fields
     KToolInvocation::invokeMailer(QString(), QString(),
-                                  QString(), i18n("Email subject", "[Share-like-connect] Sharing %1", fileName),
+                                  QString(), i18nc("Email subject", "[Share-like-connect] Sharing %1", fileName),
                                   i18nc("Email body", "I want to share %1 with you.", fileName), QString(),
                                   QStringList() << resourceUrl);
 
