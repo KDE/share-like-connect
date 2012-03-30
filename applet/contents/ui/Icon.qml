@@ -24,14 +24,20 @@ import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 import org.kde.qtextracomponents 0.1
 
 
-QIconItem {
+IconLoader {
     id: iconItem
     signal menuTriggered
     width: height
     property QtObject model
     property string service
     enabled: model.count>0?true:false
-    opacity: enabled?1:0.4
+    opacity: enabled ? 1 : 0.3
+    Behavior on opacity {
+        NumberAnimation {
+            duration: 250
+            easing: Ease.InOut
+        }
+    }
     anchors {
         top: parent.top
         bottom: parent.bottom

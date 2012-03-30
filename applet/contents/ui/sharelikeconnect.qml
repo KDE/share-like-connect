@@ -30,18 +30,18 @@ Row {
     spacing: 8
 
     Icon {
-        icon: QIcon("system-users")
+        source: "slc-share"
         service: "Share"
         model: dialog.mainItem.shareModel
     }
     Icon {
-        icon: QIcon("emblem-favorite")
+        source: "slc-like"
         service: "Like"
         model: dialog.mainItem.likeModel
     }
     Icon {
         id: connectIcon
-        icon: QIcon("network-connect")
+        source: "slc-connect"
         service: "Connect"
         model: dialog.mainItem.connectModel
     }
