@@ -64,9 +64,7 @@ IconLoader {
                     dialog.mainItem.likeVisible = false
                     dialog.mainItem.connectVisible = true
                 }
-                dialog.parentItem = iconItem
-                dialog.adjustPosition();
-                dialog.visible = true
+                dialog.open(iconItem)
             }
         }
 
