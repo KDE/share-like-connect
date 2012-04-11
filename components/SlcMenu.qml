@@ -30,6 +30,14 @@ PlasmaCore.Dialog {
         id: menuArea
     }
 
+    function open(item)
+    {
+        parentItem = item
+        dialog.x = -1000
+        dialog.y = -1000
+        visible = true
+    }
+
     function adjustPosition()
     {
         var pos = dialog.popupPosition(parentItem, Qt.AlignCenter)
