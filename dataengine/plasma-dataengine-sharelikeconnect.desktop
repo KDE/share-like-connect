@@ -2,6 +2,7 @@
 Name=Share·Like·Connect
 Name[es]=Compartir-Preferir-Conectar
 Name[et]=Share-Like-Connect
+Name[fr]=Share Like Connect
 Name[nl]=Share-Like-Connect
 Name[pl]=Share·Like·Connect
 Name[pt]=Ligação·Share·Like
@@ -13,6 +14,7 @@ Name[x-test]=xxShare·Like·Connectxx
 Comment=Provider of actions for sharing resources
 Comment[es]=Proveedor de acciones para recursos compartidos
 Comment[et]=Toimingud ressursside jagamiseks
+Comment[fr]=Fournisseur d'actions pour partager des ressources
 Comment[nl]=Leverancier van acties voor het delen van hulpbronnen
 Comment[pl]=Dostawca działań dla udostępniania zasobów
 Comment[pt]=Fornecedor de acções para partilhar os recursos
