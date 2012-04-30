@@ -24,27 +24,33 @@ import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 import org.kde.qtextracomponents 0.1
 
 
-IconLoader {
+Item {
     id: iconItem
-    signal menuTriggered
-    width: height
+    width: Math.min(main.width, main.height*1.4)
+    height: Math.min(main.width*1.4, main.height)
     property QtObject model
     property string service
-    enabled: model.count>0?true:false
-    opacity: enabled ? 1 : 0.3
-    Behavior on opacity {
-        NumberAnimation {
-            duration: 250
-            easing: Ease.InOut
+    property alias source: iconLoader.source
+    IconLoader {
+        id: iconLoader
+        signal menuTriggered
+        width: height
+
+        enabled: model.count>0?true:false
+        opacity: enabled ? 1 : 0.3
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 250
+                easing: Ease.InOut
+            }
+        }
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
         }
     }
-    anchors {
-        top: parent.top
-        bottom: parent.bottom
-    }
-
     MouseEventListener {
-        enabled: iconItem.enabled
+        enabled: parent.enabled
         anchors.fill: parent
         onPressed: {
             if (dialog.visible) {

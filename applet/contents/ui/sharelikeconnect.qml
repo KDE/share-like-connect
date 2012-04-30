@@ -24,10 +24,11 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.slccomponents 0.1 as SlcComponents
 
 Row {
+    id: main
     property int minimumWidth: childrenRect.width
     property int minimumHeight: 16
 
-    spacing: 8
+    spacing: 4
 
     Icon {
         source: "slc-share"
