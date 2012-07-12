@@ -17,16 +17,17 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 1.0
+import QtQuick 1.1
 import org.kde.qtextracomponents 0.1
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.components 0.1 as PlasmaComponents
 
 
 Item {
     id: main
     clip: true
-    width: mainWidget.currentItem.width
-    height: mainWidget.currentItem.height
+    width: Math.max(theme.defaultFont.mSize.width * 15, mainStack.currentPage ? mainStack.currentPage.implicitWidth : serviceMenu.implicitWidth)
+    height: mainStack.currentPage ? mainStack.currentPage.implicitHeight : serviceMenu.implicitHeight
 
     property bool shareVisible: true
     property bool likeVisible: true
@@ -36,6 +37,19 @@ Item {
     property string confirmationMessage
     property string providerId
     property string sourceName
+
+    onStateChanged: {
+        if (main.state == "operations") {
+            mainStack.pop(serviceMenu)
+            dialog.visible = false
+        } else if (main.state == "targets") {
+            mainStack.push(Qt.createComponent("TargetChooser.qml"))
+        } else if (main.state == "comment") {
+            mainStack.push(Qt.createComponent("CommentForm.qml"))
+        } else if (main.state == "confirmation") {
+            mainStack.push(Qt.createComponent("Confirmation.qml"))
+        }
+    }
 
     PlasmaCore.Theme {
         id: theme
@@ -166,65 +180,10 @@ Item {
         id: secondStepModel
     }
 
-    Row {
-        id: mainWidget
-        spacing: 20
-        property Item currentItem: serviceMenu
-        x: -currentItem.x
-
-        Behavior on x {
-            NumberAnimation {
-                duration: 250
-                easing.type: Easing.InOutQuad
-            }
-        }
-        ServiceMenu {
+    PlasmaComponents.PageStack {
+        id: mainStack
+        initialPage: ServiceMenu {
             id: serviceMenu
         }
-
-        TargetChooser {
-            id: targetChooser
-            visible: main.state == "targets"
-        }
-
-        CommentForm {
-            id: commentForm
-            visible: main.state == "comment"
-        }
-
-        Confirmation {
-            id: confirmation
-        }
     }
-
-    states: [
-        State {
-            name: "operations"
-            PropertyChanges {
-                target: mainWidget
-                currentItem: serviceMenu
-            }
-        },
-        State {
-            name: "targets"
-            PropertyChanges {
-                target: mainWidget
-                currentItem: targetChooser
-            }
-        },
-        State {
-            name: "comment"
-            PropertyChanges {
-                target: mainWidget
-                currentItem: commentForm
-            }
-        },
-        State {
-            name: "confirmation"
-            PropertyChanges {
-                target: mainWidget
-                currentItem: confirmation
-            }
-        }
-    ]
 }

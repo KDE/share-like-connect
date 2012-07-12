@@ -49,7 +49,7 @@ Item {
         }
     }
     MouseEventListener {
-        enabled: parent.enabled
+        enabled: iconLoader.enabled
         anchors.fill: parent
         onPressed: {
             if (dialog.visible) {

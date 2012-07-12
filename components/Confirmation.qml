@@ -17,52 +17,56 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 1.0
+import QtQuick 1.1
 import org.kde.qtextracomponents 0.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 
-Column {
-    //FIXME: no hardcoded sizes
-    width: childrenRect.width
-    height: childrenRect.height+5
-    spacing: 8
+Item {
+    implicitWidth: mainColumn.width + 24
+    implicitHeight: mainColumn.height + 24
 
-    Text {
-        text: confirmationMessage
-        wrapMode: Text.Wrap
-        anchors {
-            left: parent.left
-            right: parent.right
-        }
-    }
+    Column {
+        id: mainColumn
+        spacing: 8
+        anchors.centerIn: parent
 
-    Row {
-        id: buttons
-        spacing: 16
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-        }
-        PlasmaComponents.Button {
-            id: yesButton
-            text: i18n("Yes")
-            onClicked: {
-                var service = slcSource.serviceForSource(main.sourceName)
-                var operation = service.operationDescription("executeAction")
-                operation["ActionName"] = main.providerId
-                operation["Targets"] = ["confirmed"]
-
-                job = service.startOperationCall(operation)
-
-                dialog.visible = false
+        Text {
+            text: confirmationMessage
+            wrapMode: Text.Wrap
+            anchors {
+                left: parent.left
+                right: parent.right
             }
         }
 
-        PlasmaComponents.Button {
-            id: noButton
-            text: i18n("No")
-            onClicked: {
-                dialog.visible = false
+        Row {
+            id: buttons
+            spacing: 16
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+            }
+            PlasmaComponents.Button {
+                id: yesButton
+                text: i18n("Yes")
+                onClicked: {
+                    var service = slcSource.serviceForSource(main.sourceName)
+                    var operation = service.operationDescription("executeAction")
+                    operation["ActionName"] = main.providerId
+                    operation["Targets"] = ["confirmed"]
+
+                    job = service.startOperationCall(operation)
+
+                    dialog.visible = false
+                }
+            }
+
+            PlasmaComponents.Button {
+                id: noButton
+                text: i18n("No")
+                onClicked: {
+                    dialog.visible = false
+                }
             }
         }
     }
