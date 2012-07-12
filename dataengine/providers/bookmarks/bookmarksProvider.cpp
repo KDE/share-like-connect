@@ -20,9 +20,9 @@
 
 #include "bookmarksProvider.h"
 
-#include <Nepomuk/Query/Query>
-#include <Nepomuk/Resource>
-#include <Nepomuk/Variant>
+#include <Nepomuk2/Query/Query>
+#include <Nepomuk2/Resource>
+#include <Nepomuk2/Variant>
 
 #include <soprano/vocabulary.h>
 
@@ -50,7 +50,7 @@ QString BookmarksProvider::actionName(const QVariantHash &content, Action action
     if (content.value("Window ID").toInt() > 0 &&
         (url.scheme() == "http" ||
          content.value("Mime Type").toString() == "text/html")) {
-        Nepomuk::Resource bookmarkRes(url.toString());
+        Nepomuk2::Resource bookmarkRes(url.toString());
         if (bookmarkRes.exists() && bookmarkRes.types().contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark"))) {
             return i18n("Remove bookmark");
         } else {
@@ -67,7 +67,7 @@ QVariant BookmarksProvider::executeAction(SLC::Provider::Action action, const QV
     }
 
     const QUrl resourceUrl(content.value("URI").toString());
-    Nepomuk::Resource bookmarkRes(resourceUrl.toString());
+    Nepomuk2::Resource bookmarkRes(resourceUrl.toString());
     bool confirmed = false;
     if (!parameters["Targets"].toStringList().isEmpty()) {
         confirmed = (parameters["Targets"].toStringList().first() == "confirmed");

@@ -21,13 +21,13 @@
 
 #include <KService>
 
-#include <Nepomuk/Query/Query>
-#include <Nepomuk/Resource>
-#include <Nepomuk/Query/ResourceTerm>
-#include <Nepomuk/Query/Result>
-#include <Nepomuk/Query/QueryServiceClient>
-#include <Nepomuk/Variant>
-#include <nepomuk/comparisonterm.h>
+#include <Nepomuk2/Query/Query>
+#include <Nepomuk2/Resource>
+#include <Nepomuk2/Query/ResourceTerm>
+#include <Nepomuk2/Query/Result>
+#include <Nepomuk2/Query/QueryServiceClient>
+#include <Nepomuk2/Variant>
+#include <nepomuk2/comparisonterm.h>
 
 #include <soprano/vocabulary.h>
 
@@ -86,7 +86,7 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
     //second step
     QUrl typeUrl;
 
-    Nepomuk::Resource fileRes(resourceUrl);
+    Nepomuk2::Resource fileRes(resourceUrl);
     //Bookmark?
     if (QUrl(resourceUrl).scheme().startsWith("http") ||
         content.value("Mime Type").toString() == "text/html") {
@@ -108,7 +108,7 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
         KService::Ptr service = KService::serviceByDesktopPath(QUrl(resourceUrl).path());
         if (service) {
             fileRes.setLabel(service->name());
-            fileRes.setSymbols(QStringList() << service->icon());
+//            fileRes.setSymbols(QStringList() << service->icon());
         }
     }
 
