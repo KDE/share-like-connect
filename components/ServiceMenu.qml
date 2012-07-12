@@ -17,14 +17,14 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 1.0
+import QtQuick 1.1
 import org.kde.qtextracomponents 0.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 
 Column {
     id: menuColumn
     spacing: 8
-    width: Math.max(childrenRect.width, theme.defaultFont.mSize.width * 15)
+    //width: Math.max(childrenRect.width, )
 
 
     property string resourceUrl: slcSource.data["Current Content"]["URI"]
