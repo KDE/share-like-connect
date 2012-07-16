@@ -108,7 +108,7 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
         KService::Ptr service = KService::serviceByDesktopPath(QUrl(resourceUrl).path());
         if (service) {
             fileRes.setLabel(service->name());
-//            fileRes.setSymbols(QStringList() << service->icon());
+            fileRes.setSymbols(QStringList() << service->icon());
         }
     }
 
