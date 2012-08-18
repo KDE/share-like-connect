@@ -118,10 +118,10 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
         KActivities::Info *info = new KActivities::Info(activityId);
         //remove connection
         if ((bool)info->linkedResources().contains(resourceUrl)) {
-            info->unlinkResource(resourceUrl);
+            info->unlinkResource(fileRes.resourceUri());
         //add connection
         } else {
-            info->linkResource(resourceUrl);
+            info->linkResource(fileRes.resourceUri());
         }
     }
 
