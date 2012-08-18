@@ -99,14 +99,16 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
         fileRes.setDescription(resourceUrl);
         fileRes.setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks"), resourceUrl);
     } else if (resourceUrl.endsWith(".desktop")) {
-        typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Application");
-
-        QList <QUrl> types;
-        types << typeUrl;
-        fileRes.setTypes(types);
-
         KService::Ptr service = KService::serviceByDesktopPath(QUrl(resourceUrl).path());
         if (service) {
+            fileRes = Nepomuk::Resource(service->entryPath());
+            typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Application");
+
+            QList <QUrl> types;
+            types << typeUrl;
+            fileRes.setTypes(types);
+
+
             fileRes.setLabel(service->name());
             fileRes.setSymbols(QStringList() << service->icon());
         }
