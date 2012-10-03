@@ -101,7 +101,7 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
     } else if (resourceUrl.endsWith(".desktop")) {
         KService::Ptr service = KService::serviceByDesktopPath(QUrl(resourceUrl).path());
         if (service) {
-            fileRes = Nepomuk::Resource(service->entryPath());
+            fileRes = Nepomuk2::Resource(service->entryPath());
             typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Application");
 
             QList <QUrl> types;
