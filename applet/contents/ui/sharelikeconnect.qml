@@ -29,6 +29,10 @@ Row {
 
     spacing: 4
 
+    Component.onCompleted: {
+        plasmoid.aspectRatioMode = "IgnoreAspectRatio"
+    }
+
     Icon {
         source: "slc-share"
         service: "Share"

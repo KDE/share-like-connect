@@ -1,4 +1,4 @@
-project(LIBKTORRENT)
+project(share-like-connect)
 
 find_package(KDE4 REQUIRED)
 find_package(KDE4Internal REQUIRED)
