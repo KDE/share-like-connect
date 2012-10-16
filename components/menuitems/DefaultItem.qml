@@ -42,7 +42,7 @@ Item {
             main.providerId = providerId
 
             //TODO: error message?
-            if (serviceJob.result == true || serviceJob.result == false) {
+            if (serviceJob.result === true || serviceJob.result === false) {
                 main.pendingState = "operations"
                 main.sourceName = ""
             //is it asking for confirmation?
@@ -60,6 +60,7 @@ Item {
                 for (i in serviceJob.result) {
                     secondStepModel.append({"target": serviceJob.result[i]["target"], "name": serviceJob.result[i]["name"], "connected": serviceJob.result[i]["connected"]})
                 }
+
                 main.pendingState = "targets"
                 main.sourceName = sourceName
             }
@@ -78,8 +79,8 @@ Item {
         } else {
             operation["ActionName"] = main.providerId
         }
-        if (model["target"] != undefined) {
-            operation["Targets"] = [model["target"]]
+        if (model["target"] !== undefined) {
+            operation["Targets"] = [String(model["target"])]
         }
 
         job = service.startOperationCall(operation)

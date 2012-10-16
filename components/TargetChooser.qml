@@ -24,7 +24,6 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 Column {
     id: menuColumn
     spacing: 8
-    property string sourceName
 
     Repeater {
         id: secondStepRepeater
@@ -34,7 +33,7 @@ Column {
         MenuItem {
             id: menuItem
             resourceUrl: slcSource.data["Current Content"]["URI"]
-            sourceName: menuColumn.sourceName
+            sourceName: main.sourceName
             width: implicitWidth + checkboxSvg.naturalSize.width
             PlasmaCore.SvgItem {
                 id: checkboxSvg
