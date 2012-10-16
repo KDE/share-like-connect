@@ -44,6 +44,8 @@ Item {
 
         PlasmaExtras.FallbackComponent {
             id: fallback
+            basePath: "plasma"
+            candidates: ["slcmenuitems/" + providerId,  "slcmenuitems/Default"]
         }
 
         Loader {
@@ -51,7 +53,7 @@ Item {
             width: item ? Math.max(item.implicitWidth, serviceMenu.width) : 0
             height: item ? item.implicitHeight : 0
 
-            source: fallback.resolvePath("slcmenuitems", [providerId+"Item.qml", "DefaultItem.qml"])
+            source: fallback.filePath("Item.qml")
 
             MouseArea {
                 anchors.fill: parent
