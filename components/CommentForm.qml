@@ -17,37 +17,37 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 1.0
-import org.kde.qtextracomponents 0.1
+import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
+import org.kde.plasma.components 0.1 as PlasmaComponents
 
 Item {
-    //FIXME: no hardcoded sizes
-    width: 200
-    height: 200
-    PlasmaCore.FrameSvgItem {
-        id: menuFrame
-        imagePath: "widgets/lineedit"
-        prefix: "sunken"
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-            bottom: okButton.top
-        }
-        PlasmaWidgets.TextEdit {
-            anchors.fill: parent
-            anchors.margins: 5
-        }
-    }
+    implicitWidth: mainColumn.width + 24
+    implicitHeight: mainColumn.height + 24
 
-    PlasmaWidgets.PushButton {
-        id: okButton
-        text: i18n("Ok")
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            bottom: parent.bottom
+    Column {
+        id: mainColumn
+        spacing: 8
+        anchors.centerIn: parent
+        PlasmaComponents.TextArea {
+            id: commentField
+            implicitWidth: theme.defaultFont.mSize.width * 20
+            implicitHeight: theme.defaultFont.mSize.height * 5
+        }
+
+        PlasmaComponents.Button {
+            id: okButton
+            text: i18n("Ok")
+            anchors.horizontalCenter: parent.horizontalCenter
+            onClicked: {
+                var service = slcSource.serviceForSource(main.sourceName)
+                var operation = service.operationDescription("executeAction")
+                operation["ActionName"] = main.providerId
+                operation["Comment"] = commentField.text
+
+                service.startOperationCall(operation)
+                dialog.visible = false
+            }
         }
     }
 }

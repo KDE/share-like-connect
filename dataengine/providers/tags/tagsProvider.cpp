@@ -1,5 +1,6 @@
 /*
  *   Copyright 2011 Aaron Seigo <aseigo@kde.org>
+ *   Copyright 2011 Marco Martin <mart.org>
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU Library General Public License as
@@ -17,76 +18,76 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "activitiesProvider.h"
+#include "tagsProvider.h"
 
 #include <KService>
 
-#include <Nepomuk2/Query/Query>
+#include <Nepomuk2/Tag>
 #include <Nepomuk2/Resource>
-#include <Nepomuk2/Query/ResourceTerm>
-#include <Nepomuk2/Query/Result>
-#include <Nepomuk2/Query/QueryServiceClient>
 #include <Nepomuk2/Variant>
-#include <nepomuk2/comparisonterm.h>
 
 #include <soprano/vocabulary.h>
 
-#include <kactivities/consumer.h>
-
-ActivitiesProvider::ActivitiesProvider(QObject *parent, const QVariantList &args)
+TagsProvider::TagsProvider(QObject *parent, const QVariantList &args)
     : SLC::Provider(parent, args)
 {
-    m_activityConsumer = new KActivities::Consumer(this);
 }
 
-SLC::Provider::Actions ActivitiesProvider::actionsFor(const QVariantHash &content) const
+SLC::Provider::Actions TagsProvider::actionsFor(const QVariantHash &content) const
 {
-    if (content.value("Window ID").toInt() > 0) {
-        return Connect;
-    }
-
-    return NoAction;
+    return Connect;
 }
 
-QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters)
+QVariant TagsProvider::executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters)
 {
     if (action != Connect) {
         return false;
     }
 
     const QString resourceUrl = content["URI"].toString();
-    QStringList activityIds = parameters["Targets"].toStringList();
+    Nepomuk2::Resource fileRes(resourceUrl);
 
-    //first step
-    if (activityIds.isEmpty()) {
+    QStringList targetTags = parameters["Targets"].toStringList();
 
-        //list activities
-        QList<QVariant> result;
-        QVariantHash item;
-        KActivities::Info *info = new KActivities::Info(m_activityConsumer->currentActivity());
-        item["target"] = m_activityConsumer->currentActivity();
-        item["name"] = i18n("Current activity");
-        item["connected"] = (bool)info->linkedResources().contains(resourceUrl);
-        result << item;
-
-        foreach (const QString &activity, m_activityConsumer->listActivities()) {
-            KActivities::Info *info = new KActivities::Info(activity);
-            QVariantHash item;
-            item["target"] = activity;
-            item["name"] = info->name();
-            item["connected"] = (bool)info->linkedResources().contains(resourceUrl);
-            kDebug() << "Found activity: " << activity << info->name();
-
-            result << item;
-            delete info;
-        }
-        return result;
+    //if a comments was set take it as tag name
+    if (!parameters.value("Comment").toString().isEmpty()) {
+        targetTags << parameters.value("Comment").toString();
     }
 
+    //first step
+    if (targetTags.isEmpty()) {
+
+        //list tags
+        QList<QVariant> result;
+        QVariantHash item;
+
+        item["target"] = " ";
+        item["name"] = i18n("New Tag");
+        item["connected"] = false;
+        result << item;
+
+        foreach (const Nepomuk2::Tag &tag, Nepomuk2::Tag::allTags()) {
+            QVariantHash item;
+            item["target"] = tag.uri();
+            item["name"] = tag.genericLabel();
+            item["connected"] = (bool)(fileRes.tags().contains(tag));
+
+            result << item;
+        }
+        return result;
+
     //second step
+
+    //Empty tag name: should ask for tag name?
+    //FIXME: this assumes there is only one tag
+    } else if (targetTags.first().trimmed().isEmpty()) {
+        return "Comment";
+    }
+
+    //finally, apply the tag
     QUrl typeUrl;
 
-    Nepomuk2::Resource fileRes(resourceUrl);
+    //FIXME: this stuff should be put in a common place
     //Bookmark?
     if (QUrl(resourceUrl).scheme().startsWith("http") ||
         content.value("Mime Type").toString() == "text/html") {
@@ -114,23 +115,26 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
         }
     }
 
-    foreach (const QString &activityId, activityIds) {
-        KActivities::Info *info = new KActivities::Info(activityId);
+    foreach (const QString &tagName, targetTags) {
+        Nepomuk2::Tag tag(tagName);
+        QList<Nepomuk2::Tag> tags = fileRes.tags();
+
         //remove connection
-        if ((bool)info->linkedResources().contains(resourceUrl)) {
-            info->unlinkResource(fileRes.resourceUri());
+        if (tags.contains(tag)) {
+            tags.removeAll(tag);
+            fileRes.setTags(tags);
         //add connection
         } else {
-            info->linkResource(fileRes.resourceUri());
+            fileRes.addTag(tag);
         }
     }
 
     return true;
 }
 
-//K_EXPORT_SLC_PROVIDER(activities, ActivitiesProvider)
-K_PLUGIN_FACTORY(factory, registerPlugin<ActivitiesProvider>();)
-K_EXPORT_PLUGIN(factory("sharelikeconnect_provider_activities"))
+//K_EXPORT_SLC_PROVIDER(activities, TagsProvider)
+K_PLUGIN_FACTORY(factory, registerPlugin<TagsProvider>();)
+K_EXPORT_PLUGIN(factory("sharelikeconnect_provider_tags"))
 
-#include "activitiesProvider.moc"
+#include "tagsProvider.moc"
 

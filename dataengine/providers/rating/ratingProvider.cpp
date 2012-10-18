@@ -20,9 +20,9 @@
 
 #include "ratingProvider.h"
 
-#include <Nepomuk/Query/Query>
-#include <Nepomuk/Resource>
-#include <Nepomuk/Variant>
+#include <Nepomuk2/Query/Query>
+#include <Nepomuk2/Resource>
+#include <Nepomuk2/Variant>
 
 #include <soprano/vocabulary.h>
 
@@ -49,7 +49,7 @@ QVariant RatingProvider::executeAction(SLC::Provider::Action action, const QVari
     //only one step here
     QUrl typeUrl;
 
-    Nepomuk::Resource fileRes(resourceUrl);
+    Nepomuk2::Resource fileRes(resourceUrl);
     if (content.value("Mime Type").toString() == "text/x-html") {
         typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark");
         fileRes.addType(typeUrl);
