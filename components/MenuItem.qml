@@ -34,14 +34,6 @@ Item {
         spacing: 5
         //height: Math.min(30, itemLoader.implicitHeight)
 
-        PlasmaCore.SvgItem {
-            svg: lineSvg
-            elementId: "horizontal-line"
-            width: parent.width
-            height: lineSvg.elementSize("horizontal-line").height
-            visible: menuItem.y > 0
-        }
-
         MobileComponents.FallbackComponent {
             id: fallback
         }

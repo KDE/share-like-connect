@@ -120,11 +120,6 @@ Item {
         }
     }
 
-    PlasmaCore.Svg {
-        id: lineSvg
-        imagePath: "widgets/line"
-    }
-
     PlasmaCore.FrameSvgItem {
         id: highlightFrame
         imagePath: "widgets/viewitem"
