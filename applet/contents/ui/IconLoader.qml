@@ -101,7 +101,10 @@ Item {
 
     Loader {
         id: imageLoader
-        anchors.fill: parent
+        anchors.centerIn: parent
+        property int size: Math.min(parent.width, parent.height)
+        width: size >= theme.mediumIconSize ? size : roundToStandardSize(size)
+        height: width
 
         Component {
             id: svgComponent
@@ -110,7 +113,6 @@ Item {
                 svg: svgIcon
                 elementId: root.source
                 anchors.fill: parent
-                smooth: true
             }
         }
 
@@ -119,7 +121,6 @@ Item {
 
             QIconItem {
                 icon: (typeof source == "string") ? QIcon(root.source) : root.source
-                smooth: true
                 anchors.fill: parent
             }
         }
@@ -132,7 +133,6 @@ Item {
                 sourceSize.width: width
                 sourceSize.height: height
                 fillMode: Image.PreserveAspectFit
-                smooth: true
                 anchors.fill: parent
             }
         }
