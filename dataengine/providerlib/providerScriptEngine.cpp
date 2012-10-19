@@ -21,11 +21,14 @@
 
 #include <QFile>
 #include <QScriptEngine>
+#include <QVariantHash>
 
 #include <KGlobal>
 #include <KStandardDirs>
 
 #include <Plasma/Package>
+
+#include "mapbindings.h"
 
 namespace SLC
 {
@@ -40,6 +43,7 @@ ProviderScriptEngine::ProviderScriptEngine(Plasma::Package *package, QObject *pa
     value.setProperty("removeEventListener", newFunction(ProviderScriptEngine::removeEventListener));
     registerOpenUrl(value);
     registerGetUrl(value);
+    qScriptRegisterMapMetaType<QVariantHash>(this);
 }
 
 bool ProviderScriptEngine::include(const QString &path)
