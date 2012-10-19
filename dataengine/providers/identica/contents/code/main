@@ -18,23 +18,16 @@
  */
 
 function  actionsFor(content) {
-    //FIXME: register the enum
-    //FIXME: content cannot be unwinded at the moment, remove 1 || asap
-    if (1 || content["URI"].indexOf("http://") !== 0) {
-        return 1
-    } else {
-        return 0
+    if (content["URI"].indexOf("http://") === 0) {
+        return Share
     }
+
+    return NoAction
 }
 
 function executeAction(action, content, parameters) {
-    if (action != 1) {
+    if (action != Share) {
         return false;
-    }
-
-    print("Content is of type:" + content)
-    for(var i in content) {
-        print("Property of content " + i + ": " + content[i])
     }
 
     openUrl("http://identi.ca/home?action=newnotice&status_textarea=" + content["URI"])
