@@ -30,7 +30,12 @@ function executeAction(action, content, parameters) {
         return false;
     }
 
-    openUrl("http://identi.ca/home?action=newnotice&status_textarea=" + content["URI"])
+    if (parameters["Comment"] == "") {
+        return "Comment";
+    }
+
+    openUrl("http://identi.ca/home?action=newnotice&status_textarea=" + parameters["Comment"] + " " + content["URI"])
+    return true;
 }
 
 addEventListener("executeAction", executeAction)

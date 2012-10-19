@@ -167,7 +167,11 @@ QVariant Provider::executeAction(SLC::Provider::Action action, const QVariantHas
         args << action;
         args << qScriptValueFromValue(d->scriptEngine, content);
         args << qScriptValueFromValue(d->scriptEngine, parameters);
-        return d->scriptEngine->callEventListeners("executeAction", args);
+        QVariantList ret;
+        d->scriptEngine->callEventListeners("executeAction", args, ret);
+        if (ret.length() > 0) {
+            return ret.first();
+        }
     }
 
     return false;
