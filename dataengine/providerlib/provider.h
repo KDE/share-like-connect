@@ -40,6 +40,7 @@ public:
                   Share = 1,
                   Like = 2,
                   Connect = 4 };
+    Q_ENUMS(Action)
     Q_DECLARE_FLAGS(Actions, Action)
 
     Provider(QObject *parent, const QVariantList &args);

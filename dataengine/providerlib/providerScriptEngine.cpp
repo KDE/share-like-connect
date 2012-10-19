@@ -20,6 +20,7 @@
 #include "providerScriptEngine_p.h"
 
 #include <QFile>
+#include <QMetaEnum>
 #include <QScriptEngine>
 #include <QVariantHash>
 
@@ -29,6 +30,7 @@
 #include <Plasma/Package>
 
 #include "mapbindings.h"
+#include "provider.h"
 
 namespace SLC
 {
@@ -38,12 +40,25 @@ ProviderScriptEngine::ProviderScriptEngine(Plasma::Package *package, QObject *pa
       m_package(package),
       m_allowedUrls(HttpUrls)
 {
+    qScriptRegisterMapMetaType<QVariantHash>(this);
     QScriptValue value = globalObject();
     value.setProperty("addEventListener", newFunction(ProviderScriptEngine::addEventListener));
     value.setProperty("removeEventListener", newFunction(ProviderScriptEngine::removeEventListener));
     registerOpenUrl(value);
     registerGetUrl(value);
-    qScriptRegisterMapMetaType<QVariantHash>(this);
+    registerEnums(value, Provider::staticMetaObject);
+}
+
+void ProviderScriptEngine::registerEnums(QScriptValue &scriptValue, const QMetaObject &meta)
+{
+            kDebug() << "********************** creating" << meta.enumeratorCount();
+    for (int i = 0; i < meta.enumeratorCount(); ++i) {
+        QMetaEnum e = meta.enumerator(i);
+        for (int i = 0; i < e.keyCount(); ++i) {
+            kDebug() << "********************** creating" << e.key(i) << e.value(i);
+            scriptValue.setProperty(e.key(i), QScriptValue(this, e.value(i)));
+        }
+    }
 }
 
 bool ProviderScriptEngine::include(const QString &path)
