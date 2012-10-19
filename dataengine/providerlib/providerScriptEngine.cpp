@@ -132,7 +132,7 @@ QScriptValue ProviderScriptEngine::callFunction(QScriptValue &func, const QScrip
     return rv;
 }
 
-bool ProviderScriptEngine::callEventListeners(const QString &event, const QScriptValueList &args)
+bool ProviderScriptEngine::callEventListeners(const QString &event, const QScriptValueList &args, QVariantList &returnValue)
 {
     if (!m_eventListeners.contains(event.toLower())) {
         return false;
@@ -140,8 +140,9 @@ bool ProviderScriptEngine::callEventListeners(const QString &event, const QScrip
 
     QScriptValueList funcs = m_eventListeners.value(event.toLower());
     QMutableListIterator<QScriptValue> it(funcs);
+    //FIXME: ugly: support only one listener instead?
     while (it.hasNext()) {
-        callFunction(it.next(), args);
+        returnValue << callFunction(it.next(), args).toVariant();
     }
 
     return true;

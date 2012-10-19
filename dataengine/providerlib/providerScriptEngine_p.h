@@ -45,7 +45,7 @@ public:
     explicit ProviderScriptEngine(Plasma::Package *package, QObject *parent = 0);
 
     bool include(const QString &path);
-    bool callEventListeners(const QString &event, const QScriptValueList &args);
+    bool callEventListeners(const QString &event, const QScriptValueList &args, QVariantList &returnValue);
     QScriptValue callFunction(QScriptValue &func, const QScriptValueList &args = QScriptValueList(), const QScriptValue &activator = QScriptValue());
 
 private:
