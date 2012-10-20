@@ -1,5 +1,12 @@
 [Desktop Entry]
 Name=Tags
+Name[et]=Sildid
+Name[nl]=Tags
+Name[pt]=Marcas
+Name[pt_BR]=Etiquetas
+Name[sv]=Etiketter
+Name[uk]=Мітки
+Name[x-test]=xxTagsxx
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/ShareLikeConnect
