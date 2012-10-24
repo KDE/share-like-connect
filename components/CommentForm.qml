@@ -37,7 +37,7 @@ Item {
 
         PlasmaComponents.Button {
             id: okButton
-            text: i18n("Ok")
+            text: i18n("OK")
             anchors.horizontalCenter: parent.horizontalCenter
             onClicked: {
                 var service = slcSource.serviceForSource(main.sourceName)
