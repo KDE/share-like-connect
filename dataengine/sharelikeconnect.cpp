@@ -52,6 +52,7 @@ ShareLikeConnectEngine::ShareLikeConnectEngine(QObject *parent, const QVariantLi
 
             QString path = structure->defaultPackageRoot() + '/' + pluginName + '/';
             path = KStandardDirs::locate("data", path + "metadata.desktop");
+
             if (path.isEmpty()) {
 #ifndef NDEBUG
                 // only for debug, do not translate

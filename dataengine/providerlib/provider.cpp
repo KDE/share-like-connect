@@ -143,6 +143,11 @@ QString Provider::actionName(const QVariantHash &content, Action action)
 {
     if (d->scriptEngine) {
         QScriptValue func = d->scriptEngine->globalObject().property("actionName");
+
+        if (!func.isValid()) {
+            return d->name;
+        }
+
         QScriptValueList args;
         args << qScriptValueFromValue(d->scriptEngine, content);
         args << qScriptValueFromValue(d->scriptEngine, (int)action);

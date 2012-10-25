@@ -55,6 +55,7 @@ private:
     bool checkForErrors(bool fatal);
     bool addEventListener(const QString &event, const QScriptValue &func);
     bool removeEventListener(const QString &event, const QScriptValue &func);
+    void registerEnums(QScriptValue &scriptValue, const QMetaObject &meta);
 
     // helpers
     static ProviderScriptEngine * findProviderScriptEngine(QScriptEngine *engine) { return qobject_cast<ProviderScriptEngine *>(engine); }
