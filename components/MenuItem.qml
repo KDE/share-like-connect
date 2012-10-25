@@ -19,7 +19,7 @@
 
 import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
+import org.kde.plasma.extras 0.1 as PlasmaExtras
 
 Item {
     id: menuItem
@@ -34,8 +34,11 @@ Item {
         spacing: 5
         //height: Math.min(30, itemLoader.implicitHeight)
 
-        MobileComponents.FallbackComponent {
+
+        PlasmaExtras.FallbackComponent {
             id: fallback
+            basePath: "plasma"
+            candidates: ["slcmenuitems/" + providerId,  "slcmenuitems/Default"]
         }
 
         Loader {
@@ -43,7 +46,7 @@ Item {
             width: item ? Math.max(item.implicitWidth, serviceMenu.width) : 0
             height: item ? item.implicitHeight : 0
 
-            source: fallback.resolvePath("slcmenuitems", [providerId+"Item.qml", "DefaultItem.qml"])
+            source: fallback.filePath("Item.qml")
 
             MouseArea {
                 anchors.fill: parent
