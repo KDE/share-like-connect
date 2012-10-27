@@ -1,5 +1,9 @@
 [Desktop Entry]
 Name=Identi.ca
+Name[nl]=Identi.ca
+Name[sv]=Identi.ca
+Name[uk]=Identi.ca
+Name[x-test]=xxIdenti.caxx
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/ShareLikeConnect
