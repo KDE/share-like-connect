@@ -52,15 +52,13 @@ Column {
         contentTitle = title
     }
 
-    PlasmaCore.FrameSvgItem {
-        imagePath: "widgets/extender-dragger"
-        prefix: "grouped"
+    Column {
         visible: shareVisible && shareModel.count > 0 && !likeVisible && !connectVisible
         anchors {
             left: parent.left
             right: parent.right
         }
-        height: childrenRect.height + margins.top + margins.bottom
+
         Text {
             id: shareTitle
             y: parent.margins.top
@@ -94,15 +92,12 @@ Column {
         }
     }
 
-    PlasmaCore.FrameSvgItem {
-        imagePath: "widgets/extender-dragger"
-        prefix: "grouped"
+    Column {
         visible: likeVisible && likeModel.count > 0 && !shareVisible && !connectVisible
         anchors {
             left: parent.left
             right: parent.right
         }
-        height: childrenRect.height + margins.top + margins.bottom
         Text {
             id: likeTitle
             y: parent.margins.top
@@ -135,15 +130,12 @@ Column {
         }
     }
 
-    PlasmaCore.FrameSvgItem {
-        imagePath: "widgets/extender-dragger"
-        prefix: "grouped"
+    Column {
         visible: connectVisible && connectModel.count > 0 && !shareVisible && !likeVisible
         anchors {
             left: parent.left
             right: parent.right
         }
-        height: childrenRect.height + margins.top + margins.bottom
         Text {
             id: connectTitle
             y: parent.margins.top
