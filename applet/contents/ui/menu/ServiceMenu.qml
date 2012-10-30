@@ -61,7 +61,6 @@ Column {
 
         Text {
             id: shareTitle
-            y: parent.margins.top
             text: i18n("Share")
             color: theme.textColor
             font.bold: true
@@ -71,7 +70,6 @@ Column {
         }
         Text {
             id: shareContentTitle
-            y: shareTitle.y + shareTitle.height
             text: contentTitle
             visible: text != ''
             color: theme.textColor
@@ -100,7 +98,6 @@ Column {
         }
         Text {
             id: likeTitle
-            y: parent.margins.top
             text: i18n("Like")
             color: theme.textColor
             font.bold: true
@@ -109,7 +106,6 @@ Column {
         }
         Text {
             id: likeContentTitle
-            y: likeTitle.y + likeTitle.height
             text: contentTitle
             visible: text != ''
             color: theme.textColor
@@ -138,7 +134,6 @@ Column {
         }
         Text {
             id: connectTitle
-            y: parent.margins.top
             text: i18n("Connect")
             color: theme.textColor
             font.bold: true
@@ -148,7 +143,6 @@ Column {
         }
         Text {
             id: connectContentTitle
-            y: connectTitle.y + connectTitle.height
             text: contentTitle
             visible: text != ""
             color: theme.textColor
