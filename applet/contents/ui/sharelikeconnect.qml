@@ -17,10 +17,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import Qt 4.7
+import QtQuick 1.1
 import org.kde.qtextracomponents 0.1
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.slccomponents 0.1 as SlcComponents
+import "menu"
 
 Row {
     id: main
@@ -54,7 +54,7 @@ Row {
         id: theme
     }
 
-    SlcComponents.SlcMenu {
+    SlcMenu {
         id: dialog
         location: plasmoid.location
     }
