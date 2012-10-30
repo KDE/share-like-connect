@@ -23,7 +23,7 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 
 
-Item {
+MouseArea {
     id: main
     clip: true
     width: Math.max(theme.defaultFont.mSize.width * 15, mainStack.currentPage ? mainStack.currentPage.implicitWidth : serviceMenu.implicitWidth)
@@ -37,6 +37,12 @@ Item {
     property string confirmationMessage
     property string providerId
     property string sourceName
+
+    //TODO: not on touch
+    hoverEnabled: true
+
+    onPositionChanged: highlightItem(mouse.x, mouse.y)
+    onExited: highlightFrame.opacity = 0
 
     onStateChanged: {
         if (main.state == "operations") {
@@ -89,24 +95,34 @@ Item {
     }
 
 
-    function runItem(x, y)
+    function runItemAtGlobalPos(x, y)
     {
         var dialogX = x-dialog.x-dialog.margins.right
         var dialogY = y-dialog.y-dialog.margins.top
-        var item = serviceMenu.childAt(dialogX, dialogY)
-        print("---------------------------" + item + " " + dialogX + " " + dialogY);
+        runItem(dialogX, dialogY)
+    }
+
+    function runItem(x, y)
+    {
+        var item = serviceMenu.childAt(x, y)
+        print("---------------------------" + item + " " + x + " " + y);
         if (item && typeof item != "undefined") {
             print("You clicked " + item)
-            var posInItem = serviceMenu.mapToItem(item, dialogX, dialogY)
+            var posInItem = serviceMenu.mapToItem(item, x, y)
             item.run(posInItem.x, posInItem.y)
         }
     }
 
-    function highlightItem(x, y)
+    function highlightItemAtGlobalPos(x, y)
     {
         var dialogX = x-dialog.x-dialog.margins.right
         var dialogY = y-dialog.y-dialog.margins.top
-        var item = serviceMenu.childAt(dialogX, dialogY)
+        highlightItem(dialogX, dialogY);
+    }
+
+    function highlightItem(x, y)
+    {
+        var item = serviceMenu.childAt(x, y)
 
         if (item && item.sourceName) {
             var itemPos = serviceMenu.mapFromItem(item, 0, 0)

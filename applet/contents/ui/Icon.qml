@@ -74,11 +74,11 @@ Item {
         }
 
         onPositionChanged: {
-            dialog.mainItem.highlightItem(mouse.screenX, mouse.screenY)
+            dialog.mainItem.highlightItemAtGlobalPos(mouse.screenX, mouse.screenY)
         }
 
         onReleased: {
-            dialog.mainItem.runItem(mouse.screenX, mouse.screenY)
+            dialog.mainItem.runItemAtGlobalPos(mouse.screenX, mouse.screenY)
         }
     }
 }
