@@ -122,13 +122,14 @@ MouseArea {
 
     function highlightItem(x, y)
     {
-        var item = serviceMenu.childAt(x, y)
+        var item = mainStack.currentPage.childAt(x, y)
 
         if (item && item.sourceName) {
-            var itemPos = serviceMenu.mapFromItem(item, 0, 0)
+            var itemPos = mainStack.currentPage.mapFromItem(item, 0, 0)
+
             highlightFrame.x = itemPos.x
             highlightFrame.y = itemPos.y
-            highlightFrame.width = serviceMenu.width
+            highlightFrame.width = mainStack.currentPage.width
             highlightFrame.height = item.height
             highlightFrame.opacity = 1
         } else {
@@ -141,7 +142,7 @@ MouseArea {
         imagePath: "widgets/viewitem"
         prefix: "selected+hover"
         opacity: 0
-        visible: main.state == "operations"
+        visible: main.state == "operations" || main.state == "targets"
         Behavior on y {
             NumberAnimation {
                 duration: 250
