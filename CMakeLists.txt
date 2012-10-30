@@ -14,5 +14,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_P
 
 add_subdirectory(applet)
 add_subdirectory(dataengine)
-add_subdirectory(components)
 
+
+install(DIRECTORY menuitems/ DESTINATION ${DATA_INSTALL_DIR}/plasma/slcmenuitems/)
