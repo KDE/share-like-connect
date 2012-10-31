@@ -190,7 +190,7 @@ MouseArea {
         visible: main.state == "operations" || main.state == "targets"
         Behavior on y {
             NumberAnimation {
-                duration: 250
+                duration: highlightFrame.opacity == 0 ? 0 : 250
                 easing.type: Easing.InOutQuad
             }
         }
