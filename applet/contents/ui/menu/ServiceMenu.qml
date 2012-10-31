@@ -20,10 +20,11 @@
 import QtQuick 1.1
 import org.kde.qtextracomponents 0.1
 import org.kde.plasma.core 0.1 as PlasmaCore
+import "plasmapackage:/code/uiproperties.js" as UiProperties
 
 Column {
     id: menuColumn
-    spacing: 8
+    spacing: UiProperties.layoutSpacing
     //width: Math.max(childrenRect.width, )
 
 

@@ -21,6 +21,7 @@ import QtQuick 1.1
 import org.kde.qtextracomponents 0.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
+import "plasmapackage:/code/uiproperties.js" as UiProperties
 
 
 MouseArea {
@@ -38,8 +39,7 @@ MouseArea {
     property string providerId
     property string sourceName
 
-    //TODO: not on touch
-    hoverEnabled: true
+    hoverEnabled: !UiProperties.touchInput
 
     onPositionChanged: highlightItem(mouse.x, mouse.y)
     onExited: highlightFrame.opacity = 0

@@ -20,6 +20,7 @@
 import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
+import "plasmapackage:/code/uiproperties.js" as UiProperties
 
 Item {
     implicitWidth: mainColumn.width + 24
@@ -27,7 +28,7 @@ Item {
 
     Column {
         id: mainColumn
-        spacing: 8
+        spacing: UiProperties.layoutSpacing
         anchors.centerIn: parent
         PlasmaComponents.TextArea {
             id: commentField

@@ -25,7 +25,7 @@ import "menu"
 Row {
     id: main
     property int minimumWidth: childrenRect.width
-    property int minimumHeight: 16
+    property int minimumHeight: theme.smallIconSIze
 
     spacing: 4
 

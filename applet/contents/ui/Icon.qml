@@ -21,12 +21,12 @@ import QtQuick 1.0
 import org.kde.qtextracomponents 0.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
-
+import "plasmapackage:/code/uiproperties.js" as UiProperties
 
 Item {
     id: iconItem
-    width: Math.min(main.width, main.height*1.4)
-    height: Math.min(main.width*1.4, main.height)
+    width: Math.min(main.width, main.height * UiProperties.iconProportions)
+    height: Math.min(main.width * UiProperties.iconProportions, main.height)
     property QtObject model
     property string service
     property alias source: iconLoader.source
@@ -35,7 +35,7 @@ Item {
         signal menuTriggered
         width: height
 
-        enabled: model.count>0?true:false
+        enabled: model.count > 0 ? true : false
         opacity: enabled ? 1 : 0.3
         Behavior on opacity {
             NumberAnimation {
