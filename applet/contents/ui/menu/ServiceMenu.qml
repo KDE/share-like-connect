@@ -26,11 +26,8 @@ Column {
     id: menuColumn
 
     //BEGIN: own properties
-    //Title of the menu "Share", "Like", "Connect"
-    property string title
-
-    //Subtitle of the menu: derived from the resource uri
-    property string subTitle
+    //Title of the menu: derived from the resource uri
+    property string title 
 
     //Uri of the resource the current focused app s exposing
     property string resourceUrl: slcSource.data["Current Content"]["URI"]
@@ -44,44 +41,41 @@ Column {
     //END: Column properties
 
     //BEGIN: on*Changed
-    //some heuristic to know what to display as subTitle
+    //some heuristic to know what to display as title based on url
     onResourceUrlChanged: {
-        var title = slcSource.data["Current Content"]["Title"]
+        var text = slcSource.data["Current Content"]["Title"]
 
-        if (!title) {
+        if (!text) {
             //fallback to the url
-            title = String(menuColumn.resourceUrl)
+            text = String(menuColumn.resourceUrl);
 
-            if (title.indexOf("file://") == 0) {
-                title = title.substring(title.lastIndexOf("/") + 1);
-            } else if (title.indexOf("http") == 0) {
-                title = title.replace("http://", "");
-                title = title.replace("https://", "");
-                title = title.replace("www.", "");
-                title = title.substring(0, title.indexOf("/"));
+            if (text.indexOf("file://") == 0) {
+                text = text.substring(text.lastIndexOf("/") + 1);
+            } else if (text.indexOf("http") == 0) {
+                text = text.replace("http://", "");
+                text = text.replace("https://", "");
+                text = text.replace("www.", "");
+                text = text.substring(0, text.indexOf("/"));;
             } else {
-                title = ""
+                text = "";
             }
         }
 
-        subTitle = title
+        title = text;
     }
     //switch all needs switching to share, like or connect
     onSourceNameChanged: {
         switch (sourceName) {
         case "Share": {
-            title = i18n("Share");
             servicesRepeater.model = main.shareModel;
             break;
         }
         case "Like": {
-            title = i18n("Like");
             servicesRepeater.model = main.likeModel;
             break;
         }
         default:
         case "Connect": {
-            title = i18n("Connect");
             servicesRepeater.model = main.connectModel;
             break;
         }
@@ -104,15 +98,6 @@ Column {
             anchors.horizontalCenter: parent.horizontalCenter
             opacity: 0.6
             elide: Text.ElideMiddle
-        }
-        Text {
-            id: shareContentTitle
-            text: menuColumn.subTitle
-            visible: text != ''
-            color: theme.textColor
-            anchors.horizontalCenter: parent.horizontalCenter
-            opacity: 0.6
-            elide: Text.ElideRight
         }
     }
 
