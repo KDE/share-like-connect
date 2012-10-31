@@ -66,8 +66,10 @@ MouseArea {
     }
     //END: own properties
 
+    //BEGIN: mousearea properties
     hoverEnabled: !UiProperties.touchInput
     state: "operations"
+    //END: mousearea properties
 
     //BEGIN: on*Changed
     onPositionChanged: highlightItem(mouse.x, mouse.y)

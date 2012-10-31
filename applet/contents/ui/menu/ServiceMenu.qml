@@ -24,13 +24,17 @@ import "plasmapackage:/code/uiproperties.js" as UiProperties
 
 Column {
     id: menuColumn
-    spacing: UiProperties.layoutSpacing
-    //width: Math.max(childrenRect.width, )
 
-
+    //BEGIN: own properties
     property string resourceUrl: slcSource.data["Current Content"]["URI"]
     property string contentTitle
+    //END: own properties
 
+    //BEGIN: Column properties
+    spacing: UiProperties.layoutSpacing
+    //END: Column properties
+
+    //BEGIN: on*Changed
     onResourceUrlChanged: {
         var title = slcSource.data["Current Content"]["Title"]
 
@@ -52,7 +56,9 @@ Column {
 
         contentTitle = title
     }
+    //END: on*Changed
 
+    //BEGIN: graphical internal elements
     Column {
         visible: shareVisible && shareModel.count > 0 && !likeVisible && !connectVisible
         anchors {
@@ -167,4 +173,5 @@ Column {
             resourceUrl: menuColumn.resourceUrl
         }
     }
+    //END: graphical internal elements
 }
