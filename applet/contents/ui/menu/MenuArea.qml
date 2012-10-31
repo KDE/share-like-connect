@@ -36,9 +36,6 @@ MouseArea {
     //Always one of: "Share", "Like", "Connect"
     property string sourceName
 
-    //this will be next value of state:
-    property string pendingState: "operations"
-
     //if we need to display a confirmation message, display it here
     property string confirmationMessage
 
@@ -141,37 +138,6 @@ MouseArea {
         onVisibleChanged: {
             if (!dialog.visible) {
                 highlightFrame.opacity = 0
-            }
-        }
-    }
-
-    SequentialAnimation {
-        id: feedbackMessageAnimation
-        property Item target
-
-        NumberAnimation {
-            target: feedbackMessageAnimation.target
-            properties: "scale"
-            to: 2
-            duration: 200
-            easing.type: "OutCubic"
-        }
-        PauseAnimation {
-            duration: 100
-        }
-        NumberAnimation {
-            target: feedbackMessageAnimation.target
-            properties: "scale"
-            to: 1
-            duration: 250
-            easing.type: "OutElastic"
-        }
-        ScriptAction {
-            script: {
-                main.state = main.pendingState
-                if (main.state == "operations") {
-                    dialog.visible = false
-                }
             }
         }
     }

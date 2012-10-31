@@ -56,7 +56,6 @@ PlasmaCore.Dialog {
     onVisibleChanged: {
         // setAttribute(Qt.WA_X11NetWmWindowTypePopupMenu, true)
         if (!visible) {
-            menuArea.pendingState = "operations"
             menuArea.state = "operations"
         }
     }

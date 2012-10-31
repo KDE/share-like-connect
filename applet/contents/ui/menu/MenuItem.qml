@@ -23,44 +23,46 @@ import org.kde.plasma.extras 0.1 as PlasmaExtras
 
 Item {
     id: menuItem
+
     property string resourceUrl
     property string sourceName
 
-    implicitHeight: mainColumn.height
-    implicitWidth: mainColumn.width
+    implicitHeight: itemLoader.height
+    implicitWidth: itemLoader.width
 
-    Column {
-        id: mainColumn
-        spacing: 5
-        //height: Math.min(30, itemLoader.implicitHeight)
+    PlasmaExtras.FallbackComponent {
+        id: fallback
+        basePath: "plasma"
+        candidates: ["slcmenuitems/" + providerId,  "slcmenuitems/Default"]
+    }
 
+    Loader {
+        id: itemLoader
+        width: item ? Math.max(item.implicitWidth, serviceMenu.width) : 0
+        height: item ? item.implicitHeight : 0
 
-        PlasmaExtras.FallbackComponent {
-            id: fallback
-            basePath: "plasma"
-            candidates: ["slcmenuitems/" + providerId,  "slcmenuitems/Default"]
-        }
+        source: fallback.filePath("Item.qml")
 
-        Loader {
-            id: itemLoader
-            width: item ? Math.max(item.implicitWidth, serviceMenu.width) : 0
-            height: item ? item.implicitHeight : 0
-
-            source: fallback.filePath("Item.qml")
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    menuItem.run(mouse.x, mouse.y)
-                }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                menuItem.run(mouse.x, mouse.y)
             }
+        }
+    }
+
+    Connections {
+        target: itemLoader.item
+        onOperationCompleted: {
+            dialog.visible = false
         }
     }
 
     function run(x, y)
     {
         itemLoader.item.run(x, y)
-        feedbackMessageAnimation.target = itemLoader
-        feedbackMessageAnimation.running = true
+        if (itemLoader.item.operationCompleted === undefined) {
+            dialog.visible = false
+        }
     }
 }

@@ -23,6 +23,10 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 
 
 Item {
+    id: itemRoot
+
+    signal operationCompleted()
+
     width: Math.max(implicitWidth, parent.width)
     implicitWidth: menuItemBody.paintedWidth
     implicitHeight: Math.max(30, menuItemBody.paintedHeight)
@@ -43,16 +47,17 @@ Item {
 
             //TODO: error message?
             if (serviceJob.result === true || serviceJob.result === false) {
-                main.pendingState = "operations"
+                itemRoot.operationCompleted()
+                main.state = "operations"
                 main.sourceName = ""
             //is it asking for confirmation?
             } else if (serviceJob.result["Confirmation"]) {
                 confirmationMessage = serviceJob.result["Confirmation"]
-                main.pendingState = "confirmation"
+                main.state = "confirmation"
                 main.sourceName = sourceName
             //is it asking for a comment?
             } else if (serviceJob.result == "Comment") {
-                main.pendingState = "comment"
+                main.state = "comment"
                 main.sourceName = sourceName
             //is it proposing a series of targets?
             } else {
@@ -61,7 +66,7 @@ Item {
                     secondStepModel.append({"target": serviceJob.result[i]["target"], "name": serviceJob.result[i]["name"], "connected": serviceJob.result[i]["connected"]})
                 }
 
-                main.pendingState = "targets"
+                main.state = "targets"
                 main.sourceName = sourceName
             }
         }
