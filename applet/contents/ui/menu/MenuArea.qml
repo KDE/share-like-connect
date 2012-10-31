@@ -26,49 +26,20 @@ import "plasmapackage:/code/uiproperties.js" as UiProperties
 
 MouseArea {
     id: main
-    clip: true
+
+    //BEGIN: geometry
     width: Math.max(theme.defaultFont.mSize.width * 15, mainStack.currentPage ? mainStack.currentPage.implicitWidth : serviceMenu.implicitWidth)
     height: mainStack.currentPage ? mainStack.currentPage.implicitHeight : serviceMenu.implicitHeight
+    //END: geometry
 
+    //BEIGN: own properties
     property bool shareVisible: true
     property bool likeVisible: true
     property bool connectVisible: true
-    state: "operations"
     property string pendingState: "operations"
     property string confirmationMessage
     property string providerId
     property string sourceName
-
-    hoverEnabled: !UiProperties.touchInput
-
-    onPositionChanged: highlightItem(mouse.x, mouse.y)
-    onExited: highlightFrame.opacity = 0
-
-    onStateChanged: {
-        if (main.state == "operations") {
-            mainStack.pop(serviceMenu)
-            dialog.visible = false
-        } else if (main.state == "targets") {
-            mainStack.push(Qt.createComponent("TargetChooser.qml"))
-        } else if (main.state == "comment") {
-            mainStack.push(Qt.createComponent("CommentForm.qml"))
-        } else if (main.state == "confirmation") {
-            mainStack.push(Qt.createComponent("Confirmation.qml"))
-        }
-    }
-
-    PlasmaCore.Theme {
-        id: theme
-    }
-
-    Connections {
-        target: dialog
-        onVisibleChanged: {
-            if (!dialog.visible) {
-                highlightFrame.opacity = 0
-            }
-        }
-    }
 
     property QtObject slcSource: PlasmaCore.DataSource {
         engine: "org.kde.sharelikeconnect"
@@ -93,8 +64,30 @@ MouseArea {
         sourceFilter: "Connect"
         keyRoleFilter: ".*"
     }
+    //END: own properties
+
+    hoverEnabled: !UiProperties.touchInput
+    state: "operations"
+
+    //BEGIN: on*Changed
+    onPositionChanged: highlightItem(mouse.x, mouse.y)
+    onExited: highlightFrame.opacity = 0
+    onStateChanged: {
+        if (main.state == "operations") {
+            mainStack.pop(serviceMenu)
+            dialog.visible = false
+        } else if (main.state == "targets") {
+            mainStack.push(Qt.createComponent("TargetChooser.qml"))
+        } else if (main.state == "comment") {
+            mainStack.push(Qt.createComponent("CommentForm.qml"))
+        } else if (main.state == "confirmation") {
+            mainStack.push(Qt.createComponent("Confirmation.qml"))
+        }
+    }
+    //END: on*Changed
 
 
+    //BEGIN: functions
     function runItemAtGlobalPos(x, y)
     {
         var dialogX = x-dialog.x-dialog.margins.right
@@ -136,23 +129,14 @@ MouseArea {
             highlightFrame.opacity = 0
         }
     }
+    //END: functions
 
-    PlasmaCore.FrameSvgItem {
-        id: highlightFrame
-        imagePath: "widgets/viewitem"
-        prefix: "selected+hover"
-        opacity: 0
-        visible: main.state == "operations" || main.state == "targets"
-        Behavior on y {
-            NumberAnimation {
-                duration: 250
-                easing.type: Easing.InOutQuad
-            }
-        }
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 250
-                easing.type: Easing.InOutQuad
+    //BEGIN: non graphical internal
+    Connections {
+        target: dialog
+        onVisibleChanged: {
+            if (!dialog.visible) {
+                highlightFrame.opacity = 0
             }
         }
     }
@@ -191,6 +175,28 @@ MouseArea {
     ListModel {
         id: secondStepModel
     }
+    //END: non graphical internal
+
+    //BEGIN: graphical internals
+    PlasmaCore.FrameSvgItem {
+        id: highlightFrame
+        imagePath: "widgets/viewitem"
+        prefix: "selected+hover"
+        opacity: 0
+        visible: main.state == "operations" || main.state == "targets"
+        Behavior on y {
+            NumberAnimation {
+                duration: 250
+                easing.type: Easing.InOutQuad
+            }
+        }
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 250
+                easing.type: Easing.InOutQuad
+            }
+        }
+    }
 
     PlasmaComponents.PageStack {
         id: mainStack
@@ -198,4 +204,5 @@ MouseArea {
             id: serviceMenu
         }
     }
+    //END: graphical internals
 }
