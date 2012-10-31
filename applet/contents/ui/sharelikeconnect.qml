@@ -20,6 +20,7 @@
 import QtQuick 1.1
 import org.kde.qtextracomponents 0.1
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.extras 0.1 as PlasmaExtras
 import "menu"
 
 Row {
@@ -33,6 +34,13 @@ Row {
         plasmoid.aspectRatioMode = "IgnoreAspectRatio"
     }
 
+    // central access to the slc dataengine
+    PlasmaCore.DataSource {
+        id: slcSource
+        engine: "org.kde.sharelikeconnect"
+        connectedSources: ["Current Content", "Share", "Like", "Connect"]
+    }
+
     Icon {
         source: "slc-share"
         service: "Share"
@@ -44,14 +52,9 @@ Row {
         model: dialog.mainItem.likeModel
     }
     Icon {
-        id: connectIcon
         source: "slc-connect"
         service: "Connect"
         model: dialog.mainItem.connectModel
-    }
-
-    PlasmaCore.Theme {
-        id: theme
     }
 
     SlcMenu {

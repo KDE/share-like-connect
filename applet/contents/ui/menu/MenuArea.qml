@@ -33,21 +33,23 @@ MouseArea {
     //END: geometry
 
     //BEGIN: own properties
-    property bool shareVisible: true
-    property bool likeVisible: true
-    property bool connectVisible: true
-    property string pendingState: "operations"
-    property string confirmationMessage
-    property string providerId
+    //Always one of: "Share", "Like", "Connect"
     property string sourceName
 
-    property QtObject slcSource: PlasmaCore.DataSource {
-        engine: "org.kde.sharelikeconnect"
-        connectedSources: ["Current Content", "Share", "Like", "Connect"]
-    }
+    //this will be next value of state:
+    property string pendingState: "operations"
 
+    //if we need to display a confirmation message, display it here
+    property string confirmationMessage
+
+    //id of the slc provider: tags, activities, rate etc
+    property string providerId
+
+
+    // central access to the slc dataengine
+
+    // models that list all the actions of Share, Like, and Connect respectively
     property QtObject shareModel: PlasmaCore.DataModel {
-        id: shareModel
         dataSource: slcSource
         sourceFilter: "Share"
         keyRoleFilter: ".*"
@@ -204,6 +206,7 @@ MouseArea {
         id: mainStack
         initialPage: ServiceMenu {
             id: serviceMenu
+            sourceName: main.sourceName
         }
     }
     //END: graphical internals

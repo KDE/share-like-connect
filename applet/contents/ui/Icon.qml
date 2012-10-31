@@ -55,20 +55,7 @@ Item {
             if (dialog.visible) {
                 dialog.visible = false
             } else {
-                if (iconItem.service == "Share") {
-                    dialog.mainItem.shareVisible = true
-                    dialog.mainItem.likeVisible = false
-                    dialog.mainItem.connectVisible = false
-                } else if (iconItem.service == "Like") {
-                    dialog.mainItem.shareVisible = false
-                    dialog.mainItem.likeVisible = true
-                    dialog.mainItem.connectVisible = false
-                //Connect
-                } else {
-                    dialog.mainItem.shareVisible = false
-                    dialog.mainItem.likeVisible = false
-                    dialog.mainItem.connectVisible = true
-                }
+                dialog.mainItem.sourceName = iconItem.service
                 dialog.open(iconItem)
             }
         }

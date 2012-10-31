@@ -26,8 +26,17 @@ Column {
     id: menuColumn
 
     //BEGIN: own properties
+    //Title of the menu "Share", "Like", "Connect"
+    property string title
+
+    //Subtitle of the menu: derived from the resource uri
+    property string subTitle
+
+    //Uri of the resource the current focused app s exposing
     property string resourceUrl: slcSource.data["Current Content"]["URI"]
-    property string contentTitle
+
+    //The source we want to expse operations: Share, Like or Connect
+    property string sourceName
     //END: own properties
 
     //BEGIN: Column properties
@@ -35,6 +44,7 @@ Column {
     //END: Column properties
 
     //BEGIN: on*Changed
+    //some heuristic to know what to display as subTitle
     onResourceUrlChanged: {
         var title = slcSource.data["Current Content"]["Title"]
 
@@ -43,24 +53,44 @@ Column {
             title = String(menuColumn.resourceUrl)
 
             if (title.indexOf("file://") == 0) {
-                title = title.substring(title.lastIndexOf("/") + 1)
+                title = title.substring(title.lastIndexOf("/") + 1);
             } else if (title.indexOf("http") == 0) {
                 title = title.replace("http://", "");
                 title = title.replace("https://", "");
                 title = title.replace("www.", "");
-                title = title.substring(0, title.indexOf("/"))
+                title = title.substring(0, title.indexOf("/"));
             } else {
                 title = ""
             }
         }
 
-        contentTitle = title
+        subTitle = title
+    }
+    //switch all needs switching to share, like or connect
+    onSourceNameChanged: {
+        switch (sourceName) {
+        case "Share": {
+            title = i18n("Share");
+            servicesRepeater.model = main.shareModel;
+            break;
+        }
+        case "Like": {
+            title = i18n("Like");
+            servicesRepeater.model = main.likeModel;
+            break;
+        }
+        default:
+        case "Connect": {
+            title = i18n("Connect");
+            servicesRepeater.model = main.connectModel;
+            break;
+        }
+        }
     }
     //END: on*Changed
 
     //BEGIN: graphical internal elements
     Column {
-        visible: shareVisible && shareModel.count > 0 && !likeVisible && !connectVisible
         anchors {
             left: parent.left
             right: parent.right
@@ -68,7 +98,7 @@ Column {
 
         Text {
             id: shareTitle
-            text: i18n("Share")
+            text: menuColumn.title
             color: theme.textColor
             font.bold: true
             anchors.horizontalCenter: parent.horizontalCenter
@@ -77,7 +107,7 @@ Column {
         }
         Text {
             id: shareContentTitle
-            text: contentTitle
+            text: menuColumn.subTitle
             visible: text != ''
             color: theme.textColor
             anchors.horizontalCenter: parent.horizontalCenter
@@ -87,89 +117,11 @@ Column {
     }
 
     Repeater {
-        id: shareRepeater
-        model: shareModel
-
-        MenuItem {
-            visible: shareVisible
-            sourceName: "Share"
-            resourceUrl: menuColumn.resourceUrl
-        }
-    }
-
-    Column {
-        visible: likeVisible && likeModel.count > 0 && !shareVisible && !connectVisible
-        anchors {
-            left: parent.left
-            right: parent.right
-        }
-        Text {
-            id: likeTitle
-            text: i18n("Like")
-            color: theme.textColor
-            font.bold: true
-            anchors.horizontalCenter: parent.horizontalCenter
-            opacity: 0.6
-        }
-        Text {
-            id: likeContentTitle
-            text: contentTitle
-            visible: text != ''
-            color: theme.textColor
-            anchors.horizontalCenter: parent.horizontalCenter
-            opacity: 0.6
-            elide: Text.ElideRight
-        }
-    }
-
-    Repeater {
-        id: likeRepeater
+        id: servicesRepeater
         model: likeModel
 
         MenuItem {
-            visible: likeVisible
-            sourceName: "Like"
-            resourceUrl: menuColumn.resourceUrl
-        }
-    }
-
-    Column {
-        visible: connectVisible && connectModel.count > 0 && !shareVisible && !likeVisible
-        anchors {
-            left: parent.left
-            right: parent.right
-        }
-        Text {
-            id: connectTitle
-            text: i18n("Connect")
-            color: theme.textColor
-            font.bold: true
-            anchors.horizontalCenter: parent.horizontalCenter
-            opacity: 0.6
-            elide: Text.ElideMiddle
-        }
-        Text {
-            id: connectContentTitle
-            text: contentTitle
-            visible: text != ""
-            color: theme.textColor
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            horizontalAlignment: Text.AlignHCenter
-            opacity: 0.6
-            elide: Text.ElideRight
-        }
-    }
-
-    Repeater {
-        id: connectRepeater
-        model: connectModel
-
-        MenuItem {
-            visible: connectVisible
-            sourceName: "Connect"
+            sourceName: menuColumn.sourceName
             resourceUrl: menuColumn.resourceUrl
         }
     }
