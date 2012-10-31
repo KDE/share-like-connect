@@ -78,10 +78,6 @@ Item {
     implicitWidth: theme.smallIconSize
     implicitHeight: theme.smallIconSize
 
-    PlasmaCore.Svg {
-        id: svgIcon
-    }
-
     function roundToStandardSize(size)
     {
         if (size >= theme.enormousIconSize) {

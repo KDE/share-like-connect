@@ -24,9 +24,12 @@ import org.kde.plasma.extras 0.1 as PlasmaExtras
 import "menu"
 
 Row {
-    id: main
+    id: appletRoot
+
     property int minimumWidth: childrenRect.width
     property int minimumHeight: theme.smallIconSIze
+    //Title of the menu: derived from the resource uri
+    property string title
 
     spacing: 4
 
@@ -39,22 +42,84 @@ Row {
         id: slcSource
         engine: "org.kde.sharelikeconnect"
         connectedSources: ["Current Content", "Share", "Like", "Connect"]
+
+        //some heuristic to know what to display as title based on url
+        onDataChanged: {
+            var text = slcSource.data["Current Content"]["Title"]
+
+            if (!text) {
+                //fallback to the url
+                text = String(slcSource.data["Current Content"]["URI"]);
+
+                if (text.indexOf("file://") == 0) {
+                    text = text.substring(text.lastIndexOf("/") + 1);
+                } else if (text.indexOf("http") == 0) {
+                    text = text.replace("http://", "");
+                    text = text.replace("https://", "");
+                    text = text.replace("www.", "");
+                    text = text.substring(0, text.indexOf("/"));;
+                } else {
+                    text = "";
+                }
+            }
+
+            title = text;
+        }
+    }
+
+    PlasmaCore.Svg {
+        id: svgIcon
+        //this has to be done in an imperative way because of Plasma::Svg api
+        Component.onCompleted: {
+            svgIcon.resize(theme.enormousIconSize, theme.enormousIconSize)
+            shareToolTip.image = svgIcon.pixmap("slc-share")
+            likeToolTip.image = svgIcon.pixmap("slc-like")
+            connectToolTip.image = svgIcon.pixmap("slc-connect")
+        }
     }
 
     Icon {
+        id: shareIcon
+
         source: "slc-share"
         service: "Share"
         model: dialog.mainItem.shareModel
     }
     Icon {
+        id: likeIcon
+
         source: "slc-like"
         service: "Like"
         model: dialog.mainItem.likeModel
     }
     Icon {
+        id: connectIcon
+
         source: "slc-connect"
         service: "Connect"
         model: dialog.mainItem.connectModel
+    }
+
+    PlasmaCore.ToolTip {
+        id: shareToolTip
+
+        target: shareIcon
+        mainText: i18n("Share")
+        subText: title
+    }
+    PlasmaCore.ToolTip {
+        id: likeToolTip
+
+        target: likeIcon
+        mainText: i18n("Like")
+        subText: title
+    }
+    PlasmaCore.ToolTip {
+        id: connectToolTip
+
+        target: connectIcon
+        mainText: i18n("Connect")
+        subText: title
     }
 
     SlcMenu {

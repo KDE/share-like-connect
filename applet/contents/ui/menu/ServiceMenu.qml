@@ -26,8 +26,7 @@ Column {
     id: menuColumn
 
     //BEGIN: own properties
-    //Title of the menu: derived from the resource uri
-    property string title 
+
 
     //Uri of the resource the current focused app s exposing
     property string resourceUrl: slcSource.data["Current Content"]["URI"]
@@ -41,28 +40,6 @@ Column {
     //END: Column properties
 
     //BEGIN: on*Changed
-    //some heuristic to know what to display as title based on url
-    onResourceUrlChanged: {
-        var text = slcSource.data["Current Content"]["Title"]
-
-        if (!text) {
-            //fallback to the url
-            text = String(menuColumn.resourceUrl);
-
-            if (text.indexOf("file://") == 0) {
-                text = text.substring(text.lastIndexOf("/") + 1);
-            } else if (text.indexOf("http") == 0) {
-                text = text.replace("http://", "");
-                text = text.replace("https://", "");
-                text = text.replace("www.", "");
-                text = text.substring(0, text.indexOf("/"));;
-            } else {
-                text = "";
-            }
-        }
-
-        title = text;
-    }
     //switch all needs switching to share, like or connect
     onSourceNameChanged: {
         switch (sourceName) {
@@ -92,7 +69,7 @@ Column {
 
         Text {
             id: shareTitle
-            text: menuColumn.title
+            text: appletRoot.title
             color: theme.textColor
             font.bold: true
             anchors.horizontalCenter: parent.horizontalCenter

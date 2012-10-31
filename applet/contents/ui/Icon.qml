@@ -25,8 +25,8 @@ import "plasmapackage:/code/uiproperties.js" as UiProperties
 
 Item {
     id: iconItem
-    width: Math.min(main.width, main.height * UiProperties.iconProportions)
-    height: Math.min(main.width * UiProperties.iconProportions, main.height)
+    width: Math.min(appletRoot.width, appletRoot.height * UiProperties.iconProportions)
+    height: Math.min(appletRoot.width * UiProperties.iconProportions, appletRoot.height)
     property QtObject model
     property string service
     property alias source: iconLoader.source
