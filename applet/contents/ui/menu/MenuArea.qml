@@ -32,7 +32,7 @@ MouseArea {
     height: mainStack.currentPage ? mainStack.currentPage.implicitHeight : serviceMenu.implicitHeight
     //END: geometry
 
-    //BEIGN: own properties
+    //BEGIN: own properties
     property bool shareVisible: true
     property bool likeVisible: true
     property bool connectVisible: true
