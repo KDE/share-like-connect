@@ -25,15 +25,21 @@ import "plasmapackage:/code/uiproperties.js" as UiProperties
 
 Item {
     id: iconItem
-    width: Math.min(appletRoot.width, appletRoot.height * UiProperties.iconProportions)
-    height: Math.min(appletRoot.width * UiProperties.iconProportions, appletRoot.height)
+
+    width: appletRoot.vertical ? appletRoot.width : Math.min(appletRoot.height * UiProperties.iconProportions, theme.hugeIconSize)
+
+    height: appletRoot.vertical ? Math.min(appletRoot.width * UiProperties.iconProportions, theme.hugeIconSize) : appletRoot.height
+
+
     property QtObject model
     property string service
     property alias source: iconLoader.source
     IconLoader {
         id: iconLoader
         signal menuTriggered
-        width: height
+        width: Math.min(parent.width, parent.height)
+        height: width
+        anchors.centerIn: parent
 
         enabled: model.count > 0 ? true : false
         opacity: enabled ? 1 : 0.3
@@ -42,10 +48,6 @@ Item {
                 duration: 250
                 easing: Ease.InOut
             }
-        }
-        anchors {
-            top: parent.top
-            bottom: parent.bottom
         }
     }
     MouseEventListener {

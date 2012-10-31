@@ -23,18 +23,35 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.extras 0.1 as PlasmaExtras
 import "menu"
 
-Row {
+Flow {
     id: appletRoot
 
-    property int minimumWidth: childrenRect.width
-    property int minimumHeight: theme.smallIconSIze
+    //BEGIN: own properties
+    property int minimumWidth: vertical ? theme.smallIconSize : shareIcon.width * 3 + 8
+    property int minimumHeight: vertical ? shareIcon.height * 3 + 8 : theme.smallIconSIze
+
     //Title of the menu: derived from the resource uri
     property string title
 
-    spacing: 4
+    //true if we are on a vertical formfactor:
+    // we can't just bind to plasmoid.formfactor because since it has been registered with QScript
+    property bool vertical
+    //END: own properties
 
+
+    //BEGIN: Flow properties
+    spacing: 4
+    //END: Flow properties
+
+
+    //BEGIN: non graphical implementation objects
     Component.onCompleted: {
         plasmoid.aspectRatioMode = "IgnoreAspectRatio"
+    }
+
+    Connections {
+        target: plasmoid
+        onFormFactorChanged: vertical = (plasmoid.formFactor == Vertical)
     }
 
     // central access to the slc dataengine
@@ -77,7 +94,10 @@ Row {
             connectToolTip.image = svgIcon.pixmap("slc-connect")
         }
     }
+    //END: non graphical implementation objects
 
+
+    //BEGIN: graphical implementation objects
     Icon {
         id: shareIcon
 
@@ -126,5 +146,6 @@ Row {
         id: dialog
         location: plasmoid.location
     }
+    //END: graphical implementation objects
 }
 
