@@ -17,20 +17,28 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import Qt 4.7
+import QtQuick 1.1
 import org.kde.qtextracomponents 0.1
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.slccomponents 0.1 as SlcComponents
+import org.kde.plasma.extras 0.1 as PlasmaExtras
+import "menu"
 
 Row {
     id: main
     property int minimumWidth: childrenRect.width
-    property int minimumHeight: 16
+    property int minimumHeight: theme.smallIconSIze
 
     spacing: 4
 
     Component.onCompleted: {
         plasmoid.aspectRatioMode = "IgnoreAspectRatio"
+    }
+
+    // central access to the slc dataengine
+    PlasmaCore.DataSource {
+        id: slcSource
+        engine: "org.kde.sharelikeconnect"
+        connectedSources: ["Current Content", "Share", "Like", "Connect"]
     }
 
     Icon {
@@ -44,17 +52,12 @@ Row {
         model: dialog.mainItem.likeModel
     }
     Icon {
-        id: connectIcon
         source: "slc-connect"
         service: "Connect"
         model: dialog.mainItem.connectModel
     }
 
-    PlasmaCore.Theme {
-        id: theme
-    }
-
-    SlcComponents.SlcMenu {
+    SlcMenu {
         id: dialog
         location: plasmoid.location
     }

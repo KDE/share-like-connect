@@ -21,56 +21,35 @@ import QtQuick 1.1
 import org.kde.qtextracomponents 0.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
+import "plasmapackage:/code/uiproperties.js" as UiProperties
 
 
-Item {
+MouseArea {
     id: main
-    clip: true
+
+    //BEGIN: geometry
     width: Math.max(theme.defaultFont.mSize.width * 15, mainStack.currentPage ? mainStack.currentPage.implicitWidth : serviceMenu.implicitWidth)
     height: mainStack.currentPage ? mainStack.currentPage.implicitHeight : serviceMenu.implicitHeight
+    //END: geometry
 
-    property bool shareVisible: true
-    property bool likeVisible: true
-    property bool connectVisible: true
-    state: "operations"
-    property string pendingState: "operations"
-    property string confirmationMessage
-    property string providerId
+    //BEGIN: own properties
+    //Always one of: "Share", "Like", "Connect"
     property string sourceName
 
-    onStateChanged: {
-        if (main.state == "operations") {
-            mainStack.pop(serviceMenu)
-            dialog.visible = false
-        } else if (main.state == "targets") {
-            mainStack.push(Qt.createComponent("TargetChooser.qml"))
-        } else if (main.state == "comment") {
-            mainStack.push(Qt.createComponent("CommentForm.qml"))
-        } else if (main.state == "confirmation") {
-            mainStack.push(Qt.createComponent("Confirmation.qml"))
-        }
-    }
+    //this will be next value of state:
+    property string pendingState: "operations"
 
-    PlasmaCore.Theme {
-        id: theme
-    }
+    //if we need to display a confirmation message, display it here
+    property string confirmationMessage
 
-    Connections {
-        target: dialog
-        onVisibleChanged: {
-            if (!dialog.visible) {
-                highlightFrame.opacity = 0
-            }
-        }
-    }
+    //id of the slc provider: tags, activities, rate etc
+    property string providerId
 
-    property QtObject slcSource: PlasmaCore.DataSource {
-        engine: "org.kde.sharelikeconnect"
-        connectedSources: ["Current Content", "Share", "Like", "Connect"]
-    }
 
+    // central access to the slc dataengine
+
+    // models that list all the actions of Share, Like, and Connect respectively
     property QtObject shareModel: PlasmaCore.DataModel {
-        id: shareModel
         dataSource: slcSource
         sourceFilter: "Share"
         keyRoleFilter: ".*"
@@ -87,55 +66,81 @@ Item {
         sourceFilter: "Connect"
         keyRoleFilter: ".*"
     }
+    //END: own properties
+
+    //BEGIN: mousearea properties
+    hoverEnabled: !UiProperties.touchInput
+    state: "operations"
+    //END: mousearea properties
+
+    //BEGIN: on*Changed
+    onPositionChanged: highlightItem(mouse.x, mouse.y)
+    onExited: highlightFrame.opacity = 0
+    onStateChanged: {
+        if (main.state == "operations") {
+            mainStack.pop(serviceMenu)
+            dialog.visible = false
+        } else if (main.state == "targets") {
+            mainStack.push(Qt.createComponent("TargetChooser.qml"))
+        } else if (main.state == "comment") {
+            mainStack.push(Qt.createComponent("CommentForm.qml"))
+        } else if (main.state == "confirmation") {
+            mainStack.push(Qt.createComponent("Confirmation.qml"))
+        }
+    }
+    //END: on*Changed
 
 
-    function runItem(x, y)
+    //BEGIN: functions
+    function runItemAtGlobalPos(x, y)
     {
         var dialogX = x-dialog.x-dialog.margins.right
         var dialogY = y-dialog.y-dialog.margins.top
-        var item = serviceMenu.childAt(dialogX, dialogY)
-        print("---------------------------" + item + " " + dialogX + " " + dialogY);
+        runItem(dialogX, dialogY)
+    }
+
+    function runItem(x, y)
+    {
+        var item = serviceMenu.childAt(x, y)
+        print("---------------------------" + item + " " + x + " " + y);
         if (item && typeof item != "undefined") {
             print("You clicked " + item)
-            var posInItem = serviceMenu.mapToItem(item, dialogX, dialogY)
+            var posInItem = serviceMenu.mapToItem(item, x, y)
             item.run(posInItem.x, posInItem.y)
         }
     }
 
-    function highlightItem(x, y)
+    function highlightItemAtGlobalPos(x, y)
     {
         var dialogX = x-dialog.x-dialog.margins.right
         var dialogY = y-dialog.y-dialog.margins.top
-        var item = serviceMenu.childAt(dialogX, dialogY)
+        highlightItem(dialogX, dialogY);
+    }
+
+    function highlightItem(x, y)
+    {
+        var item = mainStack.currentPage.childAt(x, y)
 
         if (item && item.sourceName) {
-            var itemPos = serviceMenu.mapFromItem(item, 0, 0)
+            var itemPos = mainStack.currentPage.mapFromItem(item, 0, 0)
+
             highlightFrame.x = itemPos.x
             highlightFrame.y = itemPos.y
-            highlightFrame.width = serviceMenu.width
+            highlightFrame.width = mainStack.currentPage.width
             highlightFrame.height = item.height
             highlightFrame.opacity = 1
         } else {
             highlightFrame.opacity = 0
         }
     }
+    //END: functions
 
-    PlasmaCore.FrameSvgItem {
-        id: highlightFrame
-        imagePath: "widgets/viewitem"
-        prefix: "selected+hover"
-        opacity: 0
-        visible: main.state == "operations"
-        Behavior on y {
-            NumberAnimation {
-                duration: 250
-                easing.type: Easing.InOutQuad
-            }
-        }
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 250
-                easing.type: Easing.InOutQuad
+    //BEGIN: non graphical internal
+    Connections {
+        target: dialog
+        onVisibleChanged: {
+            if (!dialog.visible) {
+                highlightFrame.opacity = 0
             }
         }
     }
@@ -174,11 +179,35 @@ Item {
     ListModel {
         id: secondStepModel
     }
+    //END: non graphical internal
+
+    //BEGIN: graphical internals
+    PlasmaCore.FrameSvgItem {
+        id: highlightFrame
+        imagePath: "widgets/viewitem"
+        prefix: "selected+hover"
+        opacity: 0
+        visible: main.state == "operations" || main.state == "targets"
+        Behavior on y {
+            NumberAnimation {
+                duration: highlightFrame.opacity == 0 ? 0 : 250
+                easing.type: Easing.InOutQuad
+            }
+        }
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 250
+                easing.type: Easing.InOutQuad
+            }
+        }
+    }
 
     PlasmaComponents.PageStack {
         id: mainStack
         initialPage: ServiceMenu {
             id: serviceMenu
+            sourceName: main.sourceName
         }
     }
+    //END: graphical internals
 }

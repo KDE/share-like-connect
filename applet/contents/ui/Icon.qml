@@ -21,12 +21,12 @@ import QtQuick 1.0
 import org.kde.qtextracomponents 0.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
-
+import "plasmapackage:/code/uiproperties.js" as UiProperties
 
 Item {
     id: iconItem
-    width: Math.min(main.width, main.height*1.4)
-    height: Math.min(main.width*1.4, main.height)
+    width: Math.min(main.width, main.height * UiProperties.iconProportions)
+    height: Math.min(main.width * UiProperties.iconProportions, main.height)
     property QtObject model
     property string service
     property alias source: iconLoader.source
@@ -35,7 +35,7 @@ Item {
         signal menuTriggered
         width: height
 
-        enabled: model.count>0?true:false
+        enabled: model.count > 0 ? true : false
         opacity: enabled ? 1 : 0.3
         Behavior on opacity {
             NumberAnimation {
@@ -55,30 +55,17 @@ Item {
             if (dialog.visible) {
                 dialog.visible = false
             } else {
-                if (iconItem.service == "Share") {
-                    dialog.mainItem.shareVisible = true
-                    dialog.mainItem.likeVisible = false
-                    dialog.mainItem.connectVisible = false
-                } else if (iconItem.service == "Like") {
-                    dialog.mainItem.shareVisible = false
-                    dialog.mainItem.likeVisible = true
-                    dialog.mainItem.connectVisible = false
-                //Connect
-                } else {
-                    dialog.mainItem.shareVisible = false
-                    dialog.mainItem.likeVisible = false
-                    dialog.mainItem.connectVisible = true
-                }
+                dialog.mainItem.sourceName = iconItem.service
                 dialog.open(iconItem)
             }
         }
 
         onPositionChanged: {
-            dialog.mainItem.highlightItem(mouse.screenX, mouse.screenY)
+            dialog.mainItem.highlightItemAtGlobalPos(mouse.screenX, mouse.screenY)
         }
 
         onReleased: {
-            dialog.mainItem.runItem(mouse.screenX, mouse.screenY)
+            dialog.mainItem.runItemAtGlobalPos(mouse.screenX, mouse.screenY)
         }
     }
 }
