@@ -1,23 +1,5 @@
 [Desktop Entry]
 Name=Activities
-Name[cs]=Aktivity
-Name[da]=Aktiviteter
-Name[de]=Aktivitäten
-Name[es]=Actividades
-Name[et]=Tegevused
-Name[fr]=Activités
-Name[ga]=Gníomhaíochtaí
-Name[hu]=Tevékenységek
-Name[km]=សកម្មភាព
-Name[nds]=Aktiviteten
-Name[nl]=Activiteiten
-Name[pl]=Działania
-Name[pt]=Actividades
-Name[pt_BR]=Atividades
-Name[sk]=Aktivity
-Name[sv]=Aktiviteter
-Name[uk]=Простори дій
-Name[x-test]=xxActivitiesxx
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/ShareLikeConnect

@@ -1,23 +1,5 @@
 [Desktop Entry]
 Name=Rating
-Name[cs]=Hodnocení
-Name[da]=Vurdering
-Name[de]=Bewertungen
-Name[es]=Puntuación
-Name[et]=Hinnang
-Name[fr]=Note
-Name[ga]=Rátáil
-Name[hu]=Értékelés
-Name[km]=វាយតម្លៃ
-Name[nds]=Beweerten
-Name[nl]=Waardering
-Name[pl]=Ocena
-Name[pt]=Classificação
-Name[pt_BR]=Avaliação
-Name[sk]=Hodnotenie
-Name[sv]=Betyg
-Name[uk]=Оцінка
-Name[x-test]=xxRatingxx
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/ShareLikeConnect
