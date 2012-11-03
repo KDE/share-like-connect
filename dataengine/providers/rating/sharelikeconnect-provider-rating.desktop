@@ -1,5 +1,9 @@
 [Desktop Entry]
 Name=Rating
+Name[nl]=Waardering
+Name[pt]=Classificação
+Name[pt_BR]=Avaliação
+Name[x-test]=xxRatingxx
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/ShareLikeConnect

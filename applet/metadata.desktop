@@ -1,6 +1,14 @@
 [Desktop Entry]
 Name=Share Like Connect
+Name[nl]=Share-Like-Connect
+Name[pt]=Ligação Share-Like
+Name[pt_BR]=Conexão Share Like
+Name[x-test]=xxShare Like Connectxx
 Comment=Quick associations for active content
+Comment[nl]=Snelle associaties voor actieve inhoud
+Comment[pt]=Associações rápidas para o conteúdo activo
+Comment[pt_BR]=Associações rápidas para o conteúdo ativo
+Comment[x-test]=xxQuick associations for active contentxx
 Encoding=UTF-8
 Icon=document-share
 Keywords=

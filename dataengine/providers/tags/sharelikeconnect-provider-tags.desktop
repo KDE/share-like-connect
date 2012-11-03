@@ -1,5 +1,9 @@
 [Desktop Entry]
 Name=Tags
+Name[nl]=Tags
+Name[pt]=Marcas
+Name[pt_BR]=Etiquetas
+Name[x-test]=xxTagsxx
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/ShareLikeConnect

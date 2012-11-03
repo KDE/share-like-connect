@@ -1,5 +1,9 @@
 [Desktop Entry]
 Name=Activities
+Name[nl]=Activiteiten
+Name[pt]=Actividades
+Name[pt_BR]=Atividades
+Name[x-test]=xxActivitiesxx
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/ShareLikeConnect
