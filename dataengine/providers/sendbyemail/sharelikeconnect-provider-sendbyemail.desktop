@@ -3,6 +3,8 @@ Name=Send by email
 Name[nl]=Met e-mail verzenden
 Name[pt]=Enviar por e-mail
 Name[pt_BR]=Enviar por e-mail
+Name[sk]=Poslať e-mailom
+Name[uk]=Надіслати ел. поштою
 Name[x-test]=xxSend by emailxx
 Type=Service
 

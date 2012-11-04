@@ -3,11 +3,14 @@ Name=Share·Like·Connect
 Name[nl]=Share-Like-Connect
 Name[pt]=Ligação·Share·Like
 Name[pt_BR]=Conexão·Share·Like
+Name[sk]=Share·Like·Connect
+Name[uk]=Оприлюднити·Уподобати·З’єднати
 Name[x-test]=xxShare·Like·Connectxx
 Comment=Provider of actions for sharing resources
 Comment[nl]=Leverancier van acties voor het delen van hulpbronnen
 Comment[pt]=Fornecedor de acções para partilhar os recursos
 Comment[pt_BR]=Provedor de ações para compartilhar os recursos
+Comment[uk]=Засіб визначення дій для спільних ресурсів
 Comment[x-test]=xxProvider of actions for sharing resourcesxx
 Type=Service
 
