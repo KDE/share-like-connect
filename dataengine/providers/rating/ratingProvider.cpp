@@ -23,6 +23,7 @@
 #include <Nepomuk2/Query/Query>
 #include <Nepomuk2/Resource>
 #include <Nepomuk2/Variant>
+#include <Nepomuk2/Vocabulary/NFO>
 
 #include <soprano/vocabulary.h>
 
@@ -52,7 +53,7 @@ QVariant RatingProvider::executeAction(SLC::Provider::Action action, const QVari
     }
 
     const QString resourceUrl = content["URI"].toString();
-    int rating = -1;
+    int rating = 0;
     const QVariant targets = parameters["Targets"];
     const QVariant::Type dataType = targets.type();
     if (dataType == QVariant::StringList) {
@@ -62,20 +63,23 @@ QVariant RatingProvider::executeAction(SLC::Provider::Action action, const QVari
         }
     } else if (dataType == QVariant::Int) {
         rating = targets.toInt();
-    }
-
-    if (rating < 0) {
+    } else {
         return false;
     }
+
+    rating = qBound(0, rating, 10);
 
     //only one step here
     QUrl typeUrl;
 
     Nepomuk2::Resource fileRes(resourceUrl);
     if (content.value("Mime Type").toString() == QLatin1String("text/html")) {
-        typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark");
+        typeUrl = Nepomuk2::Vocabulary::NFO::Bookmark();
         fileRes.addType(typeUrl);
-        fileRes.setDescription(resourceUrl);
+        const QString desc = parameters["Title"].toString();
+        if (!desc.isEmpty()) {
+            fileRes.setDescription(desc);
+        }
     }
 
     fileRes.setRating(rating);
