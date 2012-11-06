@@ -45,7 +45,7 @@ SLC::Provider::Actions BookmarksProvider::actionsFor(const QVariantHash &content
     return NoAction;
 }
 
-QString BookmarksProvider::actionName(const QVariantHash &content, Action action)
+QString BookmarksProvider::actionName(const QVariantHash &content, Action action) const
 {
     QUrl url(content.value("URI").toString());
     if (content.value("Window ID").toInt() > 0 &&
@@ -98,7 +98,7 @@ QVariant BookmarksProvider::executeAction(SLC::Provider::Action action, const QV
             bookmarkRes.setTypes(types);
 
             bookmarkRes.setDescription(resourceUrl.toString());
-            bookmarkRes.setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks"), resourceUrl.toString());
+            bookmarkRes.setProperty(typeUrl, resourceUrl.toString());
             emit changed();
         }
 
