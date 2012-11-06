@@ -43,8 +43,21 @@ QVariant RatingProvider::executeAction(SLC::Provider::Action action, const QVari
     }
 
     const QString resourceUrl = content["URI"].toString();
-    //FIXME: this is pretty ugly and type unsafe
-    int rating = parameters["Targets"].toStringList().first().toInt();
+    int rating = -1;
+    const QVariant targets = parameters["Targets"];
+    const QVariant::Type dataType = targets.type();
+    if (dataType == QVariant::StringList) {
+        const QStringList args = targets.toStringList();
+        if (!args.isEmpty()) {
+            rating = args.first().toInt();
+        }
+    } else if (dataType == QVariant::Int) {
+        rating = targets.toInt();
+    }
+
+    if (rating < 0) {
+        return false;
+    }
 
     //only one step here
     QUrl typeUrl;
