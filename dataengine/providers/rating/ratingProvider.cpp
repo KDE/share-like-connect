@@ -26,14 +26,23 @@
 
 #include <soprano/vocabulary.h>
 
+#include "nepomukservicewatcher.h"
+
 RatingProvider::RatingProvider(QObject *parent, const QVariantList &args)
-    : SLC::Provider(parent, args)
+    : SLC::Provider(parent, args),
+      m_nepoWatcher(new NepomukServiceWatcher(this))
 {
 }
 
 SLC::Provider::Actions RatingProvider::actionsFor(const QVariantHash &content) const
 {
-    return Like;
+    Q_UNUSED(content)
+
+    if (m_nepoWatcher->areServicesRunning(NepomukServiceWatcher::QueryService)) {
+        return Like;
+    }
+
+    return NoAction;
 }
 
 QVariant RatingProvider::executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters)

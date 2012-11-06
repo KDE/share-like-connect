@@ -23,6 +23,7 @@
 
 #include <provider.h>
 
+class NepomukServiceWatcher;
 
 class RatingProvider : public SLC::Provider
 {
@@ -33,8 +34,9 @@ public:
     Actions actionsFor(const QVariantHash &content) const;
 
     QVariant executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters);
-private:
 
+private:
+    NepomukServiceWatcher *m_nepoWatcher;
 };
 
 #endif

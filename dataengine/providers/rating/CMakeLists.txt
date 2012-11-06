@@ -1,4 +1,5 @@
 set(ratingProvider_SRCS
+    nepomukservicewatcher.cpp
     ratingProvider.cpp
 )
 
