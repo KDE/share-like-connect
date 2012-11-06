@@ -1,6 +1,8 @@
 [Desktop Entry]
 Name=Share Like Connect
+Name[da]=Share Like Connect
 Name[es]=Compartir Me gusta Conectar
+Name[et]=Share-Like-Connect
 Name[hu]=Share Like Connect
 Name[nl]=Share-Like-Connect
 Name[pt]=Ligação Share-Like
@@ -9,7 +11,9 @@ Name[sk]=Share Like Connect
 Name[uk]=Оприлюднити·Уподобати·З’єднати
 Name[x-test]=xxShare Like Connectxx
 Comment=Quick associations for active content
+Comment[da]=Hurtige tilknytninger til Active-indhold
 Comment[es]=Asociaciones rápidas para contenido activo
+Comment[et]=Aktiivse sisu kiired seosed
 Comment[hu]=Gyors társítások az aktív tartalmakhoz
 Comment[nl]=Snelle associaties voor actieve inhoud
 Comment[pt]=Associações rápidas para o conteúdo activo

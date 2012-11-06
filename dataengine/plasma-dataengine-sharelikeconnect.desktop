@@ -1,6 +1,8 @@
 [Desktop Entry]
 Name=Share·Like·Connect
+Name[da]=Share·Like·Connect
 Name[es]=Compartir·Me gusta·Conectar
+Name[et]=Share-Like-Connect
 Name[hu]=Share·Like·Connect
 Name[nl]=Share-Like-Connect
 Name[pt]=Ligação·Share·Like
@@ -9,7 +11,9 @@ Name[sk]=Share·Like·Connect
 Name[uk]=Оприлюднити·Уподобати·З’єднати
 Name[x-test]=xxShare·Like·Connectxx
 Comment=Provider of actions for sharing resources
+Comment[da]=Giver handling til deling af ressourcer
 Comment[es]=Proveedor de acciones para compartir recursos
+Comment[et]=Toimingud ressursside jagamiseks
 Comment[hu]=Műveletek szolgáltatója erőforrások megosztásához
 Comment[nl]=Leverancier van acties voor het delen van hulpbronnen
 Comment[pt]=Fornecedor de acções para partilhar os recursos
