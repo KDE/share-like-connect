@@ -37,7 +37,7 @@ SLC::Provider::Actions BookmarksProvider::actionsFor(const QVariantHash &content
     QUrl url(content.value("URI").toString());
     if (content.value("Window ID").toInt() > 0 &&
         (url.scheme() == "http" ||
-         content.value("Mime Type").toString() == "text/html")) {
+         content.value("Mime Type").toString() == QLatin1String("text/html"))) {
         return Like;
     }
 

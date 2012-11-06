@@ -90,7 +90,7 @@ QVariant TagsProvider::executeAction(SLC::Provider::Action action, const QVarian
     //FIXME: this stuff should be put in a common place
     //Bookmark?
     if (QUrl(resourceUrl).scheme().startsWith("http") ||
-        content.value("Mime Type").toString() == "text/html") {
+        content.value("Mime Type").toString() == QLatin1String("text/html")) {
         typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark");
 
         QList <QUrl> types;

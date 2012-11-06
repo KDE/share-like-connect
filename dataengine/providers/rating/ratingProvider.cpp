@@ -50,7 +50,7 @@ QVariant RatingProvider::executeAction(SLC::Provider::Action action, const QVari
     QUrl typeUrl;
 
     Nepomuk2::Resource fileRes(resourceUrl);
-    if (content.value("Mime Type").toString() == "text/x-html") {
+    if (content.value("Mime Type").toString() == QLatin1String("text/html")) {
         typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark");
         fileRes.addType(typeUrl);
         fileRes.setDescription(resourceUrl);
