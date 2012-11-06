@@ -70,11 +70,10 @@ QVariant RatingProvider::executeAction(SLC::Provider::Action action, const QVari
     rating = qBound(0, rating, 10);
 
     //only one step here
-    QUrl typeUrl;
 
     Nepomuk2::Resource fileRes(resourceUrl);
     if (content.value("Mime Type").toString() == QLatin1String("text/html")) {
-        typeUrl = Nepomuk2::Vocabulary::NFO::Bookmark();
+        QUrl typeUrl = Nepomuk2::Vocabulary::NFO::Bookmark();
         fileRes.addType(typeUrl);
         const QString desc = parameters["Title"].toString();
         if (!desc.isEmpty()) {
