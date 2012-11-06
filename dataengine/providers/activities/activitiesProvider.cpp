@@ -27,6 +27,7 @@
 #include <Nepomuk2/Query/Result>
 #include <Nepomuk2/Query/QueryServiceClient>
 #include <Nepomuk2/Variant>
+#include <Nepomuk2/Vocabulary/NFO>
 #include <nepomuk2/comparisonterm.h>
 
 #include <soprano/vocabulary.h>
@@ -84,25 +85,23 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
     }
 
     //second step
-    QUrl typeUrl;
-
     Nepomuk2::Resource fileRes(resourceUrl);
     //Bookmark?
     if (QUrl(resourceUrl).scheme().startsWith("http") ||
         content.value("Mime Type").toString() == QLatin1String("text/html")) {
-        typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark");
+        const QUrl typeUrl = Nepomuk2::Vocabulary::NFO::Bookmark();
 
         QList <QUrl> types;
         types << typeUrl;
         fileRes.setTypes(types);
 
         fileRes.setDescription(resourceUrl);
-        fileRes.setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks"), resourceUrl);
+        fileRes.setProperty(typeUrl, resourceUrl);
     } else if (resourceUrl.endsWith(".desktop")) {
         KService::Ptr service = KService::serviceByDesktopPath(QUrl(resourceUrl).path());
         if (service) {
             fileRes = Nepomuk2::Resource(service->entryPath());
-            typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Application");
+            const QUrl typeUrl = Nepomuk2::Vocabulary::NFO::Bookmark();
 
             QList <QUrl> types;
             types << typeUrl;
