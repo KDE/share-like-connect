@@ -23,6 +23,7 @@
 #include <Nepomuk2/Query/Query>
 #include <Nepomuk2/Resource>
 #include <Nepomuk2/Variant>
+#include <Nepomuk2/Vocabulary/NFO>
 
 #include <soprano/vocabulary.h>
 
@@ -51,7 +52,8 @@ QString BookmarksProvider::actionName(const QVariantHash &content, Action action
         (url.scheme() == "http" ||
          content.value("Mime Type").toString() == "text/html")) {
         Nepomuk2::Resource bookmarkRes(url.toString());
-        if (bookmarkRes.exists() && bookmarkRes.types().contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark"))) {
+        if (bookmarkRes.exists() &&
+            bookmarkRes.types().contains(Nepomuk2::Vocabulary::NFO::Bookmark())) {
             return i18n("Remove bookmark");
         } else {
             return i18n("Add bookmark");
@@ -74,7 +76,7 @@ QVariant BookmarksProvider::executeAction(SLC::Provider::Action action, const QV
     }
 
     //the bookmark exists already? remove
-    if (bookmarkRes.exists() && bookmarkRes.types().contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark"))) {
+    if (bookmarkRes.exists() && bookmarkRes.types().contains(Nepomuk2::Vocabulary::NFO::Bookmark())) {
         //delete is dangerous: ask confirmation
         if (confirmed) {
             bookmarkRes.remove();
@@ -87,11 +89,9 @@ QVariant BookmarksProvider::executeAction(SLC::Provider::Action action, const QV
         }
     //create bookmark
     } else {
-        QUrl typeUrl;
-
         if (resourceUrl.scheme().startsWith("http") ||
             content.value("Mime Type").toString() == "text/html") {
-            typeUrl = QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark");
+            const QUrl typeUrl = Nepomuk2::Vocabulary::NFO::Bookmark();
 
             QList <QUrl> types;
             types << typeUrl;
