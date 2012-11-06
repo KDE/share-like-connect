@@ -139,7 +139,7 @@ Provider::Actions Provider::actionsFor(const QVariantHash &content) const
     return NoAction;
 }
 
-QString Provider::actionName(const QVariantHash &content, Action action)
+QString Provider::actionName(const QVariantHash &content, Action action) const
 {
     if (d->scriptEngine) {
         QScriptValue func = d->scriptEngine->globalObject().property("actionName");

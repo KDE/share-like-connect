@@ -45,12 +45,12 @@ public:
 
     Provider(QObject *parent, const QVariantList &args);
     Provider(QObject *parent, const Plasma::Package &package, const QString &pluginName);
-    ~Provider();
+    virtual ~Provider();
 
     QString name() const;
 
     virtual Actions actionsFor(const QVariantHash &content) const;
-    virtual QString actionName(const QVariantHash &content, Action action);
+    virtual QString actionName(const QVariantHash &content, Action action) const;
 
     virtual QVariant executeAction(SLC::Provider::Action action, const QVariantHash &content, const QVariantHash &parameters);
 
