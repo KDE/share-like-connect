@@ -25,6 +25,7 @@
 #include <Nepomuk2/Tag>
 #include <Nepomuk2/Resource>
 #include <Nepomuk2/Variant>
+#include <Nepomuk2/Vocabulary/NFO>
 
 #include <soprano/vocabulary.h>
 
@@ -35,6 +36,7 @@ TagsProvider::TagsProvider(QObject *parent, const QVariantList &args)
 
 SLC::Provider::Actions TagsProvider::actionsFor(const QVariantHash &content) const
 {
+    Q_UNUSED(content)
     return Connect;
 }
 
@@ -85,25 +87,24 @@ QVariant TagsProvider::executeAction(SLC::Provider::Action action, const QVarian
     }
 
     //finally, apply the tag
-    QUrl typeUrl;
 
     //FIXME: this stuff should be put in a common place
     //Bookmark?
     if (QUrl(resourceUrl).scheme().startsWith("http") ||
         content.value("Mime Type").toString() == QLatin1String("text/html")) {
-        typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark");
+        QUrl typeUrl = Nepomuk2::Vocabulary::NFO::Bookmark();
 
         QList <QUrl> types;
         types << typeUrl;
         fileRes.setTypes(types);
 
         fileRes.setDescription(resourceUrl);
-        fileRes.setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks"), resourceUrl);
+        fileRes.setProperty(typeUrl, resourceUrl);
     } else if (resourceUrl.endsWith(".desktop")) {
         KService::Ptr service = KService::serviceByDesktopPath(QUrl(resourceUrl).path());
         if (service) {
             fileRes = Nepomuk2::Resource(service->entryPath());
-            typeUrl = QUrl("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Application");
+            QUrl typeUrl = Nepomuk2::Vocabulary::NFO::Application();
 
             QList <QUrl> types;
             types << typeUrl;
