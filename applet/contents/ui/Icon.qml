@@ -34,7 +34,7 @@ Item {
     property QtObject model
     property string service
     property alias source: iconLoader.source
-    IconLoader {
+    PlasmaCore.IconItem {
         id: iconLoader
         signal menuTriggered
         width: Math.min(parent.width, parent.height)
@@ -42,13 +42,6 @@ Item {
         anchors.centerIn: parent
 
         enabled: model.count > 0 ? true : false
-        opacity: enabled ? 1 : 0.3
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 250
-                easing: Ease.InOut
-            }
-        }
     }
     MouseEventListener {
         enabled: iconLoader.enabled
