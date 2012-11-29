@@ -86,6 +86,7 @@ Flow {
 
     PlasmaCore.Svg {
         id: svgIcon
+        imagePath: "icons/slc"
         //this has to be done in an imperative way because of Plasma::Svg api
         Component.onCompleted: {
             svgIcon.resize(theme.enormousIconSize, theme.enormousIconSize)
