@@ -16,6 +16,7 @@ Name[sk]=Share·Like·Connect
 Name[sv]=Share·Like·Connect
 Name[uk]=Оприлюднити·Уподобати·З’єднати
 Name[x-test]=xxShare·Like·Connectxx
+Name[zh_TW]=Share-Like-Connect
 Comment=Provider of actions for sharing resources
 Comment[da]=Giver handling til deling af ressourcer
 Comment[el]=Παροχή ενεργειών για κοινόχρηστους πόρους
@@ -34,6 +35,7 @@ Comment[sk]=Poskytovateľ akcií pre zdieľanie zdrojov
 Comment[sv]=Tillhandahåller åtgärder för att dela resurser
 Comment[uk]=Засіб визначення дій для спільних ресурсів
 Comment[x-test]=xxProvider of actions for sharing resourcesxx
+Comment[zh_TW]=分享資源動作提供者
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/DataEngine

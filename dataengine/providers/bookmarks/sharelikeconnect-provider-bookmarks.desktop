@@ -23,6 +23,7 @@ Name[sk]=Záložky
 Name[sv]=Bokmärken
 Name[uk]=Закладки
 Name[x-test]=xxBookmarksxx
+Name[zh_TW]=書籤
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/ShareLikeConnect

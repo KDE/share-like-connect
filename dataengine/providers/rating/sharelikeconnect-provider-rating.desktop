@@ -21,6 +21,7 @@ Name[sk]=Hodnotenie
 Name[sv]=Betyg
 Name[uk]=Оцінка
 Name[x-test]=xxRatingxx
+Name[zh_TW]=評分
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/ShareLikeConnect

@@ -22,6 +22,7 @@ Name[sk]=Aktivity
 Name[sv]=Aktiviteter
 Name[uk]=Простори дій
 Name[x-test]=xxActivitiesxx
+Name[zh_TW]=活動
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/ShareLikeConnect

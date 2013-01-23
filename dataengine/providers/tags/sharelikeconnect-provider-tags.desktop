@@ -17,6 +17,7 @@ Name[sk]=Značky
 Name[sv]=Etiketter
 Name[uk]=Мітки
 Name[x-test]=xxTagsxx
+Name[zh_TW]=標籤
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/ShareLikeConnect

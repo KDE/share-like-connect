@@ -21,6 +21,7 @@ Name[sk]=Poslať e-mailom
 Name[sv]=Skicka med e-post
 Name[uk]=Надіслати ел. поштою
 Name[x-test]=xxSend by emailxx
+Name[zh_TW]=以電子郵件傳送
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/ShareLikeConnect
