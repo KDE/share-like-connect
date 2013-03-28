@@ -61,12 +61,13 @@ QVariant TagsProvider::executeAction(SLC::Provider::Action action, const QVarian
 
         //list tags
         QList<QVariant> result;
-        QVariantHash item;
+        //FIXME: reenable New tag when the keyboard issue is solved
+        /*QVariantHash item;
 
         item["target"] = " ";
         item["name"] = i18n("New Tag");
         item["connected"] = false;
-        result << item;
+        result << item;*/
 
         foreach (const Nepomuk2::Tag &tag, Nepomuk2::Tag::allTags()) {
             QVariantHash item;
