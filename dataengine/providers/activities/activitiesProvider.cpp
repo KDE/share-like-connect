@@ -101,7 +101,7 @@ QVariant ActivitiesProvider::executeAction(SLC::Provider::Action action, const Q
         KService::Ptr service = KService::serviceByDesktopPath(QUrl(resourceUrl).path());
         if (service) {
             fileRes = Nepomuk2::Resource(service->entryPath());
-            const QUrl typeUrl = Nepomuk2::Vocabulary::NFO::Bookmark();
+            const QUrl typeUrl = Nepomuk2::Vocabulary::NFO::Application();
 
             QList <QUrl> types;
             types << typeUrl;
