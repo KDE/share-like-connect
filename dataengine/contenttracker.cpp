@@ -42,13 +42,13 @@ ContentTracker::ContentTracker(QObject *parent)
 
 void ContentTracker::focusedResourceUriCallback(const QString &result)
 {
-    kWarning()<<result;
+    qWarning()<<result;
 }
 
 void ContentTracker::focusChanged(const QString &uri, const QString &mimetype, const QString &title)
 {
 #ifndef NDEBUG
-    kDebug() << "New URI" << uri << mimetype << title;
+    qDebug() << "New URI" << uri << mimetype << title;
 #endif
     setData("URI", uri);
     setData("Mime Type", mimetype);
@@ -72,14 +72,14 @@ void ContentTracker::connectToActivityManager()
     } else {
         delete activityManagerIface;
         activityManagerIface = 0;
-        kWarning() << "activityManager not reachable";
+        qWarning() << "activityManager not reachable";
     }
 }
 
 void ContentTracker::serviceChange(const QString& name, const QString& oldOwner, const QString& newOwner)
 {
 #ifndef NDEBUG
-    kDebug()<< "Service" << name << "status change, old owner:" << oldOwner << "new:" << newOwner;
+    qDebug()<< "Service" << name << "status change, old owner:" << oldOwner << "new:" << newOwner;
 #endif
 
     if (newOwner.isEmpty()) {

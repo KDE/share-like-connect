@@ -53,6 +53,7 @@ set (QT_MIN_VERSION "5.2.0")
 
 find_package(KF5Plasma REQUIRED NO_MODULE)
 find_package(KF5KIO REQUIRED NO_MODULE)
+find_package(KF5KDE4Support REQUIRED NO_MODULE)
 
 #########################################################################
 

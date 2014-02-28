@@ -24,7 +24,9 @@
 #include <KGlobalSettings>
 #include <KIO/Job>
 #include <KRun>
+#include <KUrl>
 #include <KStandardDirs>
+#include <KGlobal>
 
 namespace SLC
 {
@@ -112,7 +114,7 @@ QScriptValue ProviderScriptEngine::userDataPath(QScriptContext *context, QScript
     if (type.compare("desktop", Qt::CaseInsensitive) == 0) {
         return KGlobalSettings::desktopPath();
     } else if (type.compare("autostart", Qt::CaseInsensitive) == 0) {
-        return KGlobalSettings::autostartPath();
+        return KGlobal::dirs()->saveLocation("autostart");
     } else if (type.compare("documents", Qt::CaseInsensitive) == 0) {
         return KGlobalSettings::documentPath();
     } else if (type.compare("music", Qt::CaseInsensitive) == 0) {

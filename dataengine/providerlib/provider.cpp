@@ -93,14 +93,6 @@ Provider::Provider(QObject *parent, const Plasma::Package &package, const QStrin
 
 Provider::~Provider()
 {
-    if (d->package) {
-        const QString translationsPath = d->package->filePath("translations");
-        if (!translationsPath.isEmpty()) {
-            //FIXME: KGlobal::dirs()->removeResourceDir("locale", translationsPath);
-            KGlobal::locale()->removeCatalog(d->package->metadata().pluginName());
-        }
-    }
-
     delete d;
 }
 
