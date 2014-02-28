@@ -212,5 +212,5 @@ bool ProviderScriptEngine::removeEventListener(const QString &event, const QScri
 
 }
 
-#include "providerScriptEngine_p.moc"
+#include "moc_providerScriptEngine_p.cpp"
 

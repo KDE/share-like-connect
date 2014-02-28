@@ -11,10 +11,15 @@ set(sharelikeconnectengine_SRCS
 )
 
 set(activitymanagerslc_xml org.kde.ActivityManager.SLC.xml)
-QT4_ADD_DBUS_INTERFACE(sharelikeconnectengine_SRCS ${activitymanagerslc_xml} activitymanagerslc_interface)
+QT5_ADD_DBUS_INTERFACE(sharelikeconnectengine_SRCS ${activitymanagerslc_xml} activitymanagerslc_interface)
 
-kde4_add_plugin(plasma_dataengine_sharelikeconnect ${sharelikeconnectengine_SRCS})
-target_link_libraries(plasma_dataengine_sharelikeconnect ${KDE4_PLASMA_LIBS} ${KDE4_KIO_LIBS} sharelikeconnect)
+add_library(plasma_dataengine_sharelikeconnect MODULE ${sharelikeconnectengine_SRCS})
+target_link_libraries(plasma_dataengine_sharelikeconnect
+                        KF5::Plasma
+                        KF5::KIOCore
+                        KF5::KIOWidgets
+                        sharelikeconnect)
+kservice_desktop_to_json(plasma_dataengine_sharelikeconnect plasma-dataengine-sharelikeconnect.desktop)
 
 install(TARGETS plasma_dataengine_sharelikeconnect DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES plasma-dataengine-sharelikeconnect.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
