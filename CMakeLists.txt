@@ -1,8 +1,11 @@
 project(share-like-connect)
 
-cmake_minimum_required(VERSION 2.8.10.1)
+cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
 ################# Disallow in-source build #################
+
+set(QT_MIN_VERSION "5.4.0")
+set(KF5_MIN_VERSION "5.9.0")
 
 if("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
    message(FATAL_ERROR "plasmate requires an out of source build. Please create a separate build directory and run 'cmake path_to_plasmate [options]' there.")
@@ -15,7 +18,7 @@ include(FeatureSummary)
 
 ################# set KDE specific information #################
 
-find_package(ECM 0.0.8 REQUIRED NO_MODULE)
+find_package(ECM 1.8.0 REQUIRED NO_MODULE)
 
 # where to look first for cmake modules, before ${CMAKE_ROOT}/Modules/ is checked
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
@@ -24,7 +27,7 @@ include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDECompilerSettings)
 
-find_package(Qt5 REQUIRED NO_MODULE COMPONENTS Core Quick X11Extras Svg Test Script)
+find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS Core Quick X11Extras Svg Test Script)
 
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0)
 
@@ -41,15 +44,12 @@ endif()
 
 ################# now find all used packages #################
 
-set (QT_MIN_VERSION "5.2.0")
-
-
 # Load CMake, Compiler and InstallDirs settings from KF5 and the following are already somewhat "done" tier1/tier2 libs from kdelibs:
- find_package(KF5 CONFIG REQUIRED COMPONENTS
-     IdleTime ItemModels WidgetsAddons WindowSystem Codecs Archive CoreAddons Solid ThreadWeaver
-     Config Auth JS Wallet DBusAddons Sonnet
-     I18n GuiAddons Service ConfigWidgets ItemViews Notifications IconThemes Completion JobWidgets TextWidgets
-     TextEditor GlobalAccel XmlGui Crash UnitConversion Bookmarks Parts Kross NewStuff Attica)
+
+
+find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
+                    Plasma DocTools Runner JsEmbed NotifyConfig Su NewStuff Wallet KCMUtils
+                    IdleTime Declarative TextWidgets KDELibs4Support Crash GlobalAccel NetworkManagerQt)
 
 find_package(KF5Plasma REQUIRED NO_MODULE)
 find_package(KF5KIO REQUIRED NO_MODULE)
@@ -76,8 +76,8 @@ add_definitions(${KDE4_DEFINITIONS})
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
 
-add_subdirectory(applet)
-add_subdirectory(dataengine)
-
+#add_subdirectory(applet)
+#add_subdirectory(dataengine)
+add_subdirectory(applet2)
 
 install(DIRECTORY menuitems/ DESTINATION ${DATA_INSTALL_DIR}/plasma/slcmenuitems/)
