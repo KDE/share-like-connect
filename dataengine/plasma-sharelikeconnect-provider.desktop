@@ -2,37 +2,6 @@
 Type=ServiceType
 X-KDE-ServiceType=Plasma/ShareLikeConnect
 Comment=A Share·Like·Connect Plasma DataEngine add-on
-Comment[bs]=Dijeli · Sviđa mi se · Spojite Plazma DataEngine add-on
-Comment[ca]=Un complement de motor de dades de Plasma per a «Share-Like-Connect»
-Comment[ca@valencia]=Un complement de motor de dades de Plasma per a «Share-Like-Connect»
-Comment[da]=En Plasma datamotor-tilføjelse til Share·Like·Connect
-Comment[de]=Eine Erweiterung für die Datenquelle von „Share·Like·Connect“
-Comment[el]=ένα Share·Like·Connect Plasma DataEngine πρόσθετο
-Comment[en_GB]=A Share·Like·Connect Plasma DataEngine add-on
-Comment[es]=Un complemento de motor de datos de Plasma para Compartir·Me gusta·Conectar
-Comment[et]=Share-Like-Connecti Plasma andmemootori lisand
-Comment[fi]=Share·Like·Connect-tietomoottori
-Comment[fr]=Un module complémentaire du moteur de données Plasma pour « Share·Like·Connect »
-Comment[gl]=Un complemento de motor de datos de Plasma para Compartir · Gustar · Conectar.
-Comment[hu]=Egy Share·Like·Connect plazma adatmotor kiegészítő
-Comment[kk]=Қосылу·Секілді·Ортақтастыру Plasma дерек тетігінің қосымшасы
-Comment[km]=កម្មវិធី​ជំនួយ​នៃ​ម៉ាស៊ីន​ទិន្នន័យ​ប្លាស្មា​របស់ការ​ចែករំលែក​ដូច​ការ​តភ្ជាប់
-Comment[ko]=공유·좋아요·연결 Plasma 데이터 엔진 추가 기능
-Comment[lt]=Share·Like·Connect plazma duomenų variklio papildinys
-Comment[nb]=Et tillegg for Plasma datamotor. for Share-Like-Connect
-Comment[nds]=En Plasma-Datenkarntosetten för't Delen, Mögen un Tokoppeln
-Comment[nl]=Een add-on voor Plasma-gegevens-engine voor Share-Like-Connect
-Comment[nn]=Del–lik–kopla-tillegg for Plasma-datamotor
-Comment[pl]=Dodatek silnika danych Plazmy Share·Like·Connect
-Comment[pt]=Uma extensão do motor de dados do Plasma para o Share·Like
-Comment[pt_BR]=Uma extensão do mecanismo de dados do Plasma para o Share·Like
-Comment[sk]=Doplnok Share·Like·Connect Plasma DataEngine
-Comment[sl]=Dodatek Share·Like·Connect Plasma DataEngine
-Comment[sv]=Plasma-datagränssnitt för Share-Like-Connect
-Comment[tr]=Bir Paylaş·Beğen·Bağlan Plasma Veri Motoru eklentisi
-Comment[uk]=Додаток рушія даних Плазми Оприлюднити·Уподобати·З’єднати
-Comment[x-test]=xxA Share·Like·Connect Plasma DataEngine add-onxx
-Comment[zh_TW]=Share-Like-Connect 的 Plasma 資料引擎附加元件
 
 [PropertyDef::X-Plasma-ShareLikeConnect]
 Type=QStringList
